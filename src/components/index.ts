@@ -1,4 +1,5 @@
+import CompressionContainer from './compression-container'
 import Header from './header'
 import Spacer from './spacer'
 
-export { Header, Spacer }
+export { CompressionContainer, Header, Spacer }
