@@ -22,4 +22,4 @@ export const COLOR = {
 		1400: '#EEE',
 		1500: '#FFF'
 	}
-}
+} as const
