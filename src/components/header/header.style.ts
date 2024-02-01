@@ -2,7 +2,7 @@ import { COLOR } from '@src/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 import type * as T from './header.type'
 
-export const OverlayHeader = styled.header<T.$HeaderProps>`
+export const OverlayHeader = styled.header<T.$OverlayHeader>`
 	width: 100%;
 	height: ${({ $height }) => $height + 'rem'};
 
@@ -16,7 +16,6 @@ export const OverlayHeader = styled.header<T.$HeaderProps>`
 	display: grid;
 	grid-template: repeat(3, 1fr) / 1rem 1fr 1rem;
 `
-
 export const ServiceTitle = styled.h1`
 	grid-area: 2/2;
 

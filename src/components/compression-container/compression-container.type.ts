@@ -4,7 +4,7 @@ export type CompressionContainerProps = {
 	children?: React.ReactNode
 }
 
-export type $CompressionContainerStyleProps = {
+export type $ContainerProps = {
 	$horizontal: string
 	$vertical: string
 }
