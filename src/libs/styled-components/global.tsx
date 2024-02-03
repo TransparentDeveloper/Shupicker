@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
     font-size: ${FONT_SIZE.md};
   }
   html{
-    background-color: ${COLOR.grayScale[300]};
+    background-color: ${COLOR.grayScale[200]};
     color: ${COLOR.grayScale[1500]};
     font-family: 'Giants-Regular';
     font-size: 62.5%; 
