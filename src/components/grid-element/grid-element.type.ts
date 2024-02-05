@@ -4,7 +4,7 @@ export type GridElementProps = {
 	children?: React.ReactNode
 }
 
-export type $GridElementProps = {
+export type $ElementWrapper = {
 	$row?: number
 	$column?: number
 }
