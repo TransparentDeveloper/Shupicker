@@ -1,4 +1,5 @@
 import { COLOR } from '@src/libs/styled-components/reference-tokens'
+import { CenterFlexBox, ColumnFlexBox, CompressionContainer } from '..'
 import * as S from './namedBox.style'
 import type * as T from './namedBox.type'
 
@@ -11,10 +12,16 @@ const NamedBox = ({
 }: T.NamedBoxProps) => {
 	return (
 		<S.BoxContainer {...rest}>
-			<S.BoxName>{boxName}</S.BoxName>
-			<S.BoxBody $backgroundColor={backgroundColor} $borderColor={borderColor}>
-				{children}
-			</S.BoxBody>
+			<CenterFlexBox align="verticalAlign">
+				<ColumnFlexBox gap="0.5rem">
+					<S.BoxName>{boxName}</S.BoxName>
+					<S.BoxBody $backgroundColor={backgroundColor} $borderColor={borderColor}>
+						<CompressionContainer horizontal="1rem" vertical="1rem">
+							{children}
+						</CompressionContainer>
+					</S.BoxBody>
+				</ColumnFlexBox>
+			</CenterFlexBox>
 		</S.BoxContainer>
 	)
 }
