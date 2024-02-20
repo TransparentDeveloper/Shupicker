@@ -11,7 +11,7 @@ export const OverlayHeader = styled.header<T.$OverlayHeader>`
 
 	position: fixed;
 	top: 0;
-	z-index: 1;
+	z-index: 100;
 
 	display: grid;
 	grid-template: repeat(3, 1fr) / 1rem 1fr 1rem;
