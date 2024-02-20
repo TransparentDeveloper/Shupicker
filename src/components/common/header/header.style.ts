@@ -1,4 +1,4 @@
-import { COLOR } from '@src/libs/styled-components/reference-tokens'
+import { COLOR } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 import type * as T from './header.type'
 

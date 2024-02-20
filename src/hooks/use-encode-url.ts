@@ -1,5 +1,5 @@
-import { PersonnelInfoType } from '@src/types'
-import { arrayDecoder, arrayEncoder } from '@src/utils'
+import { PersonnelInfoType } from '@/types'
+import { arrayDecoder, arrayEncoder } from '@/utils'
 import { useSearchParams } from 'react-router-dom'
 
 export const useEncodeUrl = () => {

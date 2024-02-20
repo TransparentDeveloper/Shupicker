@@ -1,4 +1,4 @@
-import Spacer from '../spacer'
+import { Spacer } from '@/components'
 import * as S from './header.style'
 
 const Header = () => {

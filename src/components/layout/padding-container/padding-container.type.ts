@@ -1,4 +1,4 @@
-export type CompressionContainerProps = {
+export type PaddingContainerProps = {
 	horizontal?: string
 	vertical?: string
 	children?: React.ReactNode

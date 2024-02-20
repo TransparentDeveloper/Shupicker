@@ -1,4 +1,4 @@
-import '@assets/fonts/index.css'
+import '@/assets/fonts/index.css'
 import { createGlobalStyle } from 'styled-components'
 import { BREAK_POINT, COLOR, FONT_SIZE } from './reference-tokens'
 

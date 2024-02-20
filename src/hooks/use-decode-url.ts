@@ -1,5 +1,5 @@
-import type { PersonnelInfoType } from '@src/types'
-import { arrayDecoder } from '@src/utils'
+import type { PersonnelInfoType } from '@/types'
+import { arrayDecoder } from '@/utils'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 

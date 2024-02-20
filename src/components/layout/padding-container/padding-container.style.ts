@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type * as T from './compression-container.type'
+import type * as T from './padding-container.type'
 
 export const Container = styled.div<T.$ContainerProps>`
 	width: 100%;
