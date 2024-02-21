@@ -1,20 +1,9 @@
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
-import { $BoxBodyProps } from './Box.type'
+import * as T from './section-base.type'
 
-export const BoxContainer = styled.div`
+export const Container = styled.div<T.$Container>`
 	width: 100%;
-	height: 100%;
-`
-export const BoxName = styled.h3`
-	width: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-`
-export const BoxBody = styled.div<$BoxBodyProps>`
-	width: 100%;
-
 	height: 100%;
 
 	background-color: ${({ $backgroundColor }) => $backgroundColor};

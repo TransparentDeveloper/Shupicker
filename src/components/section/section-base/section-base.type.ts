@@ -1,9 +1,8 @@
-export type BoxProps = {
-	boxName?: string
+export type SectionBaseProps = {
 	backgroundColor?: string
 	children?: React.ReactNode
 }
 
-export type $BoxBodyProps = {
+export type $Container = {
 	$backgroundColor: string
 }
