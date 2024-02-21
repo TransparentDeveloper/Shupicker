@@ -1,5 +1,4 @@
-import Box from './box'
 import Header from './header'
-import PersonnelList from './personnel-list'
+import IconButton from './icon-button'
 import ShupickerIcon from './shpicker-icon'
-export { Box, Header, PersonnelList, ShupickerIcon }
+export { Header, IconButton, ShupickerIcon }
