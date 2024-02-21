@@ -1,5 +1,5 @@
 export const BORDER_RADIUS = {
-	sm: '3rem',
-	md: '6rem',
-	lg: '9rem'
+	sm: '0.5rem',
+	md: '5rem',
+	lg: '50rem'
 } as const
