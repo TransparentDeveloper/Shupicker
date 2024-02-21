@@ -1,6 +1,6 @@
 import '@/assets/fonts/index.css'
 import { createGlobalStyle } from 'styled-components'
-import { BREAK_POINT, COLOR, FONT_SIZE } from './reference-tokens'
+import { BORDER_RADIUS, BREAK_POINT, COLOR, FONT_SIZE } from './reference-tokens'
 
 const GlobalStyles = createGlobalStyle`
   *{
@@ -9,17 +9,29 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
 
     font-size: ${FONT_SIZE.md};
+
+    ::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: ${BORDER_RADIUS.lg};
+      background-color: ${COLOR.grayScale[200]};
+    }
   }
   html{
-    background-color: ${COLOR.grayScale[200]};
+    background-color: ${COLOR.grayScale[300]};
     color: ${COLOR.grayScale[1500]};
     font-family: 'Giants-Regular';
     font-size: 62.5%; 
     @media screen and (max-width: ${BREAK_POINT.md}) {
-      font-size: 56.25%;
+      font-size: 50%;
     }
     @media screen and (max-width: ${BREAK_POINT.sm}) {
-      font-size: 50%;
+      font-size: 31.25%;
     }
   }
   h1 {
@@ -45,6 +57,9 @@ const GlobalStyles = createGlobalStyle`
   }  
   ul, li {
     list-style: none;
+  }
+  p{
+    font-size: ${FONT_SIZE.sm};
   }
 `
 

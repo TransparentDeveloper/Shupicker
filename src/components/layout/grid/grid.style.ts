@@ -7,7 +7,6 @@ export const GridWrapper = styled.div<T.$GridWrapperProps>`
 
 	display: grid;
 	grid-template: repeat(${({ $rows }) => $rows}, 1fr) / repeat(${({ $columns }) => $columns}, 1fr);
-	padding: 1rem;
-
-	gap: 1rem;
+	grid-row-gap: ${({ $rowGap }) => $rowGap};
+	grid-column-gap: ${({ $columnGap }) => $columnGap};
 `
