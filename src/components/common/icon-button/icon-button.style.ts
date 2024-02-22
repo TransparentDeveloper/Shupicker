@@ -3,7 +3,7 @@ import { BORDER_RADIUS } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 import * as T from './icon-button.type'
 
-export const RoundSquareButton = styled.button<T.$RoundSquareButton>`
+export const RoundSquareButton = styled.button<T.$RoundSquareButtonProps>`
 	${FLEX_CENTER}
 
 	width: 3rem;
