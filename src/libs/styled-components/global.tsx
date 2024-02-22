@@ -1,5 +1,5 @@
-import '@/assets/fonts/index.css'
 import { createGlobalStyle } from 'styled-components'
+import { GIANTS_BOLD, GIANTS_REGULAR } from './css-utils'
 import { BORDER_RADIUS, BREAK_POINT, COLOR, FONT_SIZE } from './reference-tokens'
 
 const GlobalStyles = createGlobalStyle`
@@ -25,7 +25,7 @@ const GlobalStyles = createGlobalStyle`
   html{
     background-color: ${COLOR.grayScale[300]};
     color: ${COLOR.grayScale[1500]};
-    font-family: 'Giants-Regular';
+    ${GIANTS_REGULAR}
     font-size: 62.5%; 
     @media screen and (max-width: ${BREAK_POINT.md}) {
       font-size: 50%;
@@ -35,19 +35,19 @@ const GlobalStyles = createGlobalStyle`
     }
   }
   h1 {
-    font-family: 'Giants-Bold';
+    ${GIANTS_BOLD}
     font-size: ${FONT_SIZE.xl};
   }
   h2 {
-    font-family: 'Giants-Bold';
+    ${GIANTS_BOLD}
     font-size: ${FONT_SIZE.lg};
   }
   h3 {
-    font-family: 'Giants-Bold';
+    ${GIANTS_BOLD}
     font-size: ${FONT_SIZE.bg};
   }
   h4{
-    font-family: 'Giants-Bold';
+    ${GIANTS_BOLD}
   }
   button {
     border: none;
