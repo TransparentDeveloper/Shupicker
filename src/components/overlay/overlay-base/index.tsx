@@ -11,8 +11,12 @@ const OverlayBase = ({ children }: T.OverlayBase) => {
 	return (
 		<S.Wrapper onClick={onClickCloseOverlay}>
 			<CenterFlexBox align="bothAlign">
-				<S.Card>
-					<PaddingContainer horizontal="8%" vertical="8%">
+				<S.Card
+					onClick={(e) => {
+						e.stopPropagation()
+					}}
+				>
+					<PaddingContainer horizontal="5%" vertical="5%">
 						<S.CloseButton onClick={onClickCloseOverlay}>X</S.CloseButton>
 						{children}
 					</PaddingContainer>
