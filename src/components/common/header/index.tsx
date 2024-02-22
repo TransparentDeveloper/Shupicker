@@ -2,9 +2,9 @@ import * as S from './header.style'
 
 const Header = () => {
 	return (
-		<S.OverlayHeader>
+		<S.HeaderBase>
 			<S.ServiceTitle>Shupicker</S.ServiceTitle>
-		</S.OverlayHeader>
+		</S.HeaderBase>
 	)
 }
 

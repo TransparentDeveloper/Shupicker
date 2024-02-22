@@ -1,7 +1,7 @@
 import { COLOR } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 
-export const OverlayHeader = styled.header`
+export const HeaderBase = styled.header`
 	width: 100%;
 	height: 8vh;
 
