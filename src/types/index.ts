@@ -1,2 +1,2 @@
-export * from './additional-trait.types'
-export * from './personnel-info.type'
+export * from './custom-trait.type'
+export * from './personnel.type'
