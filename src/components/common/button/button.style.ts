@@ -1,3 +1,4 @@
+import { FLEX_CENTER } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import styled, { css } from 'styled-components'
 import type * as T from './button.type'
@@ -12,6 +13,9 @@ export const SIZE_CSS = {
 }
 
 export const ButtonBase = styled.button<T.$ButtonBase>`
+	${FLEX_CENTER}
+	text-align: center;
+
 	${({ $size }) => SIZE_CSS[$size]}
 	min-width: 5rem;
 	height: 3.5rem;
