@@ -6,7 +6,7 @@ export const HeaderBase = styled.header`
 	height: 8vh;
 
 	color: ${COLOR.grayScale[1500]};
-	background-color: ${COLOR.brand.base};
+	background-color: ${COLOR.brand.main.base};
 
 	padding: 0.8rem 3.5rem;
 `

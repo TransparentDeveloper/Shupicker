@@ -1,8 +1,15 @@
 export const COLOR = {
 	brand: {
-		base: '#1B58A8',
-		light: '#4D8EE3',
-		weight: '#1A365D'
+		main: {
+			base: '#1B58A8',
+			light: '#4D8EE3',
+			weight: '#1A365D'
+		},
+		sub: {
+			base: '#E66420',
+			light: '#FF8D51',
+			weight: '#A63500'
+		}
 	},
 	grayScale: {
 		0: '#000000',

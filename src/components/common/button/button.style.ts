@@ -29,6 +29,6 @@ export const ButtonBase = styled.button<T.$ButtonBase>`
 
 	&:hover {
 		color: ${COLOR.grayScale[1500]};
-		background-color: ${COLOR.brand.light};
+		background-color: ${COLOR.brand.main.light};
 	}
 `

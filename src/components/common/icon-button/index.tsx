@@ -8,7 +8,7 @@ const IconButton = ({
 	onClick,
 	bgColor = COLOR.grayScale[200],
 	iconColor = COLOR.grayScale[1200],
-	hoverBgColor = COLOR.brand.light,
+	hoverBgColor = COLOR.brand.main.light,
 	hoverIconColor = COLOR.grayScale[1500],
 	...rest
 }: T.IconButtonProps) => {
