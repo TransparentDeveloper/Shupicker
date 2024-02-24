@@ -1,7 +1,7 @@
-import { IS_OPEN_OVERLAY_ATOM } from '@/constants'
+import { ATOM_IS_OPEN_OVERLAY } from '@/constants'
 import { atom } from 'recoil'
 
 export const IsOpenOverlayAtom = atom({
-	key: IS_OPEN_OVERLAY_ATOM,
+	key: ATOM_IS_OPEN_OVERLAY,
 	default: false
 })
