@@ -12,7 +12,6 @@ export const Container = styled.div`
 export const ButtonGroup = styled.div`
 	${FLEX_CENTER}
 	gap: 0.5rem;
-	justify-self: start;
 
 	width: fit-content;
 	height: fit-content;

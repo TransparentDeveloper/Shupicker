@@ -1,10 +1,10 @@
-import { ColumnFlexBox, IconButton } from '@/components'
+import { IconButton, Spacer } from '@/components'
 import * as S from './section-header.style'
 import type * as T from './section-header.type'
 
-const SectionHeader = ({ sectionName, children, iconButtonDataArray }: T.SectionHeaderProps) => {
+const SectionHeader = ({ sectionName, iconButtonDataArray }: T.SectionHeaderProps) => {
 	return (
-		<ColumnFlexBox gap="1.2rem">
+		<>
 			<S.Container>
 				<h3>{sectionName}</h3>
 				<S.ButtonGroup>
@@ -13,8 +13,8 @@ const SectionHeader = ({ sectionName, children, iconButtonDataArray }: T.Section
 					))}
 				</S.ButtonGroup>
 			</S.Container>
-			{children}
-		</ColumnFlexBox>
+			<Spacer y={1.5} />
+		</>
 	)
 }
 export default SectionHeader
