@@ -7,7 +7,7 @@ export const COLOR = {
 		},
 		sub: {
 			base: '#E66420',
-			light: '#FF8D51',
+			light: '#FF8343',
 			weight: '#A63500'
 		}
 	},
