@@ -1,8 +1,9 @@
 export type HorizontalGaugeGraphProps = {
-	percentage?: number
+	totalValue?: number
+	currentValue?: number
 	width?: string
 	height?: string
-	bgColor?: string
+	gaugeColor?: string
 }
 export type $WrapperProps = {
 	$width: string
@@ -11,5 +12,5 @@ export type $WrapperProps = {
 export type $Gauge = {
 	$width: string
 	$height: string
-	$bgColor: string
+	$gaugeColor: string
 }

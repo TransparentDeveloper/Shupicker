@@ -5,7 +5,7 @@ import type * as T from './box.type'
 const Box = ({
 	width = 'fit-content',
 	height = 'fit-content',
-	bgColor = COLOR.grayScale[500],
+	bgColor = COLOR.grayScale[300],
 	children,
 	...rest
 }: T.BoxProps) => {
