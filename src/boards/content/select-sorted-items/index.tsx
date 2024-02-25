@@ -1,16 +1,15 @@
+import { BoardBase, BoardHeader } from '@/boards'
 import {
 	Box,
 	ColumnFlexBox,
 	Grid,
 	GridElement,
 	HorizontalGaugeGraph,
-	SectionBase,
-	SectionHeader,
 	TaggingText,
 	TextSpacer
 } from '@/components'
 import { useGetPersonnel } from '@/hooks'
-import { DIRECTION_COLUMN, FLEX_CENTER } from '@/libs/styled-components/css-utils'
+import { DIRECTION_COLUMN, FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
 import { COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import { faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
@@ -19,9 +18,9 @@ const SelectSortedItems = () => {
 	const { personnelArray } = useGetPersonnel()
 
 	return (
-		<SectionBase>
-			<SectionHeader
-				sectionName="📊 정렬 & 선택"
+		<BoardBase>
+			<BoardHeader
+				sectionName="👆 정렬 & 선택"
 				iconButtonDataArray={[
 					{
 						iconData: faSortAmountDownAlt
@@ -59,7 +58,7 @@ const SelectSortedItems = () => {
 					</Grid>
 				</Box>
 			</S.VerticalScrollContainer>
-		</SectionBase>
+		</BoardBase>
 	)
 }
 
@@ -82,7 +81,7 @@ const NameText = styled.h2`
 	height: 100%;
 	color: ${COLOR.grayScale[1500]};
 	text-align: center;
-	text-shadow: -0.2rem 0.2rem 0.1rem ${COLOR.grayScale[0]};
+	${TEXT_SHADOW_CSS}
 `
 
 const S = {

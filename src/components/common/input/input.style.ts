@@ -1,5 +1,5 @@
-import { GIANTS_REGULAR } from '@/libs/styled-components/css-utils'
-import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
+import { GIANTS_REGULAR, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
+import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 import type * as T from './input.type'
 
@@ -9,7 +9,7 @@ export const InputBase = styled.input<T.$InputBaseProps>`
 	max-width: 100%;
 
 	height: 4rem;
-	background-color: ${COLOR.grayScale[200]};
+	background-color: ${({ $bgColor }) => $bgColor};
 	color: ${COLOR.grayScale[1500]};
 
 	padding: 0.8rem;
@@ -17,7 +17,11 @@ export const InputBase = styled.input<T.$InputBaseProps>`
 	border-radius: ${BORDER_RADIUS.ti};
 
 	${GIANTS_REGULAR}
-	font-size: ${FONT_SIZE.md};
+	font-size: ${({ $fontSize }) => $fontSize};
 
 	text-align: center;
+
+	&::placeholder {
+		${TEXT_SHADOW_CSS}
+	}
 `

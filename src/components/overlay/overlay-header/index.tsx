@@ -1,13 +1,15 @@
-import { ColumnFlexBox } from '@/components'
+import { Spacer } from '@/components'
 import * as S from './overlay-header.style'
 import type * as T from './overlay-header.type'
 
-const OverlayHeader = ({ overlayName, children }: T.OverlayHeaderProps) => {
+const OverlayHeader = ({ overlayName }: T.OverlayHeaderProps) => {
 	return (
-		<ColumnFlexBox gap="1.2rem">
-			<S.OverlayNameText>{overlayName}</S.OverlayNameText>
-			{children}
-		</ColumnFlexBox>
+		<>
+			<S.Container>
+				<S.OverlayNameText>{overlayName}</S.OverlayNameText>
+			</S.Container>
+			<Spacer y={1} />
+		</>
 	)
 }
 export default OverlayHeader

@@ -1,5 +1,6 @@
 import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
+import type * as T from './overlay-base.type'
 
 export const Wrapper = styled.div`
 	position: fixed;
@@ -9,12 +10,11 @@ export const Wrapper = styled.div`
 
 	width: 100%;
 	height: 100%;
-	background-color: rgba(3, 3, 3, 0.4);
+	background-color: rgba(3, 3, 3, 0.6);
 `
-export const Card = styled.div`
-	width: 60vw;
-	height: fit-content;
-	min-height: 60vh;
+export const Card = styled.div<T.$Card>`
+	width: ${({ $width }) => $width};
+	height: ${({ $height }) => $height};
 
 	position: relative;
 

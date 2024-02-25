@@ -1,4 +1,5 @@
-import { AddingPersonnel, SectionBase, SectionHeader } from '@/components'
+import { BoardBase, BoardHeader } from '@/boards'
+import { AddingPersonnel } from '@/components'
 import { useGetPersonnel } from '@/hooks'
 import { IsOpenOverlayAtom } from '@/libs/recoil'
 import {
@@ -10,7 +11,7 @@ import {
 	FLEX_START
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
 
@@ -23,13 +24,13 @@ const PersonnelList = () => {
 
 	return (
 		<>
-			{isOpenOverlay && <AddingPersonnel />}
-			<SectionBase>
-				<SectionHeader
+			{isOpenOverlay && <AddingPersonnel width="50vw" height="35vh" />}
+			<BoardBase>
+				<BoardHeader
 					sectionName="📌 인명부"
 					iconButtonDataArray={[
 						{
-							iconData: faPlus,
+							iconData: faUserPlus,
 							onClick: onClickAddButton
 						}
 					]}
@@ -50,6 +51,7 @@ const PersonnelList = () => {
 					</S.EssentialInfoBox>
 
 					<S.AdditionalInfoListWrapper>
+						{}
 						<AdditionalInfoList>
 							<S.AdditionalInfoBox>
 								<S.AdditionalTraitText>성별</S.AdditionalTraitText>
@@ -89,7 +91,7 @@ const PersonnelList = () => {
 						))}
 					</S.EssentialInfoBox>
 				</S.InfoContainer>
-			</SectionBase>
+			</BoardBase>
 		</>
 	)
 }
@@ -129,14 +131,15 @@ const EssentialTraitText = styled.h4`
 	width: 100%;
 	height: 5rem;
 
-	${BORDER_INSET}
+	border-bottom: 0.05rem solid ${COLOR.grayScale[700]};
 `
-
 const AdditionalInfoListWrapper = styled.section`
 	position: relative;
 
 	width: 100%;
 	height: 100%;
+
+	background-color: ${COLOR.grayScale[400]};
 
 	overflow-y: hidden;
 	overflow-x: scroll;
@@ -156,7 +159,7 @@ const AdditionalInfoBox = styled.div`
 	width: 8.5rem;
 	height: 100%;
 
-	border: 0.05rem inset ${COLOR.grayScale[700]};
+	${BORDER_INSET}
 	border-bottom: none;
 `
 const AdditionalTraitText = styled.p`
@@ -165,7 +168,7 @@ const AdditionalTraitText = styled.p`
 	padding: 1rem;
 	width: 100%;
 	height: 5rem;
-	border-bottom: 0.5px solid ${COLOR.grayScale[600]};
+	${BORDER_INSET}
 `
 const ValueText = styled.p`
 	${FLEX_CENTER}

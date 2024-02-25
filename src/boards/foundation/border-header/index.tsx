@@ -1,12 +1,12 @@
 import { IconButton, Spacer } from '@/components'
-import * as S from './section-header.style'
-import type * as T from './section-header.type'
+import * as S from './board-header.style'
+import type * as T from './board-header.type'
 
-const SectionHeader = ({ sectionName, iconButtonDataArray }: T.SectionHeaderProps) => {
+const BoardHeader = ({ sectionName, iconButtonDataArray }: T.BoardHeaderProps) => {
 	return (
 		<>
 			<S.Container>
-				<h3>{sectionName}</h3>
+				<S.BoardNameText>{sectionName}</S.BoardNameText>
 				<S.ButtonGroup>
 					{iconButtonDataArray?.map((iconButtonData, index) => (
 						<IconButton key={index} {...iconButtonData} />
@@ -17,4 +17,4 @@ const SectionHeader = ({ sectionName, iconButtonDataArray }: T.SectionHeaderProp
 		</>
 	)
 }
-export default SectionHeader
+export default BoardHeader

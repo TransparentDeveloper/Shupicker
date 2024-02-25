@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil'
 import * as S from './overlay-base.style'
 import type * as T from './overlay-base.type'
 
-const OverlayBase = ({ children }: T.OverlayBase) => {
+const OverlayBase = ({ width = '60vw', height = '60vh', children }: T.OverlayBase) => {
 	const setIsOpenOverlay = useSetRecoilState(IsOpenOverlayAtom)
 	const onClickCloseOverlay = () => setIsOpenOverlay(false)
 
@@ -12,6 +12,8 @@ const OverlayBase = ({ children }: T.OverlayBase) => {
 		<S.Wrapper onClick={onClickCloseOverlay}>
 			<CenterFlexBox align="bothAlign">
 				<S.Card
+					$width={width}
+					$height={height}
 					onClick={(e) => {
 						e.stopPropagation()
 					}}

@@ -1,4 +1,4 @@
-import { FLEX_CENTER, JUSTIFY_BETWEEN } from '@/libs/styled-components/css-utils'
+import { FLEX_CENTER, JUSTIFY_BETWEEN, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -8,6 +8,9 @@ export const Container = styled.div`
 	height: 3rem;
 
 	padding: 1rem;
+`
+export const BoardNameText = styled.h3`
+	${TEXT_SHADOW_CSS}
 `
 export const ButtonGroup = styled.div`
 	${FLEX_CENTER}

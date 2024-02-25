@@ -1,4 +1,4 @@
-export type SectionBaseProps = {
+export type BoardBaseProps = {
 	backgroundColor?: string
 	children?: React.ReactNode
 }

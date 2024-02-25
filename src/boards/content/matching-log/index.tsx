@@ -1,13 +1,5 @@
-import {
-	Box,
-	Grid,
-	GridElement,
-	IconButton,
-	SectionBase,
-	SectionHeader,
-	Spacer,
-	TaggingText
-} from '@/components'
+import { BoardBase, BoardHeader } from '@/boards'
+import { Box, Grid, GridElement, IconButton, Spacer, TaggingText } from '@/components'
 import {
 	ALIGN_CENTER,
 	BORDER_INSET,
@@ -21,8 +13,8 @@ import styled from 'styled-components'
 
 const MatchingLog = () => {
 	return (
-		<SectionBase>
-			<SectionHeader sectionName="📋 참여기록" />
+		<BoardBase>
+			<BoardHeader sectionName="📋 참여기록" />
 			<Spacer y={2} />
 			<S.VerticalScrollContainer>
 				<Box width="100%">
@@ -89,7 +81,7 @@ const MatchingLog = () => {
 					</Grid>
 				</Box>
 			</S.VerticalScrollContainer>
-		</SectionBase>
+		</BoardBase>
 	)
 }
 

@@ -1,13 +1,18 @@
-import { Button, Grid, GridElement, Input, OverlayBase, OverlayHeader } from '@/components'
+import { Button, Grid, GridElement, Input, OverlayBase, OverlayHeader, Spacer } from '@/components'
 import { usePostPersonnel } from '@/hooks'
 import { IsOpenOverlayAtom } from '@/libs/recoil'
-import { DIRECTION_COLUMN, GIANTS_INLINE } from '@/libs/styled-components/css-utils'
-import { COLOR } from '@/libs/styled-components/reference-tokens'
+import { BORDER_SOLID, FLEX_CENTER, JUSTIFY_END_CSS } from '@/libs/styled-components/css-utils'
+import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import { getShupickerTime } from '@/utils'
 import { useSetRecoilState } from 'recoil'
 import styled from 'styled-components'
 
-const AddingPersonnel = () => {
+export type AddingPersonnel = {
+	width?: string
+	height?: string
+}
+
+const AddingPersonnel = ({ width, height }: AddingPersonnel) => {
 	const { savePersonnel } = usePostPersonnel()
 	const setIsOpenOverlay = useSetRecoilState(IsOpenOverlayAtom)
 	const onClickCloseOverlay = () => {
@@ -20,56 +25,102 @@ const AddingPersonnel = () => {
 		setIsOpenOverlay(false)
 	}
 	return (
-		<OverlayBase>
-			<OverlayHeader overlayName="인원 추가">
-				<S.TraitInputContainer>
-					{Array.from({ length: 8 }).map((_, index) => (
-						<Grid columns={3} key={index}>
-							<GridElement column={1}>
-								<S.TraitText>이름</S.TraitText>
-							</GridElement>
-							<GridElement column={2} columnSpan={2}>
-								<Input width="90%" placeholder="String" />
-							</GridElement>
-						</Grid>
-					))}
-				</S.TraitInputContainer>
+		<OverlayBase {...{ width }} {...{ height }}>
+			<OverlayHeader overlayName="인원 추가" />
+			<S.MainContent>
+				<Grid rows={2}>
+					<GridElement row={1}>
+						<S.TraitKeyWrapper>이름</S.TraitKeyWrapper>
+					</GridElement>
+					<GridElement row={2}>
+						<S.TraitValueWrapper>
+							<Input
+								width="100%"
+								fontSize={FONT_SIZE.sm}
+								bgColor="transparent"
+								placeholder="이름 입력"
+							/>
+						</S.TraitValueWrapper>
+					</GridElement>
+				</Grid>
 
-				<Button size="full" onClick={onClickCloseOverlay}>
-					버튼
+				<Grid rows={2}>
+					<GridElement row={1}>
+						<S.TraitKeyWrapper>성별</S.TraitKeyWrapper>
+					</GridElement>
+					<GridElement row={2}>
+						<S.TraitValueWrapper>
+							<Input
+								width="100%"
+								fontSize={FONT_SIZE.sm}
+								bgColor="transparent"
+								placeholder="성별 입력"
+							/>
+						</S.TraitValueWrapper>
+					</GridElement>
+				</Grid>
+			</S.MainContent>
+			<Spacer y={2}></Spacer>
+			<S.ButtonWrapper>
+				<Button disabled={true} onClick={onClickCloseOverlay}>
+					추가하기
 				</Button>
-			</OverlayHeader>
+				<Spacer x={2} />
+			</S.ButtonWrapper>
 		</OverlayBase>
 	)
 }
 
 export default AddingPersonnel
 
-const TraitTextWrapper = styled.div`
+const MainContent = styled.main`
+	${FLEX_CENTER}
+	gap: 0.1rem;
 	width: 100%;
+	height: 50%;
+	overflow-x: scroll;
+
+	padding: 1rem 0;
+`
+const TraitKeyWrapper = styled.div`
+	${FLEX_CENTER}
+
+	width: 100%;
+	min-width: 16rem;
 	height: 100%;
 
-	border: 1px;
+	text-align: center;
+	font-size: ${FONT_SIZE.bg};
+
+	${BORDER_SOLID}
+	border-bottom: 0.05rem solid ${COLOR.grayScale[700]};
+
+	border-radius: ${BORDER_RADIUS.ti};
+	background-color: ${COLOR.grayScale[200]};
 `
-const TraitText = styled.h3`
-	color: ${COLOR.grayScale[1200]};
-	justify-self: end;
-`
-const TraitInputContainer = styled.div`
+
+const TraitValueWrapper = styled.div`
+	${FLEX_CENTER}
 	width: 100%;
-	height: 30vh;
-	overflow-y: scroll;
+	min-width: 16rem;
+	height: 100%;
 
-	${DIRECTION_COLUMN}
-	gap: 5rem;
+	text-align: center;
+
+	border-radius: ${BORDER_RADIUS.ti};
+	background-color: ${COLOR.grayScale[400]};
 `
 
-const OverlayNameText = styled.h1`
-	${GIANTS_INLINE}
+const ButtonWrapper = styled.div`
+	${JUSTIFY_END_CSS}
+
+	width: 100%;
+	height: fit-content;
 `
 
 const S = {
-	TraitText,
-	TraitInputContainer,
-	OverlayNameText
+	MainContent,
+	TraitKeyWrapper,
+	TraitValueWrapper,
+	ButtonWrapper
 }

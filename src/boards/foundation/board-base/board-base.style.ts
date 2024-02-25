@@ -1,6 +1,7 @@
-import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
+import { BOX_SHADOW_CSS } from '@/libs/styled-components/css-utils'
+import { BORDER_RADIUS } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
-import * as T from './section-base.type'
+import * as T from './board-base.type'
 
 export const Container = styled.div<T.$Container>`
 	width: 100%;
@@ -9,5 +10,5 @@ export const Container = styled.div<T.$Container>`
 	background-color: ${({ $backgroundColor }) => $backgroundColor};
 	border-radius: ${BORDER_RADIUS.sm};
 
-	box-shadow: 0 0.1rem 0.5rem ${COLOR.grayScale[200]};
+	${BOX_SHADOW_CSS}
 `

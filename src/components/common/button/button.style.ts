@@ -31,4 +31,8 @@ export const ButtonBase = styled.button<T.$ButtonBase>`
 		color: ${COLOR.grayScale[1500]};
 		background-color: ${COLOR.brand.main.light};
 	}
+	&:disabled {
+		color: ${COLOR.grayScale[600]};
+		background-color: ${COLOR.grayScale[250]};
+	}
 `
