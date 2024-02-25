@@ -1,16 +1,21 @@
-import { AddingPersonnel, CenterFlexBox, ColumnFlexBox, SectionBase } from '@/components'
+import { AddingPersonnel, SectionBase, SectionHeader } from '@/components'
+import { useGetPersonnel } from '@/hooks'
 import { IsOpenOverlayAtom } from '@/libs/recoil'
 import {
 	ALIGN_CENTER,
+	BORDER_INSET,
+	BORDER_SOLID,
 	DIRECTION_COLUMN,
 	FLEX_CENTER,
 	FLEX_START
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil'
 import styled from 'styled-components'
 
 const PersonnelList = () => {
+	const { personnelArray } = useGetPersonnel()
 	const [isOpenOverlay, setIsOpenOverlay] = useRecoilState(IsOpenOverlayAtom)
 	const onClickAddButton = () => {
 		setIsOpenOverlay(true)
@@ -20,68 +25,70 @@ const PersonnelList = () => {
 		<>
 			{isOpenOverlay && <AddingPersonnel />}
 			<SectionBase>
-				<CenterFlexBox>
-					<ColumnFlexBox gap="1vh">
-						<S.InfoContainer>
-							<S.EssentialInfoBox>
-								<S.EssentialTraitText>참여자</S.EssentialTraitText>
-								<S.ValueText>김성룡</S.ValueText>
-								<S.ValueText>이순신</S.ValueText>
-								<S.ValueText>권율</S.ValueText>
-								<S.ValueText>아이유</S.ValueText>
-							</S.EssentialInfoBox>
+				<SectionHeader
+					sectionName="📌 인명부"
+					iconButtonDataArray={[
+						{
+							iconData: faPlus,
+							onClick: onClickAddButton
+						}
+					]}
+				/>
+				<S.InfoContainer>
+					<S.EssentialInfoBox>
+						<S.EssentialTraitText>이름</S.EssentialTraitText>
+						{personnelArray?.map((personnel, idx) => (
+							<S.ValueText key={idx}>{personnel.name}</S.ValueText>
+						))}
+					</S.EssentialInfoBox>
 
-							<S.EssentialInfoBox>
-								<S.EssentialTraitText>생성시각</S.EssentialTraitText>
-								<S.ValueText>18:00</S.ValueText>
-								<S.ValueText>18:30</S.ValueText>
-								<S.ValueText>19:20</S.ValueText>
-								<S.ValueText>20:20</S.ValueText>
-							</S.EssentialInfoBox>
+					<S.EssentialInfoBox>
+						<S.EssentialTraitText>총 참여횟수</S.EssentialTraitText>
+						{personnelArray?.map((personnel, idx) => (
+							<S.ValueText key={idx}>{personnel.joinCount} 회</S.ValueText>
+						))}
+					</S.EssentialInfoBox>
 
-							<S.AdditionalInfoListWrapper>
-								<AdditionalInfoList>
-									<S.AdditionalInfoBox>
-										<S.AdditionalTraitText>성별</S.AdditionalTraitText>
-										<S.ValueText>남</S.ValueText>
-										<S.ValueText>여</S.ValueText>
-										<S.ValueText>남</S.ValueText>
-										<S.ValueText>남</S.ValueText>
-									</S.AdditionalInfoBox>
-									<S.AdditionalInfoBox>
-										<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
-										<S.ValueText>1 회</S.ValueText>
-										<S.ValueText>2 회</S.ValueText>
-										<S.ValueText>5 회</S.ValueText>
-										<S.ValueText>2 회</S.ValueText>
-									</S.AdditionalInfoBox>
-									<S.AdditionalInfoBox>
-										<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
-										<S.ValueText>1 회</S.ValueText>
-										<S.ValueText>2 회</S.ValueText>
-										<S.ValueText>5 회</S.ValueText>
-										<S.ValueText>2 회</S.ValueText>
-									</S.AdditionalInfoBox>
-									<S.AdditionalInfoBox>
-										<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
-										<S.ValueText>1 회</S.ValueText>
-										<S.ValueText>2 회</S.ValueText>
-										<S.ValueText>5 회</S.ValueText>
-										<S.ValueText>2 회</S.ValueText>
-									</S.AdditionalInfoBox>
-								</AdditionalInfoList>
-							</S.AdditionalInfoListWrapper>
-
-							<S.EssentialInfoBox>
-								<S.EssentialTraitText>총 참여횟수</S.EssentialTraitText>
+					<S.AdditionalInfoListWrapper>
+						<AdditionalInfoList>
+							<S.AdditionalInfoBox>
+								<S.AdditionalTraitText>성별</S.AdditionalTraitText>
+								<S.ValueText>남</S.ValueText>
+								<S.ValueText>여</S.ValueText>
+								<S.ValueText>남</S.ValueText>
+								<S.ValueText>남</S.ValueText>
+							</S.AdditionalInfoBox>
+							<S.AdditionalInfoBox>
+								<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
 								<S.ValueText>1 회</S.ValueText>
 								<S.ValueText>2 회</S.ValueText>
 								<S.ValueText>5 회</S.ValueText>
 								<S.ValueText>2 회</S.ValueText>
-							</S.EssentialInfoBox>
-						</S.InfoContainer>
-					</ColumnFlexBox>
-				</CenterFlexBox>
+							</S.AdditionalInfoBox>
+							<S.AdditionalInfoBox>
+								<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
+								<S.ValueText>1 회</S.ValueText>
+								<S.ValueText>2 회</S.ValueText>
+								<S.ValueText>5 회</S.ValueText>
+								<S.ValueText>2 회</S.ValueText>
+							</S.AdditionalInfoBox>
+							<S.AdditionalInfoBox>
+								<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
+								<S.ValueText>1 회</S.ValueText>
+								<S.ValueText>2 회</S.ValueText>
+								<S.ValueText>5 회</S.ValueText>
+								<S.ValueText>2 회</S.ValueText>
+							</S.AdditionalInfoBox>
+						</AdditionalInfoList>
+					</S.AdditionalInfoListWrapper>
+
+					<S.EssentialInfoBox>
+						<S.EssentialTraitText>생성시각</S.EssentialTraitText>
+						{personnelArray?.map((personnel, idx) => (
+							<S.ValueText key={idx}>{personnel.joinedAt}</S.ValueText>
+						))}
+					</S.EssentialInfoBox>
+				</S.InfoContainer>
 			</SectionBase>
 		</>
 	)
@@ -91,7 +98,7 @@ export default PersonnelList
 
 const InfoContainer = styled.div`
 	width: 100%;
-	height: 100%;
+	height: 34vh;
 
 	display: grid;
 	grid-template-columns: 1fr 1fr 2fr 1fr;
@@ -109,7 +116,7 @@ const EssentialInfoBox = styled.div`
 	width: 100%;
 	height: 100%;
 
-	border: 0.05rem solid ${COLOR.grayScale[500]};
+	${BORDER_SOLID}
 	border-radius: ${BORDER_RADIUS.sm} ${BORDER_RADIUS.sm} ${BORDER_RADIUS.ti} ${BORDER_RADIUS.ti};
 	background-color: ${COLOR.grayScale[300]};
 `
@@ -122,7 +129,7 @@ const EssentialTraitText = styled.h4`
 	width: 100%;
 	height: 5rem;
 
-	border-bottom: 1px inset ${COLOR.grayScale[600]};
+	${BORDER_INSET}
 `
 
 const AdditionalInfoListWrapper = styled.section`

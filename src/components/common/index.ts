@@ -5,8 +5,8 @@ import HorizontalGaugeGraph from './horizontal-gauge-graph'
 import IconButton from './icon-button'
 import Input from './input'
 import ShupickerIcon from './shpicker-icon'
+import TaggingText from './tagging-text'
 import TextSpacer from './text-spacer'
-import TraitTag from './trait-tag'
 export {
 	Box,
 	Button,
@@ -15,6 +15,6 @@ export {
 	IconButton,
 	Input,
 	ShupickerIcon,
-	TextSpacer,
-	TraitTag
+	TaggingText,
+	TextSpacer
 }

@@ -5,11 +5,11 @@ import type * as T from './icon-button.type'
 
 const IconButton = ({
 	iconData,
-	onClick,
 	bgColor = COLOR.grayScale[200],
 	iconColor = COLOR.grayScale[1200],
 	hoverBgColor = COLOR.brand.main.light,
 	hoverIconColor = COLOR.grayScale[1500],
+	shape = 'default',
 	...rest
 }: T.IconButtonProps) => {
 	return (
@@ -18,7 +18,7 @@ const IconButton = ({
 			$iconColor={iconColor}
 			$hoverBgColor={hoverBgColor}
 			$hoverIconColor={hoverIconColor}
-			{...{ onClick }}
+			$shape={shape}
 			{...rest}
 		>
 			<ShupickerIcon {...{ iconData }} size="sm" />

@@ -1,2 +1,4 @@
+import AddingPersonnel from './adding-personnel'
 import OverlayBase from './overlay-base'
-export { OverlayBase }
+import OverlayHeader from './overlay-header'
+export { AddingPersonnel, OverlayBase, OverlayHeader }

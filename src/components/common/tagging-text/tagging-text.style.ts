@@ -1,7 +1,7 @@
 import { GIANTS_INLINE } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import styled, { css } from 'styled-components'
-import type * as T from './trait-tag.type'
+import type * as T from './tagging-text.type'
 
 export const BgIntensityCSS = {
 	light: css`
@@ -11,7 +11,6 @@ export const BgIntensityCSS = {
 		background-color: ${COLOR.grayScale[250]};
 	`
 }
-
 export const Wrapper = styled.span<T.$WrapperProps>`
 	display: inline-block;
 	${GIANTS_INLINE}

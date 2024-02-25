@@ -1,8 +1,8 @@
 import { FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import * as S from './trait-tag.style'
-import type * as T from './trait-tag.type'
+import * as S from './tagging-text.style'
+import type * as T from './tagging-text.type'
 
-const TraitTag = ({
+const TaggingText = ({
 	fontSize = FONT_SIZE.sm,
 	bgIntensity = 'light',
 	children
@@ -14,4 +14,4 @@ const TraitTag = ({
 	)
 }
 
-export default TraitTag
+export default TaggingText

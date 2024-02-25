@@ -1,4 +1,4 @@
-import { BgIntensityCSS } from './trait-tag.style'
+import { BgIntensityCSS } from './tagging-text.style'
 
 export type TraitTagProps = {
 	fontSize?: string
