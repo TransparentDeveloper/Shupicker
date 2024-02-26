@@ -1,2 +1,2 @@
-export * from './use-get-personnel'
+export * from './use-get-decoded-array'
 export * from './use-post-personnel'
