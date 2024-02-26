@@ -8,14 +8,16 @@ import {
 	TaggingText,
 	TextSpacer
 } from '@/components'
-import { useGetPersonnel } from '@/hooks'
+import { URL_PARAM_PERSONNEL } from '@/constants'
+import { useGetDecodedArray } from '@/hooks'
 import { DIRECTION_COLUMN, FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
 import { COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
+import { PersonnelType } from '@/types'
+import { faCheck, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 
 const SelectSortedItems = () => {
-	const { personnelArray } = useGetPersonnel()
+	const { decodedArray: personnelArray } = useGetDecodedArray<PersonnelType>(URL_PARAM_PERSONNEL)
 
 	return (
 		<BoardBase>
@@ -24,6 +26,11 @@ const SelectSortedItems = () => {
 				iconButtonDataArray={[
 					{
 						iconData: faSortAmountDownAlt
+					},
+					{
+						iconData: faCheck,
+						hoverBgColor: COLOR.system.confirm,
+						hoverIconColor: COLOR.grayScale[150]
 					}
 				]}
 			/>

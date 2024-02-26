@@ -1,15 +1,10 @@
 import { CenterFlexBox, PaddingContainer } from '@/components'
-import { IsOpenOverlayAtom } from '@/libs/recoil'
-import { useSetRecoilState } from 'recoil'
 import * as S from './overlay-base.style'
 import type * as T from './overlay-base.type'
 
-const OverlayBase = ({ width = '60vw', height = '60vh', children }: T.OverlayBase) => {
-	const setIsOpenOverlay = useSetRecoilState(IsOpenOverlayAtom)
-	const onClickCloseOverlay = () => setIsOpenOverlay(false)
-
+const OverlayBase = ({ width = '60vw', height = '60vh', onClose, children }: T.OverlayBase) => {
 	return (
-		<S.Wrapper onClick={onClickCloseOverlay}>
+		<S.Wrapper onClick={onClose}>
 			<CenterFlexBox align="bothAlign">
 				<S.Card
 					$width={width}
@@ -19,7 +14,7 @@ const OverlayBase = ({ width = '60vw', height = '60vh', children }: T.OverlayBas
 					}}
 				>
 					<PaddingContainer horizontal="5%" vertical="5%">
-						<S.CloseButton onClick={onClickCloseOverlay}>X</S.CloseButton>
+						<S.CloseButton onClick={onClose}>X</S.CloseButton>
 						{children}
 					</PaddingContainer>
 				</S.Card>

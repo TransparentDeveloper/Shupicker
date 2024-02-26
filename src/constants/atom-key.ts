@@ -1,1 +1,1 @@
-export const ATOM_IS_OPEN_OVERLAY = 'is-open-overlay' as const
+export const ATOM_OVERLAY_STATE = 'overlay-state' as const

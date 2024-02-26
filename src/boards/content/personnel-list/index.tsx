@@ -1,7 +1,9 @@
 import { BoardBase, BoardHeader } from '@/boards'
 import { AddingPersonnel } from '@/components'
-import { useGetPersonnel } from '@/hooks'
-import { IsOpenOverlayAtom } from '@/libs/recoil'
+import AddingTrait from '@/components/overlay/adding-trait'
+import { OVERLAY_ADDING_PERSONNEL, OVERLAY_ADDING_TRAIT, URL_PARAM_PERSONNEL } from '@/constants'
+import { useGetDecodedArray } from '@/hooks'
+import { useOpenOverlay } from '@/hooks/use-open-overlay'
 import {
 	ALIGN_CENTER,
 	BORDER_INSET,
@@ -11,27 +13,32 @@ import {
 	FLEX_START
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
-import { useRecoilState } from 'recoil'
+import { PersonnelType } from '@/types'
+import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 
 const PersonnelList = () => {
-	const { personnelArray } = useGetPersonnel()
-	const [isOpenOverlay, setIsOpenOverlay] = useRecoilState(IsOpenOverlayAtom)
-	const onClickAddButton = () => {
-		setIsOpenOverlay(true)
-	}
+	const { decodedArray: personnelArray } = useGetDecodedArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { isOpen: isOpenAddingPersonnel, onOpen: onOpenAddingPersonnel } =
+		useOpenOverlay(OVERLAY_ADDING_PERSONNEL)
+	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
+		useOpenOverlay(OVERLAY_ADDING_TRAIT)
 
 	return (
 		<>
-			{isOpenOverlay && <AddingPersonnel width="50vw" height="35vh" />}
+			{isOpenAddingPersonnel && <AddingPersonnel width="40vw" height="38vh" />}
+			{isOpenAddingTrait && <AddingTrait />}
 			<BoardBase>
 				<BoardHeader
 					sectionName="📌 인명부"
 					iconButtonDataArray={[
 						{
+							iconData: faEdit,
+							onClick: onOpenAddingTrait
+						},
+						{
 							iconData: faUserPlus,
-							onClick: onClickAddButton
+							onClick: onOpenAddingPersonnel
 						}
 					]}
 				/>
