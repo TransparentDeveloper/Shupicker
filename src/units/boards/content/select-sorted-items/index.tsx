@@ -1,4 +1,3 @@
-import { BoardBase, BoardHeader } from '@/boards'
 import {
 	Box,
 	ColumnFlexBox,
@@ -13,6 +12,7 @@ import { useGetDecodedArray } from '@/hooks'
 import { DIRECTION_COLUMN, FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
 import { COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import { PersonnelType } from '@/types'
+import { BoardBase, BoardHeader } from '@/units/boards'
 import { faCheck, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 

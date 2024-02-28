@@ -1,32 +1,51 @@
-import { BoardBase, BoardHeader } from '@/boards'
-import { AddingPersonnel } from '@/components'
-import AddingTrait from '@/components/overlay/adding-trait'
-import { OVERLAY_ADDING_PERSONNEL, OVERLAY_ADDING_TRAIT, URL_PARAM_PERSONNEL } from '@/constants'
+import {
+	OVERLAY_ADDING_PERSONNEL,
+	OVERLAY_ADDING_TRAIT,
+	URL_PARAM_ADDITIONAL_TRAIT,
+	URL_PARAM_PERSONNEL
+} from '@/constants'
 import { useGetDecodedArray } from '@/hooks'
 import { useOpenOverlay } from '@/hooks/use-open-overlay'
 import {
 	ALIGN_CENTER,
 	BORDER_INSET,
 	BORDER_SOLID,
+	BOX_SHADOW_CSS,
 	DIRECTION_COLUMN,
 	FLEX_CENTER,
-	FLEX_START
+	FLEX_START,
+	TEXT_SHADOW_CSS
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
-import { PersonnelType } from '@/types'
+import { AdditionalTraitType, PersonnelType } from '@/types'
+import { AddingPersonnel, AddingTrait } from '@/units'
+import { BoardBase, BoardHeader } from '@/units/boards'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { useCallback } from 'react'
 import styled from 'styled-components'
 
 const PersonnelList = () => {
-	const { decodedArray: personnelArray } = useGetDecodedArray<PersonnelType>(URL_PARAM_PERSONNEL)
 	const { isOpen: isOpenAddingPersonnel, onOpen: onOpenAddingPersonnel } =
 		useOpenOverlay(OVERLAY_ADDING_PERSONNEL)
 	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
 		useOpenOverlay(OVERLAY_ADDING_TRAIT)
 
+	const { decodedArray: personnelArray } = useGetDecodedArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { decodedArray: traitArray } = useGetDecodedArray<AdditionalTraitType>(
+		URL_PARAM_ADDITIONAL_TRAIT
+	)
+
+	const NoAdditionalTraitNoticeComponent = useCallback(() => {
+		return (
+			<NoticeWrapper>
+				<NoticeText>추가 특성이 없습니다. 😎</NoticeText>
+			</NoticeWrapper>
+		)
+	}, [traitArray])
+
 	return (
 		<>
-			{isOpenAddingPersonnel && <AddingPersonnel width="40vw" height="38vh" />}
+			{isOpenAddingPersonnel && <AddingPersonnel />}
 			{isOpenAddingTrait && <AddingTrait />}
 			<BoardBase>
 				<BoardHeader
@@ -58,37 +77,20 @@ const PersonnelList = () => {
 					</S.EssentialInfoBox>
 
 					<S.AdditionalInfoListWrapper>
-						{}
-						<AdditionalInfoList>
-							<S.AdditionalInfoBox>
-								<S.AdditionalTraitText>성별</S.AdditionalTraitText>
-								<S.ValueText>남</S.ValueText>
-								<S.ValueText>여</S.ValueText>
-								<S.ValueText>남</S.ValueText>
-								<S.ValueText>남</S.ValueText>
-							</S.AdditionalInfoBox>
-							<S.AdditionalInfoBox>
-								<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
-								<S.ValueText>1 회</S.ValueText>
-								<S.ValueText>2 회</S.ValueText>
-								<S.ValueText>5 회</S.ValueText>
-								<S.ValueText>2 회</S.ValueText>
-							</S.AdditionalInfoBox>
-							<S.AdditionalInfoBox>
-								<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
-								<S.ValueText>1 회</S.ValueText>
-								<S.ValueText>2 회</S.ValueText>
-								<S.ValueText>5 회</S.ValueText>
-								<S.ValueText>2 회</S.ValueText>
-							</S.AdditionalInfoBox>
-							<S.AdditionalInfoBox>
-								<S.AdditionalTraitText>총 참여횟수</S.AdditionalTraitText>
-								<S.ValueText>1 회</S.ValueText>
-								<S.ValueText>2 회</S.ValueText>
-								<S.ValueText>5 회</S.ValueText>
-								<S.ValueText>2 회</S.ValueText>
-							</S.AdditionalInfoBox>
-						</AdditionalInfoList>
+						{!traitArray.length ? (
+							<NoAdditionalTraitNoticeComponent />
+						) : (
+							<AdditionalInfoList>
+								{traitArray.map((trait, index) => (
+									<S.AdditionalInfoBox key={index}>
+										<S.AdditionalTraitText>{trait.name}</S.AdditionalTraitText>
+										{trait.values?.map((value, valueIdx) => (
+											<S.ValueText key={valueIdx}>{value}</S.ValueText>
+										))}
+									</S.AdditionalInfoBox>
+								))}
+							</AdditionalInfoList>
+						)}
 					</S.AdditionalInfoListWrapper>
 
 					<S.EssentialInfoBox>
@@ -102,7 +104,6 @@ const PersonnelList = () => {
 		</>
 	)
 }
-
 export default PersonnelList
 
 const InfoContainer = styled.div`
@@ -186,6 +187,21 @@ const ValueText = styled.p`
 	width: 100%;
 	height: 3.5rem;
 `
+const NoticeWrapper = styled.div`
+	${FLEX_CENTER}
+	width: 100%;
+	height: 100%;
+
+	${BOX_SHADOW_CSS}
+`
+const NoticeText = styled.h4`
+	text-align: center;
+	${TEXT_SHADOW_CSS}
+	padding: 0.5rem;
+	background-color: ${COLOR.system.alert};
+	border-radius: ${BORDER_RADIUS.sm};
+`
+
 const S = {
 	EssentialInfoBox,
 	InfoContainer,

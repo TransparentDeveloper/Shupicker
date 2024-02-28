@@ -15,6 +15,7 @@ export const Wrapper = styled.span<T.$WrapperProps>`
 	display: inline-block;
 	${GIANTS_INLINE}
 	${({ $bgIntensity }) => BgIntensityCSS[$bgIntensity]}
+	white-space: nowrap;
 	width: fit-content;
 	height: fit-content;
 	padding: 0.3rem;

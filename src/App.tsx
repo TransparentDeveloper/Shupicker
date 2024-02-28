@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { MatchingLog, PersonnelList, SelectSortedItems } from './boards'
 import { Grid, GridElement, Header, PaddingContainer } from './components'
+import { MatchingLog, PersonnelList, SelectSortedItems } from './units/boards'
 
 const App = () => {
 	return (

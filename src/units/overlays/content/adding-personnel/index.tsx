@@ -1,22 +1,16 @@
 import { Button, Grid, GridElement, Input, OverlayBase, OverlayHeader, Spacer } from '@/components'
 import { OVERLAY_ADDING_PERSONNEL } from '@/constants'
-import { useCloseOverlay, usePostPersonnel } from '@/hooks'
+import { useCloseOverlay } from '@/hooks'
 import { BORDER_SOLID, FLEX_CENTER, JUSTIFY_END_CSS } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 
-export type AddingPersonnel = {
-	width?: string
-	height?: string
-}
-
-const AddingPersonnel = ({ width, height }: AddingPersonnel) => {
-	const { savePersonnel } = usePostPersonnel()
+const AddingPersonnel = () => {
 	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_PERSONNEL)
 
 	if (!isVisible) return
 	return (
-		<OverlayBase {...{ width }} {...{ onClose }} {...{ height }}>
+		<OverlayBase width="45rem" height="25rem" {...{ onClose }}>
 			<OverlayHeader overlayName="인원 추가" />
 			<S.MainContent>
 				<Grid rows={2}>
@@ -35,7 +29,7 @@ const AddingPersonnel = ({ width, height }: AddingPersonnel) => {
 					</GridElement>
 				</Grid>
 			</S.MainContent>
-			<Spacer y={2}></Spacer>
+			<Spacer y={0.1} />
 			<S.ButtonWrapper>
 				<Button disabled={true} onClick={() => {}}>
 					추가하기

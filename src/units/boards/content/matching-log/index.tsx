@@ -1,4 +1,3 @@
-import { BoardBase, BoardHeader } from '@/boards'
 import { Box, Grid, GridElement, IconButton, Spacer, TaggingText } from '@/components'
 import {
 	ALIGN_CENTER,
@@ -8,6 +7,7 @@ import {
 	JUSTIFY_START
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
+import { BoardBase, BoardHeader } from '@/units/boards'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 
