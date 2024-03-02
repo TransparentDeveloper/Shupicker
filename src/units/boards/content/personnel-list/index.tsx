@@ -1,10 +1,5 @@
-import {
-	OVERLAY_ADDING_PERSONNEL,
-	OVERLAY_ADDING_TRAIT,
-	URL_PARAM_ADDITIONAL_TRAIT,
-	URL_PARAM_PERSONNEL
-} from '@/constants'
-import { useGetDecodedArray } from '@/hooks'
+import { OVERLAY_ADDING_PERSONNEL, OVERLAY_ADDING_TRAIT } from '@/constants'
+import { useManageShupickerData } from '@/hooks'
 import { useOpenOverlay } from '@/hooks/use-open-overlay'
 import {
 	ALIGN_CENTER,
@@ -17,7 +12,6 @@ import {
 	TEXT_SHADOW_CSS
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
-import { AdditionalTraitType, PersonnelType } from '@/types'
 import { AddingPersonnel, AddingTrait } from '@/units'
 import { BoardBase, BoardHeader } from '@/units/boards'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
@@ -30,10 +24,7 @@ const PersonnelList = () => {
 	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
 		useOpenOverlay(OVERLAY_ADDING_TRAIT)
 
-	const { decodedArray: personnelArray } = useGetDecodedArray<PersonnelType>(URL_PARAM_PERSONNEL)
-	const { decodedArray: traitArray } = useGetDecodedArray<AdditionalTraitType>(
-		URL_PARAM_ADDITIONAL_TRAIT
-	)
+	const { getAdditionalTraitArray, getPersonnelArray } = useManageShupickerData()
 
 	const NoAdditionalTraitNoticeComponent = useCallback(() => {
 		return (
@@ -41,7 +32,7 @@ const PersonnelList = () => {
 				<NoticeText>추가 특성이 없습니다. 😎</NoticeText>
 			</NoticeWrapper>
 		)
-	}, [traitArray])
+	}, [getAdditionalTraitArray()])
 
 	return (
 		<>
@@ -64,28 +55,28 @@ const PersonnelList = () => {
 				<S.InfoContainer>
 					<S.EssentialInfoBox>
 						<S.EssentialTraitText>이름</S.EssentialTraitText>
-						{personnelArray?.map((personnel, idx) => (
+						{getPersonnelArray()?.map((personnel, idx) => (
 							<S.ValueText key={idx}>{personnel.name}</S.ValueText>
 						))}
 					</S.EssentialInfoBox>
 
 					<S.EssentialInfoBox>
 						<S.EssentialTraitText>총 참여횟수</S.EssentialTraitText>
-						{personnelArray?.map((personnel, idx) => (
+						{getPersonnelArray()?.map((personnel, idx) => (
 							<S.ValueText key={idx}>{personnel.joinCount} 회</S.ValueText>
 						))}
 					</S.EssentialInfoBox>
 
 					<S.AdditionalInfoListWrapper>
-						{!traitArray.length ? (
+						{!getAdditionalTraitArray().length ? (
 							<NoAdditionalTraitNoticeComponent />
 						) : (
 							<AdditionalInfoList>
-								{traitArray.map((trait, index) => (
+								{getAdditionalTraitArray().map((trait, index) => (
 									<S.AdditionalInfoBox key={index}>
 										<S.AdditionalTraitText>{trait.name}</S.AdditionalTraitText>
-										{trait.values?.map((value, valueIdx) => (
-											<S.ValueText key={valueIdx}>{value}</S.ValueText>
+										{trait.values.map(({ userId, value }) => (
+											<S.ValueText key={userId}>{value}</S.ValueText>
 										))}
 									</S.AdditionalInfoBox>
 								))}
@@ -95,7 +86,7 @@ const PersonnelList = () => {
 
 					<S.EssentialInfoBox>
 						<S.EssentialTraitText>생성시각</S.EssentialTraitText>
-						{personnelArray?.map((personnel, idx) => (
+						{getPersonnelArray()?.map((personnel, idx) => (
 							<S.ValueText key={idx}>{personnel.joinedAt}</S.ValueText>
 						))}
 					</S.EssentialInfoBox>

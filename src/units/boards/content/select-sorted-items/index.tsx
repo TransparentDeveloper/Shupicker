@@ -7,18 +7,13 @@ import {
 	TaggingText,
 	TextSpacer
 } from '@/components'
-import { URL_PARAM_PERSONNEL } from '@/constants'
-import { useGetDecodedArray } from '@/hooks'
 import { DIRECTION_COLUMN, FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
 import { COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { PersonnelType } from '@/types'
 import { BoardBase, BoardHeader } from '@/units/boards'
 import { faCheck, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 
 const SelectSortedItems = () => {
-	const { decodedArray: personnelArray } = useGetDecodedArray<PersonnelType>(URL_PARAM_PERSONNEL)
-
 	return (
 		<BoardBase>
 			<BoardHeader

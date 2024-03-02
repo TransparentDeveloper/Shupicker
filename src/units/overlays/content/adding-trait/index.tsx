@@ -9,19 +9,18 @@ import {
 	OverlayHeader,
 	Spacer
 } from '@/components'
-import { OVERLAY_ADDING_TRAIT, URL_PARAM_ADDITIONAL_TRAIT } from '@/constants'
-import { useCloseOverlay } from '@/hooks'
-import { usePostEncodedArray } from '@/hooks/use-post-encoded-array'
+import { OVERLAY_ADDING_TRAIT } from '@/constants'
+import { useCloseOverlay, useManageShupickerData } from '@/hooks'
 import { FLEX_CENTER, FLEX_END, FLEX_START } from '@/libs/styled-components/css-utils'
 import { FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { AdditionalTraitType } from '@/types'
+import { getTimeStamp } from '@/utils'
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { TaggingTrait } from './components'
 
 const AddingTrait = () => {
 	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_TRAIT)
-	const { saveArray: saveNewTrait } = usePostEncodedArray<AdditionalTraitType>()
+	const { getPersonnelArray, addAdditionalTrait } = useManageShupickerData()
 	const [traitOptionArray, setTraitOptionArray] = useState<Array<string>>([])
 	const traitNameRef = useRef<HTMLInputElement>(null)
 
@@ -49,18 +48,36 @@ const AddingTrait = () => {
 	}
 	const onClickComplete = () => {
 		// 특성 이름을 적지 않은 경우
-		if (!(traitNameRef.current && traitNameRef.current.value.length))
+		if (!(traitNameRef.current && traitNameRef.current.value.length)) {
 			window.alert('추가할 특성의 이름을 적어주세요.')
+			return
+		}
 		// 특성 옵션을 두 개이상 적지 않은 경우
-		if (traitOptionArray.length < 2) window.alert('특성의 옵션을 두 개이상 추가해주세요.')
-		saveNewTrait(
-			{
-				name: traitNameRef.current!.value,
-				options: ['미지정', ...traitOptionArray],
-				values: []
-			},
-			URL_PARAM_ADDITIONAL_TRAIT
-		)
+		if (traitOptionArray.length < 2) {
+			window.alert('특성의 옵션을 두 개이상 추가해주세요.')
+			return
+		}
+
+		const personnelArray = getPersonnelArray()
+
+		const traitId = getTimeStamp()
+		const options = ['미지정', ...traitOptionArray]
+		const traitValues = []
+		for (let i = 0; i < personnelArray.length; i++) {
+			traitValues.push({
+				userId: personnelArray[i].id,
+				value: '미지정'
+			})
+		}
+
+		addAdditionalTrait({
+			id: traitId,
+			name: traitNameRef.current!.value,
+			options: options,
+			values: traitValues
+		})
+
+		onClose()
 	}
 
 	if (!isVisible) return

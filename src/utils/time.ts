@@ -3,3 +3,6 @@ export const getShupickerTime = () => {
 	const minute = new Date().getMinutes()
 	return hour + ':' + minute
 }
+export const getTimeStamp = () => {
+	return new Date().getTime()
+}
