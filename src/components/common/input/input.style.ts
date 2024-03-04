@@ -5,7 +5,7 @@ import type * as T from './input.type'
 
 export const InputBase = styled.input<T.$InputBaseProps>`
 	width: ${({ $width }) => $width};
-	min-width: 6rem;
+	min-width: 3rem;
 	max-width: 100%;
 
 	height: 4rem;

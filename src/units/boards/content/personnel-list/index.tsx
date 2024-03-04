@@ -1,5 +1,10 @@
-import { OVERLAY_ADDING_PERSONNEL, OVERLAY_ADDING_TRAIT } from '@/constants'
-import { useManageShupickerData } from '@/hooks'
+import {
+	OVERLAY_ADDING_PERSONNEL,
+	OVERLAY_ADDING_TRAIT,
+	URL_PARAM_ADDITIONAL_TRAIT,
+	URL_PARAM_PERSONNEL
+} from '@/constants'
+import { useManageUrlArray } from '@/hooks'
 import { useOpenOverlay } from '@/hooks/use-open-overlay'
 import {
 	ALIGN_CENTER,
@@ -12,6 +17,7 @@ import {
 	TEXT_SHADOW_CSS
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
+import { AdditionalTraitType, PersonnelType } from '@/types'
 import { AddingPersonnel, AddingTrait } from '@/units'
 import { BoardBase, BoardHeader } from '@/units/boards'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
@@ -23,8 +29,10 @@ const PersonnelList = () => {
 		useOpenOverlay(OVERLAY_ADDING_PERSONNEL)
 	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
 		useOpenOverlay(OVERLAY_ADDING_TRAIT)
-
-	const { getAdditionalTraitArray, getPersonnelArray } = useManageShupickerData()
+	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
+		URL_PARAM_ADDITIONAL_TRAIT
+	)
 
 	const NoAdditionalTraitNoticeComponent = useCallback(() => {
 		return (

@@ -9,10 +9,8 @@ export const useManageUrlArray = <T>(urlParamKey: string) => {
 		if (!encodedArray) return []
 		return arrayDecoder<T>(encodedArray)
 	}
-
-	const saveArray = (newElement: T) => {
+	const addElementOne = (newElement: T) => {
 		const encodedArray = params.get(urlParamKey)
-
 		if (!encodedArray) {
 			params.set(urlParamKey, arrayEncoder<T>([newElement]))
 		} else {
@@ -31,5 +29,5 @@ export const useManageUrlArray = <T>(urlParamKey: string) => {
 		params.set(urlParamKey, arrayEncoder<T>(decodedArray))
 		setParams(params)
 	}
-	return { saveArray, getArray, updateArray }
+	return { addElementOne, getArray, updateArray }
 }

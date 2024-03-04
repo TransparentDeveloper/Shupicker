@@ -1,4 +1,4 @@
-type TraitValueType = {
+export type TraitValueType = {
 	userId: number
 	value: string
 }

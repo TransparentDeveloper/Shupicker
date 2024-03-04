@@ -8,8 +8,12 @@ import {
 	OverlayHeader,
 	Spacer
 } from '@/components'
-import { OVERLAY_ADDING_PERSONNEL } from '@/constants'
-import { useCloseOverlay, useManageShupickerData } from '@/hooks'
+import {
+	OVERLAY_ADDING_PERSONNEL,
+	URL_PARAM_ADDITIONAL_TRAIT,
+	URL_PARAM_PERSONNEL
+} from '@/constants'
+import { useCloseOverlay, useManageUrlArray } from '@/hooks'
 import {
 	BORDER_SOLID,
 	FLEX_CENTER,
@@ -17,34 +21,47 @@ import {
 	JUSTIFY_END_CSS
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { getShupickerTime, getTimeStamp } from '@/utils'
+import { AdditionalTraitType, PersonnelType } from '@/types'
+import { arrayEncoder, getShupickerTime, getTimeStamp } from '@/utils'
 import { ChangeEvent } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const AddingPersonnel = () => {
 	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_PERSONNEL)
-	const { addPersonnel, getAdditionalTraitArray, updateAdditionalArray } = useManageShupickerData()
+	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
+		URL_PARAM_ADDITIONAL_TRAIT
+	)
+	const [param, setParams] = useSearchParams()
 
 	const onHandleComplete = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
+		// 참가자 정보 추가
+		const personnelArray = getPersonnelArray()
 		const userId = getTimeStamp()
-
-		addPersonnel({
+		const userName = (e.target.elements.item(0) as HTMLInputElement).value
+		personnelArray.push({
 			id: userId,
-			name: (e.target.elements.item(0) as HTMLInputElement).value,
+			name: userName,
 			joinedAt: getShupickerTime(),
 			joinCount: 0
 		})
+		const encodedPersonnelArray = arrayEncoder<PersonnelType>(personnelArray)
+		param.set(URL_PARAM_PERSONNEL, encodedPersonnelArray)
 
-		console.log(getAdditionalTraitArray())
+		// 추가 특성 정보 갱신
+		const additionalTraitArray = getAdditionalTraitArray()
+		const numAdditionalTrait = additionalTraitArray.length
+		for (let i = 0; i < numAdditionalTrait; i++) {
+			const traitValue = (e.target.elements.item(i + 1) as HTMLSelectElement).value
+			additionalTraitArray[i].values.push({ userId, value: traitValue })
+		}
+		const encodedAdditionalTraitArray = arrayEncoder<AdditionalTraitType>(additionalTraitArray)
+		param.set(URL_PARAM_ADDITIONAL_TRAIT, encodedAdditionalTraitArray)
 
-		getAdditionalTraitArray()?.forEach((additionalTrait, idx) => {
-			const selectValue = (e.target.elements.item(idx + 1) as HTMLSelectElement).value
-			console.log(selectValue)
-			updateAdditionalArray(additionalTrait.id, userId, selectValue)
-		})
-
+		setParams(param)
 		onClose()
 	}
 
