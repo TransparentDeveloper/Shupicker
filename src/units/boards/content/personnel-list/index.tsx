@@ -20,6 +20,7 @@ import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import { AdditionalTraitType, PersonnelType } from '@/types'
 import { AddingPersonnel, AddingTrait } from '@/units'
 import { BoardBase, BoardHeader } from '@/units/boards'
+import { getTimeFormatHHMM } from '@/utils'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
 import styled from 'styled-components'
@@ -95,7 +96,7 @@ const PersonnelList = () => {
 					<S.EssentialInfoBox>
 						<S.EssentialTraitText>생성시각</S.EssentialTraitText>
 						{getPersonnelArray()?.map((personnel, idx) => (
-							<S.ValueText key={idx}>{personnel.joinedAt}</S.ValueText>
+							<S.ValueText key={idx}>{getTimeFormatHHMM(personnel.joinedAt)}</S.ValueText>
 						))}
 					</S.EssentialInfoBox>
 				</S.InfoContainer>

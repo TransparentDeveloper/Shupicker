@@ -6,7 +6,7 @@ export const HeaderBase = styled.header`
 	${ALIGN_CENTER}
 
 	width: 100%;
-	height: 8vh;
+	height: 6vh;
 
 	color: ${COLOR.grayScale[1500]};
 	background-color: ${COLOR.brand.main.base};

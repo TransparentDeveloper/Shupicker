@@ -31,5 +31,5 @@ export default App
 
 const Main = styled.main`
 	width: 100%;
-	height: 92vh;
+	height: 90vh;
 `

@@ -1,4 +1,6 @@
-export type BoxProps = {
+import type { HTMLAttributes } from 'react'
+
+export type BoxProps = HTMLAttributes<HTMLDivElement> & {
 	width?: string
 	height?: string
 	bgColor?: string

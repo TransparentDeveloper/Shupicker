@@ -53,7 +53,7 @@ const MatchingLog = () => {
 					<Grid columns={8} columnGap="1rem">
 						<GridElement column={1} columnSpan={2}>
 							<S.IdWrapper>
-								<S.IdText>2</S.IdText>
+								<S.IdText>8888</S.IdText>
 							</S.IdWrapper>
 						</GridElement>
 
@@ -98,7 +98,7 @@ const IdText = styled.h1`
 	color: ${COLOR.grayScale[1500]};
 	opacity: 0.2;
 	text-align: start;
-	transform: translate(-10%, 20%) scale(230%);
+	transform: translate(30%, 3%) scale(170%);
 `
 const VerticalScrollContainer = styled.div`
 	${DIRECTION_COLUMN}

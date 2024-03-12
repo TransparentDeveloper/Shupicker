@@ -22,7 +22,7 @@ import {
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import { AdditionalTraitType, PersonnelType } from '@/types'
-import { arrayEncoder, getShupickerTime, getTimeStamp } from '@/utils'
+import { arrayEncoder, getTimeStamp } from '@/utils'
 import { ChangeEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -45,8 +45,8 @@ const AddingPersonnel = () => {
 		personnelArray.push({
 			id: userId,
 			name: userName,
-			joinedAt: getShupickerTime(),
-			joinCount: 0
+			joinedAt: Date.now(),
+			joinCount: 3
 		})
 		const encodedPersonnelArray = arrayEncoder<PersonnelType>(personnelArray)
 		param.set(URL_PARAM_PERSONNEL, encodedPersonnelArray)

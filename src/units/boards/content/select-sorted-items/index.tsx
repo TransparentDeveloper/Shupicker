@@ -1,19 +1,27 @@
-import {
-	Box,
-	ColumnFlexBox,
-	Grid,
-	GridElement,
-	HorizontalGaugeGraph,
-	TaggingText,
-	TextSpacer
-} from '@/components'
-import { DIRECTION_COLUMN, FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
-import { COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
+import { URL_PARAM_PERSONNEL } from '@/constants'
+import { useManageUrlArray } from '@/hooks'
+import { DIRECTION_COLUMN } from '@/libs/styled-components/css-utils'
+import { COLOR } from '@/libs/styled-components/reference-tokens'
+import { PersonnelType } from '@/types'
 import { BoardBase, BoardHeader } from '@/units/boards'
 import { faCheck, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
 import styled from 'styled-components'
+import { SelectableCard } from './components'
 
 const SelectSortedItems = () => {
+	const [selectedIdArray, setSelectedIdArray] = useState<Array<number>>([])
+	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+
+	const onHandleSelectedIdArray = (id: number) => {
+		if (selectedIdArray.includes(id)) {
+			const newArray = selectedIdArray.filter((elem) => elem !== id)
+			setSelectedIdArray(newArray)
+		} else {
+			setSelectedIdArray((prev) => [...prev, id])
+		}
+	}
+
 	return (
 		<BoardBase>
 			<BoardHeader
@@ -30,35 +38,18 @@ const SelectSortedItems = () => {
 				]}
 			/>
 			<S.VerticalScrollContainer>
-				<Box width="100%" height="fit-content">
-					<Grid columns={9}>
-						<GridElement column={1} columnSpan={2}>
-							<S.NameText>이윤신</S.NameText>
-						</GridElement>
-						<GridElement column={3} columnSpan={7}>
-							<ColumnFlexBox gap="1rem">
-								<ColumnFlexBox gap="0.5rem">
-									<h4>
-										<TaggingText bgIntensity="light" fontSize={FONT_SIZE.ti}>
-											생성시각
-										</TaggingText>
-										<TextSpacer />
-										대비, 참여횟수
-									</h4>
-									<HorizontalGaugeGraph
-										currentValue={90}
-										totalValue={200}
-										gaugeColor={COLOR.brand.sub.light}
-									/>
-								</ColumnFlexBox>
-								<ColumnFlexBox gap="0.5rem">
-									<h4>현재까지 참여횟수</h4>
-									<HorizontalGaugeGraph currentValue={90} totalValue={200} />
-								</ColumnFlexBox>
-							</ColumnFlexBox>
-						</GridElement>
-					</Grid>
-				</Box>
+				{getPersonnelArray().map((personnel) => {
+					return (
+						<SelectableCard
+							key={personnel.id}
+							isSelected={selectedIdArray.includes(personnel.id)}
+							{...{ personnel }}
+							onClickCard={() => {
+								onHandleSelectedIdArray(personnel.id)
+							}}
+						/>
+					)
+				})}
 			</S.VerticalScrollContainer>
 		</BoardBase>
 	)
@@ -77,16 +68,7 @@ const VerticalScrollContainer = styled.div`
 	overflow-y: scroll;
 	overflow-x: hidden;
 `
-const NameText = styled.h2`
-	${FLEX_CENTER}
-	width: 100%;
-	height: 100%;
-	color: ${COLOR.grayScale[1500]};
-	text-align: center;
-	${TEXT_SHADOW_CSS}
-`
 
 const S = {
-	NameText,
 	VerticalScrollContainer
 }

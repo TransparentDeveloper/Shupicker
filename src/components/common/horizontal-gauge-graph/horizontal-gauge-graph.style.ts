@@ -11,7 +11,7 @@ export const Wrapper = styled.div<T.$WrapperProps>`
 	width: ${({ $width }) => $width};
 	height: ${({ $height }) => $height};
 
-	background-color: ${COLOR.grayScale[1200]};
+	background-color: ${COLOR.grayScale[900]};
 	border-radius: ${BORDER_RADIUS.sm};
 `
 
@@ -33,7 +33,7 @@ export const FractionText = styled.p`
 
 	color: ${COLOR.grayScale[1500]};
 
-	font-size: ${FONT_SIZE.ti};
-	text-shadow: -0.5px 0.5px 2px ${COLOR.grayScale[100]};
+	font-size: ${FONT_SIZE.sm};
+	text-shadow: -0.01rem -0.01rem 0.1rem ${COLOR.grayScale[0]};
 	text-align: center;
 `
