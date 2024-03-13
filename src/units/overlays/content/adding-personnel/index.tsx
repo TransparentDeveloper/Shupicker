@@ -46,7 +46,7 @@ const AddingPersonnel = () => {
 			id: userId,
 			name: userName,
 			joinedAt: Date.now(),
-			joinCount: 3
+			joinCount: 0
 		})
 		const encodedPersonnelArray = arrayEncoder<PersonnelType>(personnelArray)
 		param.set(URL_PARAM_PERSONNEL, encodedPersonnelArray)

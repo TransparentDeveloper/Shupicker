@@ -6,22 +6,24 @@ import { getMinuteDifference } from '@/utils'
 import styled from 'styled-components'
 
 type SelectableCardProps = {
-	isSelected: boolean
+	isSelected?: boolean
 	personnel: PersonnelType
 	onClickCard: VoidFunction
 }
 
-export const SelectableCard = ({ isSelected, personnel, onClickCard }: SelectableCardProps) => {
+export const SelectableCard = ({
+	isSelected = false,
+	personnel,
+	onClickCard
+}: SelectableCardProps) => {
 	// 10 분 당 평균 참여횟수 구하기
 	const timeDiffFromCreation = getMinuteDifference(Date.now(), personnel.joinedAt)
 	let joinCountPer10Min = personnel.joinCount
 	if (timeDiffFromCreation > 10) {
-		// 10분 단위
-		const numOf10minIncrements = Math.floor(timeDiffFromCreation / 10)
-		joinCountPer10Min = parseFloat((personnel.joinCount / numOf10minIncrements).toFixed(2))
+		joinCountPer10Min = parseFloat(((joinCountPer10Min / timeDiffFromCreation) * 10).toFixed(2))
 	}
 	return (
-		<Box
+		<S.Card
 			bgColor={isSelected ? COLOR.system.confirm : COLOR.grayScale[300]}
 			width="100%"
 			height="fit-content"
@@ -34,7 +36,7 @@ export const SelectableCard = ({ isSelected, personnel, onClickCard }: Selectabl
 				<GridElement column={3} columnSpan={7}>
 					<ColumnFlexBox gap="1rem">
 						<ColumnFlexBox gap="0.5rem">
-							<span>10분 당, 참여횟수</span>
+							<S.GaugeTitle>10분 당, 참여횟수</S.GaugeTitle>
 							<HorizontalGaugeGraph
 								currentValue={joinCountPer10Min}
 								totalValue={10}
@@ -42,16 +44,20 @@ export const SelectableCard = ({ isSelected, personnel, onClickCard }: Selectabl
 							/>
 						</ColumnFlexBox>
 						<ColumnFlexBox gap="0.5rem">
-							<span>현재까지 참여횟수</span>
-							<HorizontalGaugeGraph currentValue={personnel.joinCount} totalValue={200} />
+							<S.GaugeTitle>현재까지 참여횟수</S.GaugeTitle>
+							<HorizontalGaugeGraph currentValue={personnel.joinCount} totalValue={10} />
 						</ColumnFlexBox>
 					</ColumnFlexBox>
 				</GridElement>
 			</Grid>
-		</Box>
+		</S.Card>
 	)
 }
 
+const Card = styled(Box)`
+	transition: background-color 0.2s;
+	cursor: pointer;
+`
 const NameText = styled.h2`
 	${FLEX_CENTER}
 	width: 100%;
@@ -60,6 +66,11 @@ const NameText = styled.h2`
 	text-align: center;
 	${TEXT_SHADOW_CSS}
 `
+const GaugeTitle = styled.span`
+	${TEXT_SHADOW_CSS}
+`
 const S = {
-	NameText
+	Card,
+	NameText,
+	GaugeTitle
 }

@@ -14,5 +14,4 @@ export const Container = styled.div<T.$ContainerProps>`
 	border-radius: ${BORDER_RADIUS.sm};
 	overflow: visible;
 	${BORDER_SOLID}
-	transition: all 0.2s;
 `

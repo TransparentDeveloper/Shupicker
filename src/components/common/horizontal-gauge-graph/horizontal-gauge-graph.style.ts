@@ -1,4 +1,4 @@
-import { FLEX_CENTER, FLEX_START } from '@/libs/styled-components/css-utils'
+import { BORDER_SOLID, FLEX_CENTER, FLEX_START } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 import type * as T from './horizontal-gauge-graph.type'
@@ -13,6 +13,9 @@ export const Wrapper = styled.div<T.$WrapperProps>`
 
 	background-color: ${COLOR.grayScale[900]};
 	border-radius: ${BORDER_RADIUS.sm};
+
+	${BORDER_SOLID};
+	overflow: hidden;
 `
 
 export const Gauge = styled.div<T.$Gauge>`

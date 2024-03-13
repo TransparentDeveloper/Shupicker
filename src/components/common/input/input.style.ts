@@ -14,7 +14,7 @@ export const InputBase = styled.input<T.$InputBaseProps>`
 
 	padding: 0.8rem;
 	border: none;
-	border-radius: ${BORDER_RADIUS.ti};
+	border-radius: ${BORDER_RADIUS.sm};
 
 	${GIANTS_REGULAR}
 	font-size: ${({ $fontSize }) => $fontSize};
