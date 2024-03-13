@@ -1,11 +1,12 @@
 import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
-import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL } from '@/constants'
+import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL, URL_PARAM_SORT_METHOD } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
+import { useSearchSingleValue } from '@/hooks/use-search-single-value'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
-import type { GroupType, PersonnelType } from '@/types'
+import type { GroupType, PersonnelType, SortMethodType } from '@/types'
 import { BoardBase, BoardHeader } from '@/units/boards'
-import { arrayEncoder } from '@/utils'
-import { faCheck, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
+import { arrayEncoder, sortByJoinCountRelativeToCreation } from '@/utils'
+import { faCheck, faSortAmountDownAlt, faSortAmountUpAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { SelectableCard } from './components'
@@ -15,6 +16,15 @@ const SelectSortedItems = () => {
 	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
 	const [params, setParams] = useSearchParams()
+	const { getValue: getSortMethod, updateValue: updateSortMethod } =
+		useSearchSingleValue(URL_PARAM_SORT_METHOD)
+
+	const personnelArray = getPersonnelArray()
+	const groupArray = getGroupArray()
+	const sortMethod = getSortMethod('ascend') as SortMethodType
+
+	/** 정렬된 멤버리스트 */
+	const sortedPersonnelArray = sortByJoinCountRelativeToCreation(personnelArray, 10, sortMethod)
 
 	const onHandleSelectedIdArray = (id: number) => {
 		if (selectedIdArray.includes(id)) {
@@ -32,20 +42,20 @@ const SelectSortedItems = () => {
 		}
 
 		// 선택된 참여자들 참여횟수 +1
-		const personnelArray: Array<PersonnelType> = getPersonnelArray()
+		const updatedPersonnelArray: Array<PersonnelType> = [...personnelArray]
 		selectedIdArray.forEach((selectedId) => {
-			const found = personnelArray.find((personnel) => personnel.id === selectedId)
+			const found = updatedPersonnelArray.find((personnel) => personnel.id === selectedId)
 			found!.joinCount += 1
 		})
-		params.set(URL_PARAM_PERSONNEL, arrayEncoder<PersonnelType>(personnelArray))
+		params.set(URL_PARAM_PERSONNEL, arrayEncoder<PersonnelType>(updatedPersonnelArray))
 
 		// 선택된 참여자 id로 group 생성
-		const groupArray = getGroupArray()
+		const newGroupArray = groupArray
 		const submitNewGroup: GroupType = {
-			id: groupArray.length,
+			id: newGroupArray.length,
 			personnelIdArray: [...selectedIdArray]
 		}
-		params.set(URL_PARAM_GROUP, arrayEncoder<GroupType>([...groupArray, submitNewGroup]))
+		params.set(URL_PARAM_GROUP, arrayEncoder<GroupType>([...newGroupArray, submitNewGroup]))
 		setSelectedIdArray([])
 		setParams(params)
 	}
@@ -56,9 +66,11 @@ const SelectSortedItems = () => {
 				sectionName="👆 정렬 & 선택"
 				iconButtonDataArray={[
 					{
-						iconData: faSortAmountDownAlt,
+						// [현재 정렬 상태] 를 아이콘으로 출력
+						iconData: sortMethod === 'ascend' ? faSortAmountUpAlt : faSortAmountDownAlt,
 						onClick: () => {
-							window.alert('기능 구현중 입니다..😅')
+							if (sortMethod === 'ascend') updateSortMethod('descend')
+							else updateSortMethod('ascend')
 						}
 					},
 					{
@@ -69,7 +81,7 @@ const SelectSortedItems = () => {
 				]}
 			/>
 			<VerticalScrollContainer height="34vh" gap="1.5rem">
-				{getPersonnelArray().map((personnel) => {
+				{sortedPersonnelArray.map((personnel) => {
 					return (
 						<SelectableCard
 							key={personnel.id}
