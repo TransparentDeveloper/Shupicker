@@ -1,6 +1,6 @@
+import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
 import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
-import { DIRECTION_COLUMN } from '@/libs/styled-components/css-utils'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
 import type { GroupType, PersonnelType } from '@/types'
 import { BoardBase, BoardHeader } from '@/units/boards'
@@ -8,7 +8,6 @@ import { arrayEncoder } from '@/utils'
 import { faCheck, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { SelectableCard } from './components'
 
 const SelectSortedItems = () => {
@@ -69,7 +68,7 @@ const SelectSortedItems = () => {
 					}
 				]}
 			/>
-			<S.VerticalScrollContainer>
+			<VerticalScrollContainer height="34vh" gap="1.5rem">
 				{getPersonnelArray().map((personnel) => {
 					return (
 						<SelectableCard
@@ -82,25 +81,9 @@ const SelectSortedItems = () => {
 						/>
 					)
 				})}
-			</S.VerticalScrollContainer>
+			</VerticalScrollContainer>
 		</BoardBase>
 	)
 }
 
 export default SelectSortedItems
-
-const VerticalScrollContainer = styled.div`
-	${DIRECTION_COLUMN}
-	gap: 1rem;
-
-	width: 100%;
-	height: 34vh;
-	max-height: 100%;
-
-	overflow-y: scroll;
-	overflow-x: hidden;
-`
-
-const S = {
-	VerticalScrollContainer
-}

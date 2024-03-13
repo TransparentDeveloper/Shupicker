@@ -1,10 +1,8 @@
-import { Spacer } from '@/components'
+import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
 import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
-import { DIRECTION_COLUMN } from '@/libs/styled-components/css-utils'
 import type { GroupType, PersonnelType } from '@/types'
 import { BoardBase, BoardHeader } from '@/units/boards'
-import styled from 'styled-components'
 import { GroupCard } from './components'
 
 const MatchingLog = () => {
@@ -22,28 +20,13 @@ const MatchingLog = () => {
 	return (
 		<BoardBase>
 			<BoardHeader sectionName="📋 참여기록" />
-			<Spacer y={2} />
-			<S.VerticalScrollContainer>
+			<VerticalScrollContainer height="79vh" gap="1rem">
 				{groupArray.map((group, idx) => (
 					<GroupCard key={group.id} groupId={group.id} memberArray={memberArrayEachGroup[idx]} />
 				))}
-			</S.VerticalScrollContainer>
+			</VerticalScrollContainer>
 		</BoardBase>
 	)
 }
 
 export default MatchingLog
-
-const VerticalScrollContainer = styled.div`
-	${DIRECTION_COLUMN}
-	gap: 1rem;
-	width: 100%;
-	height: 75vh;
-	max-height: 100%;
-	overflow-y: scroll;
-	overflow-x: hidden;
-`
-
-const S = {
-	VerticalScrollContainer
-}

@@ -1,15 +1,8 @@
-import { Box, ColumnFlexBox, Grid, GridElement, HorizontalGaugeGraph } from '@/components'
-import { FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
+import { ColumnFlexBox, Grid, GridElement, HorizontalGaugeGraph } from '@/components'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
-import type { PersonnelType } from '@/types'
 import { getMinuteDifference } from '@/utils'
-import styled from 'styled-components'
-
-type SelectableCardProps = {
-	isSelected?: boolean
-	personnel: PersonnelType
-	onClickCard: VoidFunction
-}
+import * as S from './selectable-card.style'
+import type { SelectableCardProps } from './selectable-card.type'
 
 export const SelectableCard = ({
 	isSelected = false,
@@ -22,6 +15,7 @@ export const SelectableCard = ({
 	if (timeDiffFromCreation > 10) {
 		joinCountPer10Min = parseFloat(((joinCountPer10Min / timeDiffFromCreation) * 10).toFixed(2))
 	}
+
 	return (
 		<S.Card
 			bgColor={isSelected ? COLOR.system.confirm : COLOR.grayScale[300]}
@@ -52,25 +46,4 @@ export const SelectableCard = ({
 			</Grid>
 		</S.Card>
 	)
-}
-
-const Card = styled(Box)`
-	transition: background-color 0.2s;
-	cursor: pointer;
-`
-const NameText = styled.h2`
-	${FLEX_CENTER}
-	width: 100%;
-	height: 100%;
-	color: ${COLOR.grayScale[1500]};
-	text-align: center;
-	${TEXT_SHADOW_CSS}
-`
-const GaugeTitle = styled.span`
-	${TEXT_SHADOW_CSS}
-`
-const S = {
-	Card,
-	NameText,
-	GaugeTitle
 }
