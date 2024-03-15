@@ -2,7 +2,7 @@ export type ColumnFlexBoxProps = {
 	width?: string
 	height?: string
 	gap?: string
-	children?: React.ReactNode
+	children?: React.
 }
 export type $BoxContainerProps = {
 	$width: string
