@@ -18,10 +18,10 @@ export const useSearchSingleValue = (paramKey: string) => {
 		return value
 	}
 
-	const updateValue = (value: SingleValueType) => {
+	const setValue = (value: SingleValueType) => {
 		if (typeof value === 'number') value = value.toString()
 		params.set(paramKey, value)
 		setParams(params)
 	}
-	return { getValue, updateValue }
+	return { getValue, setValue }
 }

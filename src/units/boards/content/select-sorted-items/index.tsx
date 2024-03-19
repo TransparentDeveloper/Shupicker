@@ -1,11 +1,17 @@
 import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
-import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL, URL_PARAM_SORT_METHOD } from '@/constants'
+import {
+	URL_PARAM_GROUP,
+	URL_PARAM_PERSONNEL,
+	URL_PARAM_SORT_BY,
+	URL_PARAM_SORT_METHOD
+} from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import { useSearchSingleValue } from '@/hooks/use-search-single-value'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
 import type { GroupType, PersonnelType, SortMethodType } from '@/types'
 import { BoardBase, BoardHeader } from '@/units/boards'
 import { arrayEncoder, sortByJoinCountRelativeToCreation } from '@/utils'
+import { getAverageJoinCountPerUnitMinute } from '@/utils/common'
 import { faCheck, faSortAmountDownAlt, faSortAmountUpAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -15,16 +21,35 @@ const SelectSortedItems = () => {
 	const [selectedIdArray, setSelectedIdArray] = useState<Array<number>>([])
 	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
-	const [params, setParams] = useSearchParams()
-	const { getValue: getSortMethod, updateValue: updateSortMethod } =
+	const { getValue: getSortMethod, setValue: setSortMethod } =
 		useSearchSingleValue(URL_PARAM_SORT_METHOD)
+	const { getValue: getSortBy, setValue: setSortBy } = useSearchSingleValue(URL_PARAM_SORT_BY)
+	const [params, setParams] = useSearchParams()
 
-	const personnelArray = getPersonnelArray()
+	/** 멤버 배열 */
+	const memberArray = getPersonnelArray()
+	/** 그룹 배열  */
 	const groupArray = getGroupArray()
+	/** 정렬기준 ( = 정렬항목 ) */
+	const sortBy = getSortBy('join-count-per-time')
+	/** 정렬법 ( 'ascend' or 'descend' ) */
 	const sortMethod = getSortMethod('ascend') as SortMethodType
 
-	/** 정렬된 멤버리스트 */
-	const sortedPersonnelArray = sortByJoinCountRelativeToCreation(personnelArray, 10, sortMethod)
+	/** 정렬된 멤버배열 */
+	const sortedMemberArray = sortByJoinCountRelativeToCreation(memberArray, 10, sortMethod)
+	/** 참여횟수 배열 */
+	const joinCountArray = sortedMemberArray.map((member) => member.joinCount)
+	/** 참여횟수 중 최댓값 */
+	const maxJoinCount = Math.max(...joinCountArray)
+	/** 10분 당 평균참여횟수 배열 */
+	const averageJoinCountPer10MinuteArray = sortedMemberArray.map((member) =>
+		getAverageJoinCountPerUnitMinute(Date.now(), member?.joinedAt ?? 0, member?.joinCount ?? 0, 10)
+	)
+	/** 10분 당 참여횟수 중 최댓값 */
+	const maxAverageJoinCountPer10MinuteArray =
+		sortMethod === 'ascend'
+			? averageJoinCountPer10MinuteArray.at(0) ?? 0
+			: averageJoinCountPer10MinuteArray.at(-1) ?? 0
 
 	const onHandleSelectedIdArray = (id: number) => {
 		if (selectedIdArray.includes(id)) {
@@ -42,7 +67,7 @@ const SelectSortedItems = () => {
 		}
 
 		// 선택된 참여자들 참여횟수 +1
-		const updatedPersonnelArray: Array<PersonnelType> = [...personnelArray]
+		const updatedPersonnelArray: Array<PersonnelType> = [...memberArray]
 		selectedIdArray.forEach((selectedId) => {
 			const found = updatedPersonnelArray.find((personnel) => personnel.id === selectedId)
 			found!.joinCount += 1
@@ -69,8 +94,8 @@ const SelectSortedItems = () => {
 						// [현재 정렬 상태] 를 아이콘으로 출력
 						iconData: sortMethod === 'ascend' ? faSortAmountUpAlt : faSortAmountDownAlt,
 						onClick: () => {
-							if (sortMethod === 'ascend') updateSortMethod('descend')
-							else updateSortMethod('ascend')
+							if (sortMethod === 'ascend') setSortMethod('descend')
+							else setSortMethod('ascend')
 						}
 					},
 					{
@@ -81,14 +106,19 @@ const SelectSortedItems = () => {
 				]}
 			/>
 			<VerticalScrollContainer height="34vh" gap="1.5rem">
-				{sortedPersonnelArray.map((personnel) => {
+				{sortedMemberArray.map((member, idx) => {
 					return (
 						<SelectableCard
-							key={personnel.id}
-							isSelected={selectedIdArray.includes(personnel.id)}
-							{...{ personnel }}
+							key={member.id}
+							isSelected={selectedIdArray.includes(member.id)}
+							memberName={member.name}
+							sortedItemLabel="10분 당, 참여횟수"
+							currentSortedItemValue={averageJoinCountPer10MinuteArray[idx]}
+							maxSortedItemValue={maxAverageJoinCountPer10MinuteArray}
+							currentJoinCount={member.joinCount}
+							maxJoinCount={maxJoinCount}
 							onClickCard={() => {
-								onHandleSelectedIdArray(personnel.id)
+								onHandleSelectedIdArray(member.id)
 							}}
 						/>
 					)

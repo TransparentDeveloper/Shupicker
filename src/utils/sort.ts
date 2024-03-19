@@ -1,28 +1,34 @@
 import type { PersonnelType, SortMethodType } from '@/types'
-import { getMinuteDifference } from '.'
+import { getAverageJoinCountPerUnitMinute } from './common'
 
 /** 참여자 이름 기준 정렬 */
 export const sortByMemberName = (memberArray: Array<PersonnelType>) => {}
 
-/** 생성시간 대비 참여횟수 기준 정렬 */
+/**
+ * @description 생성시간 대비 참여횟수 기준 정렬
+ */
 export const sortByJoinCountRelativeToCreation = (
 	memberArray: Array<PersonnelType>,
-	unitMinute: number,
+	unitMinute: number, // 단위시간
 	sortMethod: SortMethodType
 ): Array<PersonnelType> => {
 	const now = Date.now()
 
 	const result = memberArray.sort((member1, member2) => {
 		// 멤버 1의 단위 시간당 평균 참여횟수
-		let joinCountPerUnitTime1 = member1.joinCount
-		const timeDiffFromCreation1 = getMinuteDifference(now, member1.joinedAt)
-		if (timeDiffFromCreation1 > unitMinute)
-			joinCountPerUnitTime1 = (joinCountPerUnitTime1 / timeDiffFromCreation1) * 10
+		const joinCountPerUnitTime1 = getAverageJoinCountPerUnitMinute(
+			now,
+			member1.joinedAt,
+			member1.joinCount,
+			unitMinute
+		)
 		// 멤버 2의 단위 시간당 평균 참여횟수
-		let joinCountPerUnitTime2 = member2.joinCount
-		const timeDiffFromCreation2 = getMinuteDifference(now, member1.joinedAt)
-		if (timeDiffFromCreation2 > unitMinute)
-			joinCountPerUnitTime2 = (joinCountPerUnitTime2 / timeDiffFromCreation2) * 10
+		const joinCountPerUnitTime2 = getAverageJoinCountPerUnitMinute(
+			now,
+			member2.joinedAt,
+			member2.joinCount,
+			unitMinute
+		)
 
 		// 오름차순 정렬
 		if (sortMethod === 'ascend') {
