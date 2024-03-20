@@ -6,7 +6,14 @@ import type * as T from './input.type'
 const Input = forwardRef<HTMLInputElement, T.InputProps>(
 	({ width = '18rem', fontSize = FONT_SIZE.md, bgColor = COLOR.grayScale[200], ...rest }, ref) => {
 		return (
-			<S.InputBase ref={ref} $width={width} $fontSize={fontSize} $bgColor={bgColor} {...rest} />
+			<S.InputBase
+				ref={ref}
+				autoComplete="off"
+				$width={width}
+				$fontSize={fontSize}
+				$bgColor={bgColor}
+				{...rest}
+			/>
 		)
 	}
 )

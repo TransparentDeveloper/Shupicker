@@ -12,6 +12,8 @@ export const getAverageJoinCountPerUnitMinute = (
 	unitMinute: number // 단위시간
 ) => {
 	const timeDiffMinute = getMinuteDifference(anchorTime, creationTime)
+	if (timeDiffMinute < 1) return 0
+	if (timeDiffMinute < unitMinute) return joinCount
 	const minuteRate = timeDiffMinute / unitMinute
 	const result = (joinCount / minuteRate).toFixed(2) // 소수점 두번째 자리까지 반환
 	return parseFloat(result)

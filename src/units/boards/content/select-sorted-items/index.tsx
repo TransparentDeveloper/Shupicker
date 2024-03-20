@@ -19,7 +19,7 @@ import { SelectableCard } from './components'
 
 const SelectSortedItems = () => {
 	const [selectedIdArray, setSelectedIdArray] = useState<Array<number>>([])
-	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getMemberArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
 	const { getValue: getSortMethod, setValue: setSortMethod } =
 		useSearchSingleValue(URL_PARAM_SORT_METHOD)
@@ -27,7 +27,7 @@ const SelectSortedItems = () => {
 	const [params, setParams] = useSearchParams()
 
 	/** 멤버 배열 */
-	const memberArray = getPersonnelArray()
+	const memberArray = getMemberArray()
 	/** 그룹 배열  */
 	const groupArray = getGroupArray()
 	/** 정렬기준 ( = 정렬항목 ) */
@@ -36,11 +36,11 @@ const SelectSortedItems = () => {
 	const sortMethod = getSortMethod('ascend') as SortMethodType
 
 	/** 정렬된 멤버배열 */
-	const sortedMemberArray = sortByJoinCountRelativeToCreation(memberArray, 10, sortMethod)
+	const sortedMemberArray = sortByJoinCountRelativeToCreation([...memberArray], 10, sortMethod)
 	/** 참여횟수 배열 */
 	const joinCountArray = sortedMemberArray.map((member) => member.joinCount)
 	/** 참여횟수 중 최댓값 */
-	const maxJoinCount = Math.max(...joinCountArray)
+	const maxJoinCount = Math.max(...joinCountArray) ?? 0
 	/** 10분 당 평균참여횟수 배열 */
 	const averageJoinCountPer10MinuteArray = sortedMemberArray.map((member) =>
 		getAverageJoinCountPerUnitMinute(Date.now(), member?.joinedAt ?? 0, member?.joinCount ?? 0, 10)
@@ -50,6 +50,10 @@ const SelectSortedItems = () => {
 		sortMethod === 'ascend'
 			? averageJoinCountPer10MinuteArray.at(0) ?? 0
 			: averageJoinCountPer10MinuteArray.at(-1) ?? 0
+
+	console.log(sortedMemberArray)
+	console.log(averageJoinCountPer10MinuteArray)
+	console.log(maxAverageJoinCountPer10MinuteArray)
 
 	const onHandleSelectedIdArray = (id: number) => {
 		if (selectedIdArray.includes(id)) {

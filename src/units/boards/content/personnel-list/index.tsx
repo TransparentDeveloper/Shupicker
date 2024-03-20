@@ -9,7 +9,7 @@ import { useOpenOverlay } from '@/hooks/use-open-overlay'
 import { AdditionalTraitType, PersonnelType } from '@/types'
 import { AddingPersonnel, AddingTrait } from '@/units'
 import { BoardBase, BoardHeader } from '@/units/boards'
-import { getTimeFormatHHMM } from '@/utils'
+import { getTimeFormatHHMM, sortByMemberId } from '@/utils'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
 import * as S from './personnel-list.style'
@@ -19,10 +19,18 @@ const PersonnelList = () => {
 		useOpenOverlay(OVERLAY_ADDING_PERSONNEL)
 	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
 		useOpenOverlay(OVERLAY_ADDING_TRAIT)
-	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getMemberArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
 	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
 	)
+
+	/** 멤버 배열 */
+	const memberArray = getMemberArray()
+	/** 추가 특성 배열 */
+	const additionalTraitArray = getAdditionalTraitArray()
+
+	/** 아이디로 정렬된 멤버 배열 */
+	const sortedByIdMemberArray = sortByMemberId(memberArray)
 
 	const NoAdditionalTraitNoticeComponent = useCallback(() => {
 		return (
@@ -30,7 +38,7 @@ const PersonnelList = () => {
 				<S.NoticeText>추가 특성이 없습니다. 😎</S.NoticeText>
 			</S.NoticeWrapper>
 		)
-	}, [getAdditionalTraitArray()])
+	}, [additionalTraitArray])
 
 	return (
 		<>
@@ -53,24 +61,24 @@ const PersonnelList = () => {
 				<S.InfoContainer>
 					<S.EssentialInfoBox>
 						<S.EssentialTraitText>이름</S.EssentialTraitText>
-						{getPersonnelArray()?.map((personnel, idx) => (
-							<S.ValueText key={idx}>{personnel.name}</S.ValueText>
+						{sortedByIdMemberArray?.map((member, idx) => (
+							<S.ValueText key={idx}>{member.name}</S.ValueText>
 						))}
 					</S.EssentialInfoBox>
 
 					<S.EssentialInfoBox>
 						<S.EssentialTraitText>총 참여횟수</S.EssentialTraitText>
-						{getPersonnelArray()?.map((personnel, idx) => (
-							<S.ValueText key={idx}>{personnel.joinCount} 회</S.ValueText>
+						{sortedByIdMemberArray?.map((member, idx) => (
+							<S.ValueText key={idx}>{member.joinCount} 회</S.ValueText>
 						))}
 					</S.EssentialInfoBox>
 
 					<S.AdditionalInfoListWrapper>
-						{!getAdditionalTraitArray().length ? (
+						{!additionalTraitArray.length ? (
 							<NoAdditionalTraitNoticeComponent />
 						) : (
 							<S.AdditionalInfoList>
-								{getAdditionalTraitArray().map((trait, index) => (
+								{additionalTraitArray.map((trait, index) => (
 									<S.AdditionalInfoBox key={index}>
 										<S.AdditionalTraitText>{trait.name}</S.AdditionalTraitText>
 										{trait.values.map(({ userId, value }) => (
@@ -84,8 +92,8 @@ const PersonnelList = () => {
 
 					<S.EssentialInfoBox>
 						<S.EssentialTraitText>생성시각</S.EssentialTraitText>
-						{getPersonnelArray()?.map((personnel, idx) => (
-							<S.ValueText key={idx}>{getTimeFormatHHMM(personnel.joinedAt)}</S.ValueText>
+						{sortedByIdMemberArray?.map((member, idx) => (
+							<S.ValueText key={idx}>{getTimeFormatHHMM(member.joinedAt)}</S.ValueText>
 						))}
 					</S.EssentialInfoBox>
 				</S.InfoContainer>
