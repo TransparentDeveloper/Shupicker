@@ -51,7 +51,3 @@ const SelectBase = styled.select<$SelectProps>`
 
 	text-align: center;
 `
-
-const S = {
-	SelectBase
-}
