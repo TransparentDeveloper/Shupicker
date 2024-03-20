@@ -1,10 +1,5 @@
 import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
-import {
-	URL_PARAM_GROUP,
-	URL_PARAM_PERSONNEL,
-	URL_PARAM_SORT_BY,
-	URL_PARAM_SORT_METHOD
-} from '@/constants'
+import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL, URL_PARAM_SORT_METHOD } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import { useSearchSingleValue } from '@/hooks/use-search-single-value'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
@@ -23,7 +18,7 @@ const SelectSortedItems = () => {
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
 	const { getValue: getSortMethod, setValue: setSortMethod } =
 		useSearchSingleValue(URL_PARAM_SORT_METHOD)
-	const { getValue: getSortBy, setValue: setSortBy } = useSearchSingleValue(URL_PARAM_SORT_BY)
+	// const { getValue: getSortBy, setValue: setSortBy } = useSearchSingleValue(URL_PARAM_SORT_BY)
 	const [params, setParams] = useSearchParams()
 
 	/** 멤버 배열 */
@@ -31,7 +26,7 @@ const SelectSortedItems = () => {
 	/** 그룹 배열  */
 	const groupArray = getGroupArray()
 	/** 정렬기준 ( = 정렬항목 ) */
-	const sortBy = getSortBy('join-count-per-time')
+	// const sortBy = getSortBy('join-count-per-time')
 	/** 정렬법 ( 'ascend' or 'descend' ) */
 	const sortMethod = getSortMethod('ascend') as SortMethodType
 
