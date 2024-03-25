@@ -1,5 +1,10 @@
 export const BREAK_POINT = {
-	sm: '480px', // small
-	md: '896px', // medium
-	lg: '1152px' // large
+	mobile: {
+		label: 'mobile',
+		maxWidth: 500
+	},
+	tablet: {
+		label: 'tablet',
+		maxWidth: 800
+	}
 } as const
