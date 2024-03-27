@@ -1,6 +1,6 @@
 import { BREAK_POINT } from '@/libs/styled-components/reference-tokens'
 import type { ScreenType } from '@/types/screen.type'
-import ScreenRadioAlert from '@/units/overlays/content/screen-radio-alert'
+import ScreenRadioAlert from '@/units/overlays/screen-radio-alert'
 import type { PropsWithChildren } from 'react'
 import { createContext, useEffect, useState } from 'react'
 

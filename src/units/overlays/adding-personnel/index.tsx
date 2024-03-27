@@ -8,6 +8,7 @@ import {
 	OverlayHeader,
 	Spacer
 } from '@/components'
+
 import {
 	OVERLAY_ADDING_PERSONNEL,
 	URL_PARAM_ADDITIONAL_TRAIT,

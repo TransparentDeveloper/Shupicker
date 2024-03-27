@@ -1,7 +1,7 @@
 import { Spacer } from '@/components'
+import { OverlayBase, OverlayHeader } from '@/components/overlay'
 import { DIRECTION_COLUMN, FLEX_CENTER } from '@/libs/styled-components/css-utils'
 import { COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { OverlayBase, OverlayHeader } from '@/units/overlays/foundation'
 import styled from 'styled-components'
 
 const ScreenRadioAlert = () => {
