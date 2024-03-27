@@ -13,7 +13,7 @@ import styled from 'styled-components'
 
 export const InfoContainer = styled.div`
 	width: 100%;
-	height: 34vh;
+	height: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 2fr 1fr;
 	overflow-y: scroll;

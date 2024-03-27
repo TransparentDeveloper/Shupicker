@@ -2,7 +2,12 @@ import { CenterFlexBox, PaddingContainer } from '@/components'
 import * as S from './overlay-base.style'
 import type * as T from './overlay-base.type'
 
-const OverlayBase = ({ width = '60vw', height = '60vh', onClose, children }: T.OverlayBase) => {
+const OverlayBase = ({
+	width = '60dvw',
+	height = '60dvh',
+	onClose,
+	children
+}: T.OverlayBaseProps) => {
 	return (
 		<S.Wrapper onClick={onClose}>
 			<CenterFlexBox align="bothAlign">

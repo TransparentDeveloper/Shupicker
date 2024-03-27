@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import type * as T from './spacer.type'
 
-export const Box = styled.div<T.$Box>`
-	width: ${({ $x }) => $x + 'rem'};
-	height: ${({ $y }) => $y + 'rem'};
+export const SpacerBase = styled.div<T.$SpacerBaseProps>`
+	width: ${({ $width }) => $width + 'rem'};
+	height: ${({ $height }) => $height + 'rem'};
 	display: inline-block;
 `

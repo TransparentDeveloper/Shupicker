@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 	height: 100%;
 	background-color: rgba(3, 3, 3, 0.6);
 `
-export const Card = styled.div<T.$Card>`
+export const Card = styled.div<T.$CardProps>`
 	width: ${({ $width }) => $width};
 	height: ${({ $height }) => $height};
 

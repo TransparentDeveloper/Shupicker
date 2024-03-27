@@ -1,4 +1,4 @@
 import MatchingLog from './matching-log'
-import PersonnelList from './personnel-list'
+import MemberTable from './member-table'
 import SelectSortedItems from './select-sorted-items'
-export { MatchingLog, PersonnelList, SelectSortedItems }
+export { MatchingLog, MemberTable, SelectSortedItems }

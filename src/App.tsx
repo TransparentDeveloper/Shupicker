@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Grid, GridElement, Header, PaddingContainer } from './components'
-import { MatchingLog, PersonnelList, SelectSortedItems } from './units/panels'
+import { MatchingLog, MemberTable, SelectSortedItems } from './units/panels'
 
 const App = () => {
 	return (
@@ -10,7 +10,7 @@ const App = () => {
 				<PaddingContainer horizontal={'2%'} vertical={'1%'}>
 					<Grid rows={2} columns={2} rowGap="1rem" columnGap="2rem">
 						<GridElement>
-							<PersonnelList />
+							<MemberTable />
 						</GridElement>
 
 						<GridElement row={2} column={1}>

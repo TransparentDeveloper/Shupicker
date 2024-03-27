@@ -1,5 +1,5 @@
-import { PanelBase, PanelHeader } from '@/components'
-import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
+import { ColumnFlexBox, PanelBase, PanelHeader } from '@/components'
+import PanelMain from '@/components/panel/panel-main'
 import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL, URL_PARAM_SORT_METHOD } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import { useSearchSingleValue } from '@/hooks/use-search-single-value'
@@ -100,25 +100,27 @@ const SelectSortedItems = () => {
 					}
 				]}
 			/>
-			<VerticalScrollContainer height="34vh" gap="1.5rem">
-				{sortedMemberArray.map((member, idx) => {
-					return (
-						<SelectableCard
-							key={member.id}
-							isSelected={selectedIdArray.includes(member.id)}
-							memberName={member.name}
-							sortedItemLabel="10분 당, 참여횟수"
-							currentSortedItemValue={averageJoinCountPer10MinuteArray[idx]}
-							maxSortedItemValue={maxAverageJoinCountPer10MinuteArray}
-							currentJoinCount={member.joinCount}
-							maxJoinCount={maxJoinCount}
-							onClickCard={() => {
-								onHandleSelectedIdArray(member.id)
-							}}
-						/>
-					)
-				})}
-			</VerticalScrollContainer>
+			<PanelMain>
+				<ColumnFlexBox gap="0.5rem">
+					{sortedMemberArray.map((member, idx) => {
+						return (
+							<SelectableCard
+								key={member.id}
+								isSelected={selectedIdArray.includes(member.id)}
+								memberName={member.name}
+								sortedItemLabel="10분 당, 참여횟수"
+								currentSortedItemValue={averageJoinCountPer10MinuteArray[idx]}
+								maxSortedItemValue={maxAverageJoinCountPer10MinuteArray}
+								currentJoinCount={member.joinCount}
+								maxJoinCount={maxJoinCount}
+								onClickCard={() => {
+									onHandleSelectedIdArray(member.id)
+								}}
+							/>
+						)
+					})}
+				</ColumnFlexBox>
+			</PanelMain>
 		</PanelBase>
 	)
 }

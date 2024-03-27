@@ -1,5 +1,5 @@
-import { PanelBase, PanelHeader } from '@/components'
-import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
+import { ColumnFlexBox, PanelBase, PanelHeader } from '@/components'
+import PanelMain from '@/components/panel/panel-main'
 import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import type { GroupType, PersonnelType } from '@/types'
@@ -20,11 +20,13 @@ const MatchingLog = () => {
 	return (
 		<PanelBase>
 			<PanelHeader sectionName="📋 참여기록" />
-			<VerticalScrollContainer height="79vh" gap="1rem">
-				{groupArray.map((group, idx) => (
-					<GroupCard key={group.id} groupId={group.id} memberArray={memberArrayEachGroup[idx]} />
-				))}
-			</VerticalScrollContainer>
+			<PanelMain>
+				<ColumnFlexBox gap="0.5rem">
+					{groupArray.map((group, idx) => (
+						<GroupCard key={group.id} groupId={group.id} memberArray={memberArrayEachGroup[idx]} />
+					))}
+				</ColumnFlexBox>
+			</PanelMain>
 		</PanelBase>
 	)
 }

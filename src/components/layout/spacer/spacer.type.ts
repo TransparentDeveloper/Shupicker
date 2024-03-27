@@ -1,8 +1,8 @@
 export type SpacerProps = {
-	x?: number
-	y?: number
+	width?: number
+	height?: number
 }
-export type $Box = {
-	$x: number
-	$y: number
+export type $SpacerBaseProps = {
+	$width: number
+	$height: number
 }
