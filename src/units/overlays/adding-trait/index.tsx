@@ -129,7 +129,7 @@ const AddingTrait = () => {
 								</S.InputWrapper>
 							</GridElement>
 						</Grid>
-						<Spacer y={0.5} />
+						<Spacer height={1} />
 						<ButtonWrapper>
 							<Button type="submit">완료</Button>
 						</ButtonWrapper>

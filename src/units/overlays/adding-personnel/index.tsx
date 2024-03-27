@@ -70,6 +70,7 @@ const AddingPersonnel = () => {
 	return (
 		<OverlayBase width="45rem" height="25rem" {...{ onClose }}>
 			<OverlayHeader overlayName="인원 추가" />
+			<Spacer height={1} />
 			<form onSubmit={onHandleComplete}>
 				<S.MainContent>
 					<Grid rows={2}>
@@ -102,10 +103,8 @@ const AddingPersonnel = () => {
 						</Grid>
 					))}
 				</S.MainContent>
-				<Spacer y={0.1} />
 				<S.ButtonWrapper>
 					<Button type="submit">추가하기</Button>
-					<Spacer x={2} />
 				</S.ButtonWrapper>
 			</form>
 		</OverlayBase>
