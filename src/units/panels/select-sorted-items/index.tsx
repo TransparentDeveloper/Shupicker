@@ -4,7 +4,7 @@ import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL, URL_PARAM_SORT_METHOD } from '@/c
 import { useManageUrlArray } from '@/hooks'
 import { useSearchSingleValue } from '@/hooks/use-search-single-value'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
-import type { GroupType, PersonnelType, SortMethodType } from '@/types'
+import type { GroupType, OptionalSizeProps, PersonnelType, SortMethodType } from '@/types'
 import { arrayEncoder, sortByJoinCountRelativeToCreation } from '@/utils'
 import { getAverageJoinCountPerUnitMinute } from '@/utils/common'
 import { faCheck, faSortAmountDownAlt, faSortAmountUpAlt } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +12,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { SelectableCard } from './components'
 
-const SelectSortedItems = () => {
+const SelectSortedItems = ({ width = '100%', height = '100%' }: OptionalSizeProps) => {
 	const [selectedIdArray, setSelectedIdArray] = useState<Array<number>>([])
 	const { getArray: getMemberArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
@@ -81,7 +81,7 @@ const SelectSortedItems = () => {
 	}
 
 	return (
-		<PanelBase>
+		<PanelBase {...{ width, height }}>
 			<PanelHeader
 				sectionName="👆 정렬 & 선택"
 				iconButtonDataArray={[

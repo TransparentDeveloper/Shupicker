@@ -8,14 +8,14 @@ import {
 } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import { useOpenOverlay } from '@/hooks/use-open-overlay'
-import { AdditionalTraitType, PersonnelType } from '@/types'
+import type { AdditionalTraitType, OptionalSizeProps, PersonnelType } from '@/types'
 import { AddingPersonnel, AddingTrait } from '@/units'
 import { getTimeFormatHHMM, sortByMemberId } from '@/utils'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
 import * as S from './member-table.style'
 
-const MemberTable = () => {
+const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => {
 	const { isOpen: isOpenAddingPersonnel, onOpen: onOpenAddingPersonnel } =
 		useOpenOverlay(OVERLAY_ADDING_PERSONNEL)
 	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
@@ -45,7 +45,7 @@ const MemberTable = () => {
 		<>
 			{isOpenAddingPersonnel && <AddingPersonnel />}
 			{isOpenAddingTrait && <AddingTrait />}
-			<PanelBase>
+			<PanelBase {...{ width, height }}>
 				<PanelHeader
 					sectionName="📌 인명부"
 					iconButtonDataArray={[

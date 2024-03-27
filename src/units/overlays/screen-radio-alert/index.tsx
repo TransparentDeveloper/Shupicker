@@ -6,11 +6,11 @@ import styled from 'styled-components'
 
 const ScreenRadioAlert = () => {
 	return (
-		<OverlayBase width="90vw" height="30vh">
+		<OverlayBase width="90dvw" height="30dvh">
 			<OverlayHeader overlayName="⚠️ Alert" />
 			<S.MainContent>
 				<span>화면 비율 중, 가로 너비가 더 커야합니다. 🥲</span>
-				<Spacer y={2} />
+				<Spacer height={2} />
 				<S.TipText>Tip: 모바일 환경이라면, 디바이스를 눕혀보세요:)</S.TipText>
 			</S.MainContent>
 		</OverlayBase>

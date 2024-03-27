@@ -1,10 +1,10 @@
-export type OverlayBase = {
+export type OverlayBaseProps = {
 	width?: string
 	height?: string
 	onClose?: VoidFunction
 	children?: React.ReactNode
 }
-export type $Card = {
+export type $CardProps = {
 	$width: string
 	$height: string
 }

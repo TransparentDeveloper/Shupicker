@@ -27,12 +27,13 @@ const GlobalStyles = createGlobalStyle`
     color: ${COLOR.grayScale[1500]};
     ${GIANTS_REGULAR}
     font-size: 62.5%; 
-    @media screen and (max-width: ${BREAK_POINT.md}) {
+    @media screen and (max-width: ${BREAK_POINT.mobile.maxWidth}) {
       font-size: 50%;
     }
-    @media screen and (max-width: ${BREAK_POINT.sm}) {
-      font-size: 31.25%;
-    }
+    height: 100%;
+  }
+  body{
+    height: 100%;
   }
   h1 {
     ${GIANTS_BOLD}

@@ -1,10 +1,10 @@
 export const BREAK_POINT = {
 	mobile: {
 		label: 'mobile',
-		maxWidth: 500
+		maxWidth: 1000
 	},
 	tablet: {
 		label: 'tablet',
-		maxWidth: 800
+		maxWidth: 1280
 	}
 } as const

@@ -1,15 +1,22 @@
+import { DefaultLayout } from '@/components'
+import { ScreenProvider } from '@/context'
+import GlobalStyles from '@/libs/styled-components/global'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import App from './App.tsx'
-import { ScreenProvider } from './context/screen.context.tsx'
-import GlobalStyles from './libs/styled-components/global.tsx'
 
 const router = createBrowserRouter([
 	{
-		path: '',
-		element: <App />
+		path: '/',
+		element: <DefaultLayout />,
+		children: [
+			{
+				path: '',
+				element: <App />
+			}
+		]
 	}
 ])
 

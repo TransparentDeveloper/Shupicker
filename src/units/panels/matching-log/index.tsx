@@ -2,10 +2,10 @@ import { ColumnFlexBox, PanelBase, PanelHeader } from '@/components'
 import PanelMain from '@/components/panel/panel-main'
 import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
-import type { GroupType, PersonnelType } from '@/types'
+import type { GroupType, OptionalSizeProps, PersonnelType } from '@/types'
 import { GroupCard } from './components'
 
-const MatchingLog = () => {
+const MatchingLog = ({ width = '100%', height = '100%' }: OptionalSizeProps) => {
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
 	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
 
@@ -18,7 +18,7 @@ const MatchingLog = () => {
 	})
 
 	return (
-		<PanelBase>
+		<PanelBase {...{ width, height }}>
 			<PanelHeader sectionName="📋 참여기록" />
 			<PanelMain>
 				<ColumnFlexBox gap="0.5rem">
