@@ -1,3 +1,4 @@
+import { PanelBase, PanelHeader } from '@/components'
 import {
 	OVERLAY_ADDING_PERSONNEL,
 	OVERLAY_ADDING_TRAIT,
@@ -8,7 +9,6 @@ import { useManageUrlArray } from '@/hooks'
 import { useOpenOverlay } from '@/hooks/use-open-overlay'
 import { AdditionalTraitType, PersonnelType } from '@/types'
 import { AddingPersonnel, AddingTrait } from '@/units'
-import { BoardBase, BoardHeader } from '@/units/boards'
 import { getTimeFormatHHMM, sortByMemberId } from '@/utils'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
@@ -44,8 +44,8 @@ const PersonnelList = () => {
 		<>
 			{isOpenAddingPersonnel && <AddingPersonnel />}
 			{isOpenAddingTrait && <AddingTrait />}
-			<BoardBase>
-				<BoardHeader
+			<PanelBase>
+				<PanelHeader
 					sectionName="📌 인명부"
 					iconButtonDataArray={[
 						{
@@ -97,7 +97,7 @@ const PersonnelList = () => {
 						))}
 					</S.EssentialInfoBox>
 				</S.InfoContainer>
-			</BoardBase>
+			</PanelBase>
 		</>
 	)
 }

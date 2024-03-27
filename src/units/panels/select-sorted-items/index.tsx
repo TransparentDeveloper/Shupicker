@@ -1,10 +1,10 @@
+import { PanelBase, PanelHeader } from '@/components'
 import { VerticalScrollContainer } from '@/components/layout/vertical-scroll-container'
 import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL, URL_PARAM_SORT_METHOD } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import { useSearchSingleValue } from '@/hooks/use-search-single-value'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
 import type { GroupType, PersonnelType, SortMethodType } from '@/types'
-import { BoardBase, BoardHeader } from '@/units/boards'
 import { arrayEncoder, sortByJoinCountRelativeToCreation } from '@/utils'
 import { getAverageJoinCountPerUnitMinute } from '@/utils/common'
 import { faCheck, faSortAmountDownAlt, faSortAmountUpAlt } from '@fortawesome/free-solid-svg-icons'
@@ -46,10 +46,6 @@ const SelectSortedItems = () => {
 			? averageJoinCountPer10MinuteArray.at(0) ?? 0
 			: averageJoinCountPer10MinuteArray.at(-1) ?? 0
 
-	console.log(sortedMemberArray)
-	console.log(averageJoinCountPer10MinuteArray)
-	console.log(maxAverageJoinCountPer10MinuteArray)
-
 	const onHandleSelectedIdArray = (id: number) => {
 		if (selectedIdArray.includes(id)) {
 			const newArray = selectedIdArray.filter((elem) => elem !== id)
@@ -85,8 +81,8 @@ const SelectSortedItems = () => {
 	}
 
 	return (
-		<BoardBase>
-			<BoardHeader
+		<PanelBase>
+			<PanelHeader
 				sectionName="👆 정렬 & 선택"
 				iconButtonDataArray={[
 					{
@@ -123,7 +119,7 @@ const SelectSortedItems = () => {
 					)
 				})}
 			</VerticalScrollContainer>
-		</BoardBase>
+		</PanelBase>
 	)
 }
 

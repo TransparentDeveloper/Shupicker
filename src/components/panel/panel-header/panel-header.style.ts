@@ -9,7 +9,7 @@ export const Container = styled.div`
 
 	padding: 1rem;
 `
-export const BoardNameText = styled.h3`
+export const PanelNameText = styled.h3`
 	${TEXT_SHADOW_CSS}
 `
 export const ButtonGroup = styled.div`

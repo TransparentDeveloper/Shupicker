@@ -1,7 +1,7 @@
 import { BOX_SHADOW_CSS } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
-import * as T from './board-base.type'
+import * as T from './panel-base.type'
 
 export const Container = styled.div<T.$Container>`
 	width: 100%;
