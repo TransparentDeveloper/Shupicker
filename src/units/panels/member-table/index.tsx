@@ -1,26 +1,26 @@
 import { PanelBase, PanelHeader } from '@/components'
 import PanelMain from '@/components/panel/panel-main'
 import {
-	OVERLAY_ADDING_PERSONNEL,
+	OVERLAY_ADDING_MEMBER,
 	OVERLAY_ADDING_TRAIT,
 	URL_PARAM_ADDITIONAL_TRAIT,
-	URL_PARAM_PERSONNEL
+	URL_PARAM_MEMBER
 } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import { useOpenOverlay } from '@/hooks/use-open-overlay'
-import type { AdditionalTraitType, OptionalSizeProps, PersonnelType } from '@/types'
-import { AddingPersonnel, AddingTrait } from '@/units'
+import type { AdditionalTraitType, MemberType, OptionalSizeProps } from '@/types'
+import { AddingMember, AddingTrait } from '@/units'
 import { getTimeFormatHHMM, sortByMemberId } from '@/utils'
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
 import * as S from './member-table.style'
 
 const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => {
-	const { isOpen: isOpenAddingPersonnel, onOpen: onOpenAddingPersonnel } =
-		useOpenOverlay(OVERLAY_ADDING_PERSONNEL)
+	const { isOpen: isOpenAddingMember, onOpen: onOpenAddingMember } =
+		useOpenOverlay(OVERLAY_ADDING_MEMBER)
 	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
 		useOpenOverlay(OVERLAY_ADDING_TRAIT)
-	const { getArray: getMemberArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
 	)
@@ -43,7 +43,7 @@ const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => 
 
 	return (
 		<>
-			{isOpenAddingPersonnel && <AddingPersonnel />}
+			{isOpenAddingMember && <AddingMember />}
 			{isOpenAddingTrait && <AddingTrait />}
 			<PanelBase {...{ width, height }}>
 				<PanelHeader
@@ -55,7 +55,7 @@ const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => 
 						},
 						{
 							iconData: faUserPlus,
-							onClick: onOpenAddingPersonnel
+							onClick: onOpenAddingMember
 						}
 					]}
 				/>

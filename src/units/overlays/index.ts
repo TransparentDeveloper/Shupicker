@@ -1,4 +1,4 @@
-import AddingPersonnel from './adding-personnel'
+import AddingMember from './adding-member'
 import AddingTrait from './adding-trait'
 import ScreenRadioAlert from './screen-radio-alert'
-export { AddingPersonnel, AddingTrait, ScreenRadioAlert }
+export { AddingMember, AddingTrait, ScreenRadioAlert }

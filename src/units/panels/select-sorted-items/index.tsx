@@ -1,10 +1,10 @@
 import { ColumnFlexBox, PanelBase, PanelHeader } from '@/components'
 import PanelMain from '@/components/panel/panel-main'
-import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL, URL_PARAM_SORT_METHOD } from '@/constants'
+import { URL_PARAM_GROUP, URL_PARAM_MEMBER, URL_PARAM_SORT_METHOD } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
 import { useSearchSingleValue } from '@/hooks/use-search-single-value'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
-import type { GroupType, OptionalSizeProps, PersonnelType, SortMethodType } from '@/types'
+import type { GroupType, MemberType, OptionalSizeProps, SortMethodType } from '@/types'
 import { arrayEncoder, sortByJoinCountRelativeToCreation } from '@/utils'
 import { getAverageJoinCountPerUnitMinute } from '@/utils/common'
 import { faCheck, faSortAmountDownAlt, faSortAmountUpAlt } from '@fortawesome/free-solid-svg-icons'
@@ -14,7 +14,7 @@ import { SelectableCard } from './components'
 
 const SelectSortedItems = ({ width = '100%', height = '100%' }: OptionalSizeProps) => {
 	const [selectedIdArray, setSelectedIdArray] = useState<Array<number>>([])
-	const { getArray: getMemberArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
 	const { getValue: getSortMethod, setValue: setSortMethod } =
 		useSearchSingleValue(URL_PARAM_SORT_METHOD)
@@ -62,18 +62,18 @@ const SelectSortedItems = ({ width = '100%', height = '100%' }: OptionalSizeProp
 		}
 
 		// 선택된 참여자들 참여횟수 +1
-		const updatedPersonnelArray: Array<PersonnelType> = [...memberArray]
+		const updatedMemberArray: Array<MemberType> = [...memberArray]
 		selectedIdArray.forEach((selectedId) => {
-			const found = updatedPersonnelArray.find((personnel) => personnel.id === selectedId)
+			const found = updatedMemberArray.find((member) => member.id === selectedId)
 			found!.joinCount += 1
 		})
-		params.set(URL_PARAM_PERSONNEL, arrayEncoder<PersonnelType>(updatedPersonnelArray))
+		params.set(URL_PARAM_MEMBER, arrayEncoder<MemberType>(updatedMemberArray))
 
 		// 선택된 참여자 id로 group 생성
 		const newGroupArray = groupArray
 		const submitNewGroup: GroupType = {
 			id: newGroupArray.length,
-			personnelIdArray: [...selectedIdArray]
+			memberIdArray: [...selectedIdArray]
 		}
 		params.set(URL_PARAM_GROUP, arrayEncoder<GroupType>([...newGroupArray, submitNewGroup]))
 		setSelectedIdArray([])

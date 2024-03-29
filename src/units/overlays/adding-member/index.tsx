@@ -9,11 +9,7 @@ import {
 	Spacer
 } from '@/components'
 
-import {
-	OVERLAY_ADDING_PERSONNEL,
-	URL_PARAM_ADDITIONAL_TRAIT,
-	URL_PARAM_PERSONNEL
-} from '@/constants'
+import { OVERLAY_ADDING_MEMBER, URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
 import { useCloseOverlay, useManageUrlArray } from '@/hooks'
 import {
 	BORDER_SOLID,
@@ -22,15 +18,15 @@ import {
 	JUSTIFY_END_CSS
 } from '@/libs/styled-components/css-utils'
 import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { AdditionalTraitType, PersonnelType } from '@/types'
+import { AdditionalTraitType, MemberType } from '@/types'
 import { arrayEncoder, getTimeStamp } from '@/utils'
 import { ChangeEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
-const AddingPersonnel = () => {
-	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_PERSONNEL)
-	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+const AddingMember = () => {
+	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_MEMBER)
+	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
 	)
@@ -40,17 +36,17 @@ const AddingPersonnel = () => {
 		e.preventDefault()
 
 		// 참가자 정보 추가
-		const personnelArray = getPersonnelArray()
+		const memberArray = getMemberArray()
 		const userId = getTimeStamp()
 		const userName = (e.target.elements.item(0) as HTMLInputElement).value
-		personnelArray.push({
+		memberArray.push({
 			id: userId,
 			name: userName,
 			joinedAt: Date.now(),
 			joinCount: 0
 		})
-		const encodedPersonnelArray = arrayEncoder<PersonnelType>(personnelArray)
-		param.set(URL_PARAM_PERSONNEL, encodedPersonnelArray)
+		const encodedMemberArray = arrayEncoder<MemberType>(memberArray)
+		param.set(URL_PARAM_MEMBER, encodedMemberArray)
 
 		// 추가 특성 정보 갱신
 		const additionalTraitArray = getAdditionalTraitArray()
@@ -111,7 +107,7 @@ const AddingPersonnel = () => {
 	)
 }
 
-export default AddingPersonnel
+export default AddingMember
 
 const MainContent = styled.main`
 	${FLEX_START}

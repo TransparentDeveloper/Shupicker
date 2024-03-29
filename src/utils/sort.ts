@@ -1,8 +1,8 @@
-import type { PersonnelType, SortMethodType } from '@/types'
+import type { MemberType, SortMethodType } from '@/types'
 import { getAverageJoinCountPerUnitMinute } from './common'
 
 /** 참여자 id 기준 정렬 */
-export const sortByMemberId = (memberArray: Array<PersonnelType>, sortMethod?: SortMethodType) => {
+export const sortByMemberId = (memberArray: Array<MemberType>, sortMethod?: SortMethodType) => {
 	sortMethod = sortMethod ?? 'ascend'
 	const result = memberArray.sort((member1, member2) => {
 		return member2.id - member1.id
@@ -14,10 +14,10 @@ export const sortByMemberId = (memberArray: Array<PersonnelType>, sortMethod?: S
  * @description 생성시간 대비 참여횟수 기준 정렬
  */
 export const sortByJoinCountRelativeToCreation = (
-	memberArray: Array<PersonnelType>,
+	memberArray: Array<MemberType>,
 	unitMinute: number, // 단위시간
 	sortMethod?: SortMethodType
-): Array<PersonnelType> => {
+): Array<MemberType> => {
 	sortMethod = sortMethod ?? 'ascend'
 	const now = Date.now()
 	const result = memberArray.sort((member1, member2) => {

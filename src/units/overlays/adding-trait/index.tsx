@@ -10,11 +10,11 @@ import {
 	OverlayHeader,
 	Spacer
 } from '@/components'
-import { OVERLAY_ADDING_TRAIT, URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_PERSONNEL } from '@/constants'
+import { OVERLAY_ADDING_TRAIT, URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
 import { useCloseOverlay, useManageUrlArray } from '@/hooks'
 import { FLEX_CENTER, FLEX_END, FLEX_START } from '@/libs/styled-components/css-utils'
 import { FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import type { AdditionalTraitType, PersonnelType } from '@/types'
+import type { AdditionalTraitType, MemberType } from '@/types'
 import { getTimeStamp } from '@/utils'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 import { ChangeEvent, useRef, useState } from 'react'
@@ -23,7 +23,7 @@ import { TaggingTrait } from './components'
 
 const AddingTrait = () => {
 	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_TRAIT)
-	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 	const { addElementOne: addAdditionalTrait } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
 	)
@@ -66,11 +66,11 @@ const AddingTrait = () => {
 			window.alert('특성의 옵션을 두 개이상 추가해주세요.')
 			return
 		}
-		const personnelArray = getPersonnelArray()
+		const memberArray = getMemberArray()
 		const traitValues = []
-		for (let i = 0; i < personnelArray.length; i++) {
+		for (let i = 0; i < memberArray.length; i++) {
 			traitValues.push({
-				userId: personnelArray[i].id,
+				userId: memberArray[i].id,
 				value: '미지정'
 			})
 		}

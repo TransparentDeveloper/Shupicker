@@ -1,20 +1,20 @@
 import { ColumnFlexBox, PanelBase, PanelHeader } from '@/components'
 import PanelMain from '@/components/panel/panel-main'
-import { URL_PARAM_GROUP, URL_PARAM_PERSONNEL } from '@/constants'
+import { URL_PARAM_GROUP, URL_PARAM_MEMBER } from '@/constants'
 import { useManageUrlArray } from '@/hooks'
-import type { GroupType, OptionalSizeProps, PersonnelType } from '@/types'
+import type { GroupType, MemberType, OptionalSizeProps } from '@/types'
 import { GroupCard } from './components'
 
 const MatchingLog = ({ width = '100%', height = '100%' }: OptionalSizeProps) => {
 	const { getArray: getGroupArray } = useManageUrlArray<GroupType>(URL_PARAM_GROUP)
-	const { getArray: getPersonnelArray } = useManageUrlArray<PersonnelType>(URL_PARAM_PERSONNEL)
+	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 
 	const groupArray = getGroupArray()
-	const personnelArray = getPersonnelArray()
+	const memberArray = getMemberArray()
 
 	const memberArrayEachGroup = groupArray.map((group) => {
-		const memberIdArray = group.personnelIdArray
-		return personnelArray.filter((member) => memberIdArray.includes(member.id))
+		const memberIdArray = group.memberIdArray
+		return memberArray.filter((member) => memberIdArray.includes(member.id))
 	})
 
 	return (

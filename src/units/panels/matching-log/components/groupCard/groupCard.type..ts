@@ -1,6 +1,6 @@
-import type { PersonnelType } from '@/types'
+import type { MemberType } from '@/types'
 
 export type GroupCardProps = {
 	groupId: number
-	memberArray: Array<PersonnelType>
+	memberArray: Array<MemberType>
 }

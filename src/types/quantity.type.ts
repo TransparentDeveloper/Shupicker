@@ -1,4 +1,4 @@
 export type QuantityType = {
-	numberOfPersonnel: number
+	numberOfMember: number
 	numberOfAdditionalTrait: number
 }

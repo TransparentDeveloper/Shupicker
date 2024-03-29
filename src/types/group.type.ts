@@ -1,4 +1,4 @@
 export type GroupType = {
 	id: number
-	personnelIdArray: Array<number>
+	memberIdArray: Array<number>
 }
