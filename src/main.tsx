@@ -1,5 +1,5 @@
 import { DefaultLayout } from '@/components'
-import { ScreenProvider } from '@/context'
+import { DialogProvider, ScreenProvider } from '@/context'
 import GlobalStyles from '@/libs/styled-components/global'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -23,10 +23,12 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<RecoilRoot>
-			<ScreenProvider>
-				<GlobalStyles />
-				<RouterProvider router={router} />
-			</ScreenProvider>
+			<DialogProvider>
+				<ScreenProvider>
+					<GlobalStyles />
+					<RouterProvider router={router} />
+				</ScreenProvider>
+			</DialogProvider>
 		</RecoilRoot>
 	</React.StrictMode>
 )

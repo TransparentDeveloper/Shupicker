@@ -1,5 +1,6 @@
 import Box from './box'
 import Button from './button'
+import Dialog from './dialog'
 import DropBox from './drop-box'
 import Header from './header'
 import HorizontalGaugeGraph from './horizontal-gauge-graph'
@@ -11,6 +12,7 @@ import TextSpacer from './text-spacer'
 export {
 	Box,
 	Button,
+	Dialog,
 	DropBox,
 	Header,
 	HorizontalGaugeGraph,

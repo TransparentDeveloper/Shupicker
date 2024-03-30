@@ -19,7 +19,6 @@ export const AlignCSS = {
 export const Container = styled.div<T.$ContainerProps>`
 	width: 100%;
 	height: 100%;
-	min-height: 100%;
 	gap: ${({ $gap }) => $gap};
 
 	${({ $align }) => AlignCSS[$align]};
