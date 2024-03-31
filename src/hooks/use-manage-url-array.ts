@@ -5,15 +5,15 @@ export const useManageUrlArray = <T>(urlParamKey: string) => {
 	const [params, setParams] = useSearchParams()
 
 	const getArray = (): T[] => {
-		const encodedArray = params.get(urlParamKey)
-		if (!encodedArray) return []
+		if (!params.has(urlParamKey)) return []
+		const encodedArray = params.get(urlParamKey)!
 		return arrayDecoder<T>(encodedArray)
 	}
 	const addElementOne = (newElement: T) => {
-		const encodedArray = params.get(urlParamKey)
-		if (!encodedArray) {
+		if (!params.has(urlParamKey)) {
 			params.set(urlParamKey, arrayEncoder<T>([newElement]))
 		} else {
+			const encodedArray = params.get(urlParamKey)!
 			const originArray = arrayDecoder<T>(encodedArray)
 			params.set(urlParamKey, arrayEncoder<T>([...originArray, newElement]))
 		}

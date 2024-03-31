@@ -6,23 +6,21 @@ import {
 	GridElement,
 	IconButton,
 	Input,
-	OverlayBase,
-	OverlayHeader,
 	Spacer
 } from '@/components'
-import { OVERLAY_ADDING_TRAIT, URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
-import { useCloseOverlay, useManageUrlArray } from '@/hooks'
+import { URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
+import { useManageUrlArray } from '@/hooks'
 import { FLEX_CENTER, FLEX_END, FLEX_START } from '@/libs/styled-components/css-utils'
 import { FONT_SIZE } from '@/libs/styled-components/reference-tokens'
 import type { AdditionalTraitType, MemberType } from '@/types'
 import { getTimeStamp } from '@/utils'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
-import { ChangeEvent, useRef, useState } from 'react'
+import type { ChangeEvent } from 'react'
+import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { TaggingTrait } from './components'
 
 const AddingTrait = () => {
-	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_TRAIT)
 	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 	const { addElementOne: addAdditionalTrait } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
@@ -80,73 +78,56 @@ const AddingTrait = () => {
 			options: ['미지정', ...optionArray],
 			values: traitValues
 		})
-		onClose()
 	}
 
-	if (!isVisible) return
 	return (
-		<OverlayBase width="45rem" height="32rem" {...{ onClose }}>
-			<OverlayHeader overlayName="특성 추가" />
-			<S.MainContent>
-				<ColumnFlexBox>
-					<form onSubmit={onHandleSubmit}>
-						<Grid rows={2} columns={2} rowGap="1rem">
-							<GridElement row={1} column={1}>
-								<CenterFlexBox align="bothAlign">
-									<S.TraitKeyText>특성 이름</S.TraitKeyText>
-								</CenterFlexBox>
-							</GridElement>
-							<GridElement row={1} column={2}>
-								<CenterFlexBox align="bothAlign">
-									<Input width="100%" />
-								</CenterFlexBox>
-							</GridElement>
-							<GridElement row={2} column={1}>
-								<CenterFlexBox align="bothAlign">
-									<S.TraitKeyText>옵션 설정</S.TraitKeyText>
-								</CenterFlexBox>
-							</GridElement>
-							<GridElement row={2} column={2}>
-								<S.InputWrapper>
-									<S.OptionList>
-										{optionArray.map((option, optionIndex) => (
-											<TaggingTrait
-												key={optionIndex}
-												onClickCancel={() => onHandleRemovingTraitOption(optionIndex)}
-											>
-												{option}
-											</TaggingTrait>
-										))}
-									</S.OptionList>
-									<CenterFlexBox align="bothAlign" gap="0.2rem">
-										<Input width="100%" ref={optionRef} />
-										<IconButton
-											type="button"
-											iconData={faUpload}
-											onClick={onClickAddingOptionButton}
-										/>
-									</CenterFlexBox>
-								</S.InputWrapper>
-							</GridElement>
-						</Grid>
-						<Spacer height={1} />
-						<ButtonWrapper>
-							<Button type="submit">완료</Button>
-						</ButtonWrapper>
-					</form>
-				</ColumnFlexBox>
-			</S.MainContent>
-		</OverlayBase>
+		<ColumnFlexBox>
+			<form onSubmit={onHandleSubmit}>
+				<Grid rows={2} columns={2} rowGap="1rem">
+					<GridElement row={1} column={1}>
+						<CenterFlexBox align="bothAlign">
+							<S.TraitKeyText>특성 이름</S.TraitKeyText>
+						</CenterFlexBox>
+					</GridElement>
+					<GridElement row={1} column={2}>
+						<CenterFlexBox align="bothAlign">
+							<Input width="100%" />
+						</CenterFlexBox>
+					</GridElement>
+					<GridElement row={2} column={1}>
+						<CenterFlexBox align="bothAlign">
+							<S.TraitKeyText>옵션 설정</S.TraitKeyText>
+						</CenterFlexBox>
+					</GridElement>
+					<GridElement row={2} column={2}>
+						<S.InputWrapper>
+							<S.OptionList>
+								{optionArray.map((option, optionIndex) => (
+									<TaggingTrait
+										key={optionIndex}
+										onClickCancel={() => onHandleRemovingTraitOption(optionIndex)}
+									>
+										{option}
+									</TaggingTrait>
+								))}
+							</S.OptionList>
+							<CenterFlexBox align="bothAlign" gap="0.2rem">
+								<Input width="100%" ref={optionRef} />
+								<IconButton type="button" iconData={faUpload} onClick={onClickAddingOptionButton} />
+							</CenterFlexBox>
+						</S.InputWrapper>
+					</GridElement>
+				</Grid>
+				<Spacer height={1} />
+				<ButtonWrapper>
+					<Button type="submit">완료</Button>
+				</ButtonWrapper>
+			</form>
+		</ColumnFlexBox>
 	)
 }
 
 export default AddingTrait
-
-const MainContent = styled.div`
-	${FLEX_CENTER}
-	width: 100%;
-	height: 75%;
-`
 
 const TraitKeyText = styled.p`
 	${FLEX_CENTER}
@@ -186,7 +167,6 @@ const OptionList = styled.div`
 `
 
 const S = {
-	MainContent,
 	TraitKeyText,
 	ButtonWrapper,
 	InputWrapper,

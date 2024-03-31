@@ -27,7 +27,7 @@ const GlobalStyles = createGlobalStyle`
     color: ${COLOR.grayScale[1500]};
     ${GIANTS_REGULAR}
     font-size: 62.5%; 
-    @media screen and (max-width: ${BREAK_POINT.mobile.maxWidth}) {
+    @media screen and (max-width: ${BREAK_POINT.mobile.maxWidth + 'px'}) {
       font-size: 50%;
     }
     height: 100%;

@@ -1,13 +1,7 @@
 import { PanelBase, PanelHeader } from '@/components'
 import PanelMain from '@/components/panel/panel-main'
-import {
-	OVERLAY_ADDING_MEMBER,
-	OVERLAY_ADDING_TRAIT,
-	URL_PARAM_ADDITIONAL_TRAIT,
-	URL_PARAM_MEMBER
-} from '@/constants'
-import { useManageUrlArray } from '@/hooks'
-import { useOpenOverlay } from '@/hooks/use-open-overlay'
+import { URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
+import { useDialog, useManageUrlArray } from '@/hooks'
 import type { AdditionalTraitType, MemberType, OptionalSizeProps } from '@/types'
 import { AddingMember, AddingTrait } from '@/units'
 import { getTimeFormatHHMM, sortByMemberId } from '@/utils'
@@ -16,20 +10,29 @@ import { useCallback } from 'react'
 import * as S from './member-table.style'
 
 const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => {
-	const { isOpen: isOpenAddingMember, onOpen: onOpenAddingMember } =
-		useOpenOverlay(OVERLAY_ADDING_MEMBER)
-	const { isOpen: isOpenAddingTrait, onOpen: onOpenAddingTrait } =
-		useOpenOverlay(OVERLAY_ADDING_TRAIT)
 	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
 	)
+	const { onOverlayWindow, onClose } = useDialog()
+
+	const onOpenAddingTrait = () => {
+		onOverlayWindow({
+			title: '특성 추가',
+			dialogContent: <AddingTrait />
+		})
+	}
+	const onOpenAddingMember = () => {
+		onOverlayWindow({
+			title: '인원 추가',
+			dialogContent: <AddingMember {...{ onClose }} />
+		})
+	}
 
 	/** 멤버 배열 */
 	const memberArray = getMemberArray()
 	/** 추가 특성 배열 */
 	const additionalTraitArray = getAdditionalTraitArray()
-
 	/** 아이디로 정렬된 멤버 배열 */
 	const sortedByIdMemberArray = sortByMemberId(memberArray)
 
@@ -43,8 +46,6 @@ const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => 
 
 	return (
 		<>
-			{isOpenAddingMember && <AddingMember />}
-			{isOpenAddingTrait && <AddingTrait />}
 			<PanelBase {...{ width, height }}>
 				<PanelHeader
 					sectionName="📌 인명부"

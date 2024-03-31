@@ -1,42 +1,32 @@
-import {
-	Button,
-	DropBox,
-	Grid,
-	GridElement,
-	Input,
-	OverlayBase,
-	OverlayHeader,
-	Spacer
-} from '@/components'
-
-import { OVERLAY_ADDING_MEMBER, URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
-import { useCloseOverlay, useManageUrlArray } from '@/hooks'
-import {
-	BORDER_SOLID,
-	FLEX_CENTER,
-	FLEX_START,
-	JUSTIFY_END_CSS
-} from '@/libs/styled-components/css-utils'
-import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { AdditionalTraitType, MemberType } from '@/types'
+import { Button, DropBox, Input, Spacer } from '@/components'
+import { URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
+import { useManageUrlArray } from '@/hooks'
+import { ALIGN_CENTER, DIRECTION_COLUMN, FLEX_CENTER } from '@/libs/styled-components/css-utils'
+import type { AdditionalTraitType, MemberType, OverlayCommonProps } from '@/types'
 import { arrayEncoder, getTimeStamp } from '@/utils'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { LabelAndNodeRowPair } from './components'
 
-const AddingMember = () => {
-	const { isVisible, onClose } = useCloseOverlay(OVERLAY_ADDING_MEMBER)
+type $ScrollListProps = { $isAdditionalTrait: boolean }
+
+const AddingMember = ({ onClose }: OverlayCommonProps) => {
 	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
 	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
 	)
 	const [param, setParams] = useSearchParams()
 
+	const memberArray = getMemberArray()
+	const additionalTraitArray = getAdditionalTraitArray()
+	/** 추가 특성의 갯수 */
+	const isAdditionalTrait = additionalTraitArray.length
+
 	const onHandleComplete = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
 		// 참가자 정보 추가
-		const memberArray = getMemberArray()
 		const userId = getTimeStamp()
 		const userName = (e.target.elements.item(0) as HTMLInputElement).value
 		memberArray.push({
@@ -49,9 +39,7 @@ const AddingMember = () => {
 		param.set(URL_PARAM_MEMBER, encodedMemberArray)
 
 		// 추가 특성 정보 갱신
-		const additionalTraitArray = getAdditionalTraitArray()
-		const numAdditionalTrait = additionalTraitArray.length
-		for (let i = 0; i < numAdditionalTrait; i++) {
+		for (let i = 0; i < isAdditionalTrait; i++) {
 			const traitValue = (e.target.elements.item(i + 1) as HTMLSelectElement).value
 			additionalTraitArray[i].values.push({ userId, value: traitValue })
 		}
@@ -62,101 +50,58 @@ const AddingMember = () => {
 		onClose()
 	}
 
-	if (!isVisible) return
 	return (
-		<OverlayBase width="45rem" height="25rem" {...{ onClose }}>
-			<OverlayHeader overlayName="인원 추가" />
-			<Spacer height={1} />
-			<form onSubmit={onHandleComplete}>
-				<S.MainContent>
-					<Grid rows={2}>
-						<GridElement row={1}>
-							<S.TraitKeyWrapper>이름</S.TraitKeyWrapper>
-						</GridElement>
-						<GridElement row={2}>
-							<S.TraitValueWrapper>
-								<Input
-									name="participantName"
-									width="100%"
-									fontSize={FONT_SIZE.sm}
-									bgColor="transparent"
-									placeholder="이름 입력"
-								/>
-							</S.TraitValueWrapper>
-						</GridElement>
-					</Grid>
-
-					{getAdditionalTraitArray()?.map((trait, traitIndex) => (
-						<Grid rows={2} key={traitIndex}>
-							<GridElement row={1}>
-								<S.TraitKeyWrapper>{trait.name}</S.TraitKeyWrapper>
-							</GridElement>
-							<GridElement row={2}>
-								<S.TraitValueWrapper>
-									<DropBox options={trait.options} width="90%" bgColor="transparent" />
-								</S.TraitValueWrapper>
-							</GridElement>
-						</Grid>
+		<S.ContentForm onSubmit={onHandleComplete}>
+			<S.ScrollWrapper>
+				<S.ScrollList $isAdditionalTrait={!!isAdditionalTrait}>
+					<LabelAndNodeRowPair label="이름">
+						<Input bgColor="transparent" placeholder="입력해주세요." width="100%" />
+					</LabelAndNodeRowPair>
+					{additionalTraitArray.map((additionalTrait, idx) => (
+						<LabelAndNodeRowPair label={additionalTrait.name} key={idx}>
+							<DropBox options={additionalTrait.options} width="100%" bgColor="transparent" />
+						</LabelAndNodeRowPair>
 					))}
-				</S.MainContent>
-				<S.ButtonWrapper>
-					<Button type="submit">추가하기</Button>
-				</S.ButtonWrapper>
-			</form>
-		</OverlayBase>
+				</S.ScrollList>
+			</S.ScrollWrapper>
+			<Spacer height={1} />
+			<S.ButtonWrapper>
+				<Button type="submit">추가하기</Button>
+			</S.ButtonWrapper>
+		</S.ContentForm>
 	)
 }
 
 export default AddingMember
 
-const MainContent = styled.main`
-	${FLEX_START}
-	gap: 0.1rem;
+const ContentForm = styled.form`
+	${DIRECTION_COLUMN}
+	${FLEX_CENTER}
+	gap: 2rem;
+
 	width: 100%;
-	height: 50%;
+	height: 100%;
+`
+const ScrollWrapper = styled.div`
+	position: relative;
+	width: 100%;
+	height: 10rem;
+`
+const ScrollList = styled.div<$ScrollListProps>`
+	${({ $isAdditionalTrait }) => ($isAdditionalTrait ? ALIGN_CENTER : FLEX_CENTER)}
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	gap: 0.5rem;
 	overflow-x: scroll;
-
-	padding: 1rem 0;
 `
-const TraitKeyWrapper = styled.div`
-	${FLEX_CENTER}
-
-	width: 100%;
-	min-width: 16rem;
-	height: 100%;
-
-	text-align: center;
-	font-size: ${FONT_SIZE.bg};
-
-	${BORDER_SOLID}
-	border-bottom: 0.05rem solid ${COLOR.grayScale[700]};
-
-	border-radius: ${BORDER_RADIUS.ti};
-	background-color: ${COLOR.grayScale[200]};
-`
-
-const TraitValueWrapper = styled.div`
-	${FLEX_CENTER}
-	width: 100%;
-	min-width: 16rem;
-	height: 100%;
-
-	text-align: center;
-
-	border-radius: ${BORDER_RADIUS.ti};
-	background-color: ${COLOR.grayScale[400]};
-`
-
 const ButtonWrapper = styled.div`
-	${JUSTIFY_END_CSS}
-
-	width: 100%;
-	height: fit-content;
+	position: absolute;
+	bottom: 1.5rem;
 `
-
 const S = {
-	MainContent,
-	TraitKeyWrapper,
-	TraitValueWrapper,
-	ButtonWrapper
+	ContentForm,
+	ButtonWrapper,
+	ScrollList,
+	ScrollWrapper
 }

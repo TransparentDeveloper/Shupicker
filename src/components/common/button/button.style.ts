@@ -24,7 +24,7 @@ export const ButtonBase = styled.button<T.$ButtonBase>`
 	color: ${COLOR.grayScale[0]};
 	background-color: ${COLOR.grayScale[1500]};
 
-	padding: 0.8rem;
+	padding: 0.5rem 0.8rem;
 	transition: background-color 200ms;
 
 	&:hover {

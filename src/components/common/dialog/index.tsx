@@ -1,4 +1,5 @@
-import { CenterFlexBox, ColumnFlexBox, PaddingContainer } from '@/components'
+import { CenterFlexBox, ColumnFlexBox } from '@/components'
+import styled from 'styled-components'
 import * as S from './dialog.style'
 import type * as T from './dialog.type'
 
@@ -14,12 +15,10 @@ const Dialog = ({
 			<CenterFlexBox align="bothAlign">
 				<S.DialogBase $size={size} onClick={(e) => e.stopPropagation()}>
 					{isCloseButton && <S.CloseButton onClick={onClose}>X</S.CloseButton>}
-					<PaddingContainer horizontal="2rem" vertical="2rem">
-						<ColumnFlexBox gap="1rem">
-							<S.DialogTitle>{title}</S.DialogTitle>
-							<CenterFlexBox align="bothAlign">{dialogContent}</CenterFlexBox>
-						</ColumnFlexBox>
-					</PaddingContainer>
+					<ColumnFlexBox gap="1rem">
+						<S.DialogTitle>{title}</S.DialogTitle>
+						<CenterFlexBox align="bothAlign">{dialogContent}</CenterFlexBox>
+					</ColumnFlexBox>
 				</S.DialogBase>
 			</CenterFlexBox>
 		</S.FullSizeFilter>
@@ -27,3 +26,5 @@ const Dialog = ({
 }
 
 export default Dialog
+
+const Test = styled.div``

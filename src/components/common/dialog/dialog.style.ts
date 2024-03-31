@@ -1,16 +1,27 @@
 import { FLEX_CENTER, GIANTS_INLINE, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
-import { BORDER_RADIUS, COLOR, FONT_SIZE } from '@/libs/styled-components/reference-tokens'
+import {
+	BORDER_RADIUS,
+	BREAK_POINT,
+	COLOR,
+	FONT_SIZE
+} from '@/libs/styled-components/reference-tokens'
 import styled, { css } from 'styled-components'
 import type * as T from './dialog.type'
 
 export const SIZE_CSS = {
 	default: css`
-		width: 60dvw;
-		height: 60dvh;
+		width: fit-content;
+		min-width: 45dvw;
+		height: 50dvh;
+		@media screen and (max-width: ${BREAK_POINT.mobile.maxWidth + 'px'}) {
+			height: 60dvh;
+		}
 	`,
 	small: css`
-		width: 40dvw;
-		height: 30dvh;
+		width: fit-content;
+		min-width: 40dvw;
+		height: fit-content;
+		min-height: 30dvh;
 	`
 }
 export const FullSizeFilter = styled.div`
@@ -30,6 +41,7 @@ export const DialogBase = styled.div<T.$DialogBaseProps>`
 
 	border-radius: ${BORDER_RADIUS.sm};
 	background-color: ${COLOR.grayScale[300]};
+	padding: 2rem;
 `
 export const CloseButton = styled.button`
 	position: absolute;
