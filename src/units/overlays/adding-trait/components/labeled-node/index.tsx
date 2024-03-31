@@ -1,14 +1,7 @@
 import { Grid, GridElement } from '@/components'
-import { FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-components/css-utils'
-import { FONT_SIZE } from '@/libs/styled-components/reference-tokens'
-import { PropsWithChildren } from 'react'
-import styled from 'styled-components'
-
-type LabeledNodeProps = PropsWithChildren & {
-	label: string
-}
-
-const LabeledNode = ({ label, children }: LabeledNodeProps) => {
+import * as S from './labeled-node.style'
+import type * as T from './labeled-node.type'
+const LabeledNode = ({ label, children }: T.LabeledNodeProps) => {
 	return (
 		<S.Wrapper>
 			<Grid columns={2}>
@@ -24,22 +17,3 @@ const LabeledNode = ({ label, children }: LabeledNodeProps) => {
 }
 
 export default LabeledNode
-
-const Wrapper = styled.div`
-	width: 100%;
-	height: 6rem;
-`
-
-const LabelText = styled.div`
-	${FLEX_CENTER}
-	${TEXT_SHADOW_CSS}
-	text-align: center;
-	width: 100%;
-	height: 100%;
-	font-size: ${FONT_SIZE.bg};
-`
-
-const S = {
-	Wrapper,
-	LabelText
-}

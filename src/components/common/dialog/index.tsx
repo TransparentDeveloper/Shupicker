@@ -1,5 +1,4 @@
 import { CenterFlexBox, ColumnFlexBox } from '@/components'
-import styled from 'styled-components'
 import * as S from './dialog.style'
 import type * as T from './dialog.type'
 
@@ -26,5 +25,3 @@ const Dialog = ({
 }
 
 export default Dialog
-
-const Test = styled.div``

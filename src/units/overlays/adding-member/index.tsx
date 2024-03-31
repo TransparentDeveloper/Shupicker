@@ -1,16 +1,12 @@
 import { Button, DropBox, Input } from '@/components'
 import { URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
 import { useDialog, useManageUrlArray } from '@/hooks'
-import { ALIGN_CENTER, FLEX_CENTER } from '@/libs/styled-components/css-utils'
-import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import type { AdditionalTraitType, MemberType, OverlayCommonProps } from '@/types'
 import { arrayEncoder, getTimeStamp } from '@/utils'
 import type { ChangeEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import styled from 'styled-components'
+import * as S from './adding-member.style'
 import { LabelAndNodeRowPair } from './components'
-
-type $ScrollListProps = { $isAdditionalTrait: boolean }
 
 const AddingMember = ({ onClose }: OverlayCommonProps) => {
 	const { getArray: getMemberArray } = useManageUrlArray<MemberType>(URL_PARAM_MEMBER)
@@ -80,41 +76,3 @@ const AddingMember = ({ onClose }: OverlayCommonProps) => {
 }
 
 export default AddingMember
-
-const ContentForm = styled.form`
-	${FLEX_CENTER}
-	width: 100%;
-	height: 100%;
-`
-const ScrollWrapper = styled.div`
-	position: relative;
-	width: 100%;
-	height: 10rem;
-`
-const ScrollList = styled.div<$ScrollListProps>`
-	${({ $isAdditionalTrait }) => ($isAdditionalTrait ? ALIGN_CENTER : FLEX_CENTER)}
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	gap: 0.5rem;
-	overflow-x: scroll;
-`
-const ButtonWrapper = styled.div`
-	${FLEX_CENTER}
-	position: absolute;
-	gap: 1rem;
-	width: 100%;
-	height: 5rem;
-	bottom: -5.2rem;
-	padding: 0 2rem;
-	border-bottom-right-radius: ${BORDER_RADIUS.sm};
-	border-bottom-left-radius: ${BORDER_RADIUS.sm};
-	background-color: ${COLOR.grayScale[400]};
-	right: 0;
-`
-const S = {
-	ContentForm,
-	ButtonWrapper,
-	ScrollList,
-	ScrollWrapper
-}
