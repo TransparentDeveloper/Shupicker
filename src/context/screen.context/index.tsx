@@ -28,8 +28,13 @@ export const ScreenProvider = ({ children }: PropsWithChildren) => {
 	}
 	useEffect(() => {
 		window.addEventListener('resize', onHandleScreen)
+		const registerState = setTimeout(() => {
+			onHandleScreen()
+		}, 0.0000000000001)
+
 		return () => {
 			window.addEventListener('resize', onHandleScreen)
+			clearTimeout(registerState)
 		}
 	}, [])
 
