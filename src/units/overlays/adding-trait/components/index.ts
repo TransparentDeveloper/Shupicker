@@ -1,2 +1,3 @@
-import TaggingTrait from './tagging-trait'
-export { TaggingTrait }
+import LabeledNode from './labeled-node'
+import RecordedInput from './recorded-input'
+export { LabeledNode, RecordedInput }

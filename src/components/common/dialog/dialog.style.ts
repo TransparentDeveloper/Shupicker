@@ -10,18 +10,16 @@ import type * as T from './dialog.type'
 
 export const SIZE_CSS = {
 	default: css`
-		width: fit-content;
-		min-width: 45dvw;
+		width: 45dvw;
 		height: 50dvh;
 		@media screen and (max-width: ${BREAK_POINT.mobile.maxWidth + 'px'}) {
+			width: 55dvw;
 			height: 60dvh;
 		}
 	`,
 	small: css`
-		width: fit-content;
-		min-width: 40dvw;
-		height: fit-content;
-		min-height: 30dvh;
+		width: 40dvw;
+		height: 30dvh;
 	`
 }
 export const FullSizeFilter = styled.div`

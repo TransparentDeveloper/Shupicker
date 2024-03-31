@@ -19,7 +19,7 @@ const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => 
 	const onOpenAddingTrait = () => {
 		onOverlayWindow({
 			title: '특성 추가',
-			dialogContent: <AddingTrait />
+			dialogContent: <AddingTrait {...{ onClose }} />
 		})
 	}
 	const onOpenAddingMember = () => {

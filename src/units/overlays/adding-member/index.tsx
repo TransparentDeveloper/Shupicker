@@ -1,7 +1,8 @@
-import { Button, DropBox, Input, Spacer } from '@/components'
+import { Button, DropBox, Input } from '@/components'
 import { URL_PARAM_ADDITIONAL_TRAIT, URL_PARAM_MEMBER } from '@/constants'
-import { useManageUrlArray } from '@/hooks'
-import { ALIGN_CENTER, DIRECTION_COLUMN, FLEX_CENTER } from '@/libs/styled-components/css-utils'
+import { useDialog, useManageUrlArray } from '@/hooks'
+import { ALIGN_CENTER, FLEX_CENTER } from '@/libs/styled-components/css-utils'
+import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import type { AdditionalTraitType, MemberType, OverlayCommonProps } from '@/types'
 import { arrayEncoder, getTimeStamp } from '@/utils'
 import type { ChangeEvent } from 'react'
@@ -16,6 +17,7 @@ const AddingMember = ({ onClose }: OverlayCommonProps) => {
 	const { getArray: getAdditionalTraitArray } = useManageUrlArray<AdditionalTraitType>(
 		URL_PARAM_ADDITIONAL_TRAIT
 	)
+	const { onAlert } = useDialog()
 	const [param, setParams] = useSearchParams()
 
 	const memberArray = getMemberArray()
@@ -26,9 +28,15 @@ const AddingMember = ({ onClose }: OverlayCommonProps) => {
 	const onHandleComplete = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
+		const userName = (e.target.elements.item(0) as HTMLInputElement).value
+
+		if (!!!userName) {
+			onAlert('새로운 멤버의 이름을 작성해주세요.')
+			return
+		}
+
 		// 참가자 정보 추가
 		const userId = getTimeStamp()
-		const userName = (e.target.elements.item(0) as HTMLInputElement).value
 		memberArray.push({
 			id: userId,
 			name: userName,
@@ -64,7 +72,6 @@ const AddingMember = ({ onClose }: OverlayCommonProps) => {
 					))}
 				</S.ScrollList>
 			</S.ScrollWrapper>
-			<Spacer height={1} />
 			<S.ButtonWrapper>
 				<Button type="submit">추가하기</Button>
 			</S.ButtonWrapper>
@@ -75,10 +82,7 @@ const AddingMember = ({ onClose }: OverlayCommonProps) => {
 export default AddingMember
 
 const ContentForm = styled.form`
-	${DIRECTION_COLUMN}
 	${FLEX_CENTER}
-	gap: 2rem;
-
 	width: 100%;
 	height: 100%;
 `
@@ -96,8 +100,17 @@ const ScrollList = styled.div<$ScrollListProps>`
 	overflow-x: scroll;
 `
 const ButtonWrapper = styled.div`
+	${FLEX_CENTER}
 	position: absolute;
-	bottom: 1.5rem;
+	gap: 1rem;
+	width: 100%;
+	height: 5rem;
+	bottom: -5.2rem;
+	padding: 0 2rem;
+	border-bottom-right-radius: ${BORDER_RADIUS.sm};
+	border-bottom-left-radius: ${BORDER_RADIUS.sm};
+	background-color: ${COLOR.grayScale[400]};
+	right: 0;
 `
 const S = {
 	ContentForm,

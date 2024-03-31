@@ -4,10 +4,11 @@ import { useDialogStore } from '@/context'
 export const useDialog = () => {
 	const { onOpen, onClose } = useDialogStore()
 
-	const onAlert = (title: string) => {
+	const onAlert = (alertMessage: string) => {
 		onOpen({
-			title,
+			title: '⚠️ Alert',
 			size: 'small',
+			dialogContent: <div>{alertMessage}</div>,
 			onClose
 		})
 	}
