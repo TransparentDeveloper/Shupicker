@@ -1,5 +1,4 @@
-export const arrayEncoder = <T>(originArray: T[]): string =>
-	btoa(encodeURIComponent(JSON.stringify(originArray)))
-
-export const arrayDecoder = <T>(encodedString: string): T[] =>
+export const encoder = (origin: Array<Object> | string | number): string =>
+	btoa(encodeURIComponent(JSON.stringify(origin)))
+export const decoder = <T>(encodedString: string): Array<T> | T =>
 	JSON.parse(decodeURIComponent(atob(encodedString)))
