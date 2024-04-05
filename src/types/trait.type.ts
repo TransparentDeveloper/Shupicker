@@ -3,7 +3,8 @@ export type TraitType = {
 	label: string
 	hasOption: boolean
 	options: Array<string>
-	value: number // options 의 idx
+	value: string | number
+	valueIdx: number // options 의 idx
 }
 
 export type TraitTableType = Array<TraitType>

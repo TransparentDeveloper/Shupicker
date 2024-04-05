@@ -1,9 +1,9 @@
+import type { PropsWithChildren } from 'react'
 import { AlignCSS } from './center-box.style'
 
-export type CenterBoxProps = {
+export type CenterBoxProps = PropsWithChildren & {
 	align?: keyof typeof AlignCSS
 	gap?: string
-	children?: React.ReactNode
 }
 
 export type $ContainerProps = {

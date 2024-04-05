@@ -2,6 +2,7 @@ import { TraitType } from '.'
 
 export type MemberType = {
 	id: number
-	traits: Array<TraitType>
+	essentialTraits: Array<TraitType>
+	additionalTraits: Array<TraitType>
 }
 export type MemberTableType = Array<MemberType>
