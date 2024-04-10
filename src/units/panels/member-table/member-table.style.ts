@@ -2,7 +2,7 @@ import { BOX_SHADOW_CSS, FLEX_CENTER, TEXT_SHADOW_CSS } from '@/libs/styled-comp
 import { BORDER_RADIUS, COLOR } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 
-export const GridTable = styled.table`
+export const GridTable = styled.div`
 	width: 100%;
 	height: 100%;
 	display: grid;

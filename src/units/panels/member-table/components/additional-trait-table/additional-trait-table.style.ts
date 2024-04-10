@@ -2,7 +2,7 @@ import { FLEX_START } from '@/libs/styled-components/css-utils'
 import { COLOR } from '@/libs/styled-components/reference-tokens'
 import styled from 'styled-components'
 
-export const TableWrapper = styled.table`
+export const TableWrapper = styled.div`
 	position: relative;
 	width: 100%;
 	height: 100%;
