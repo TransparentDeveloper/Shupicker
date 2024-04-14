@@ -8,8 +8,8 @@ import {
 	ESSENTIAL_TRAIT_CREATION_TIME_LABEL,
 	ESSENTIAL_TRAIT_NAME_ID,
 	ESSENTIAL_TRAIT_NAME_LABEL,
-	ESSENTIAL_TRAIT_PARTICIPATION_NUM_ID,
-	ESSENTIAL_TRAIT_PARTICIPATION_NUM_LABEL,
+	ESSENTIAL_TRAIT_PARTICIPATION_CNT_ID,
+	ESSENTIAL_TRAIT_PARTICIPATION_CNT_LABEL,
 	URL_PARAM_ADDITIONAL_TRAIT
 } from '@/constants'
 import { AddingMember, AddingTrait } from '@/units/overlays'
@@ -62,12 +62,10 @@ const MemberTable = ({ width = '100%', height = '100%' }: OptionalSizeProps) => 
 						traitId={ESSENTIAL_TRAIT_NAME_ID}
 					/>
 					<EssentialTraitColumn
-						traitLabel={ESSENTIAL_TRAIT_PARTICIPATION_NUM_LABEL}
-						traitId={ESSENTIAL_TRAIT_PARTICIPATION_NUM_ID}
+						traitLabel={ESSENTIAL_TRAIT_PARTICIPATION_CNT_LABEL}
+						traitId={ESSENTIAL_TRAIT_PARTICIPATION_CNT_ID}
 					/>
-
 					{isAdditionalTrait ? <AdditionalTraitTable /> : <NoticeAdditionalTraitNotice />}
-
 					<EssentialTraitColumn
 						traitLabel={ESSENTIAL_TRAIT_CREATION_TIME_LABEL}
 						traitId={ESSENTIAL_TRAIT_CREATION_TIME_ID}

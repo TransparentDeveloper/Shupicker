@@ -2,13 +2,13 @@ import { Button, DropBox, Input } from '@/components'
 import {
 	ESSENTIAL_TRAIT_CREATION_TIME_INIT,
 	ESSENTIAL_TRAIT_NAME_INIT,
-	ESSENTIAL_TRAIT_PARTICIPATION_NUM_INIT,
+	ESSENTIAL_TRAIT_PARTICIPATION_CNT_INIT,
 	URL_PARAM_ADDITIONAL_TRAIT,
 	URL_PARAM_MEMBER
 } from '@/constants'
 import { useCryptoQuery, useDialog } from '@/hooks'
 import type { MemberType, TraitTableType, TraitType } from '@/types'
-import { getTimeStamp } from '@/utils'
+import { getFormattedCurTime, getTimeStamp } from '@/utils'
 import type { ChangeEvent } from 'react'
 import * as S from './adding-member.style'
 import { LabelAndNodeRowPair } from './components'
@@ -37,12 +37,12 @@ const AddingMember = () => {
 			value: memberName
 		}
 		const participationNumTrait: TraitType = {
-			...ESSENTIAL_TRAIT_PARTICIPATION_NUM_INIT,
+			...ESSENTIAL_TRAIT_PARTICIPATION_CNT_INIT,
 			value: 0
 		}
 		const creationTimeTrait: TraitType = {
 			...ESSENTIAL_TRAIT_CREATION_TIME_INIT,
-			value: Date.now()
+			value: getFormattedCurTime()
 		}
 		const newEssentialTraitArray: TraitTableType = [
 			nameTrait,
