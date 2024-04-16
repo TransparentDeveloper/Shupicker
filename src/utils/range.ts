@@ -1,4 +1,4 @@
-export const numberAdjust = (
+export const clampValue = (
 	currentValue: number,
 	lowerLimit: number,
 	upperLimit: number
