@@ -1,43 +1,45 @@
-import type { MemberType, SortMethodType } from '@/types'
-import { getAverageJoinCountPerUnitMinute } from './common'
+import { ESSENTIAL_TRAIT_CREATION_TIME_ID, ESSENTIAL_TRAIT_PARTICIPATION_CNT_ID } from '@/constants'
+import type { MemberTableType, MemberType, SortMethodType } from '@/types'
+import { calAvgCntPerUnitMin, getFormattedCurTime } from '@/utils'
+import { findEssentialTraitById } from './find'
 
-/** 참여자 id 기준 정렬 */
-export const sortByMemberId = (memberArray: Array<MemberType>, sortMethod?: SortMethodType) => {
-	sortMethod = sortMethod ?? 'ascend'
-	const result = memberArray.sort((member1, member2) => {
-		return member2.id - member1.id
-	})
-	return sortMethod === 'ascend' ? result : result.reverse()
+const sortByUnitTime = (
+	memberA: MemberType,
+	memberB: MemberType,
+	current: string, // 현재 시각, hh:mm 형식
+	sortMethod: SortMethodType, // 정렬 방법
+	unitMinute: number // 단위 시간, 분 단위
+) => {
+	const creationTimeA = findEssentialTraitById(memberA, ESSENTIAL_TRAIT_CREATION_TIME_ID) as string
+	const participationCntA = findEssentialTraitById(
+		memberA,
+		ESSENTIAL_TRAIT_PARTICIPATION_CNT_ID
+	) as number
+	const averageCountA = calAvgCntPerUnitMin(current, creationTimeA, participationCntA, unitMinute)
+
+	const creationTimeB = findEssentialTraitById(memberB, ESSENTIAL_TRAIT_CREATION_TIME_ID) as string
+	const participationCntB = findEssentialTraitById(
+		memberB,
+		ESSENTIAL_TRAIT_PARTICIPATION_CNT_ID
+	) as number
+	const averageCountB = calAvgCntPerUnitMin(current, creationTimeB, participationCntB, unitMinute)
+
+	if (sortMethod === 'ascend') return averageCountA - averageCountB
+	return averageCountB - averageCountA
 }
 
 /**
- * @description 생성시간 대비 참여횟수 기준 정렬
+ * 단위 시간(분) 당 참여횟수를 우선
+ * @default unitMinute 5
  */
-export const sortByJoinCountRelativeToCreation = (
-	memberArray: Array<MemberType>,
-	unitMinute: number, // 단위시간
-	sortMethod?: SortMethodType
-): Array<MemberType> => {
-	sortMethod = sortMethod ?? 'ascend'
-	const now = Date.now()
-	const result = memberArray.sort((member1, member2) => {
-		// 멤버 1의 단위 시간당 평균 참여횟수
-		const joinCountPerUnitTime1 = getAverageJoinCountPerUnitMinute(
-			now,
-			member1.joinedAt,
-			member1.joinCount,
-			unitMinute
-		)
-		// 멤버 2의 단위 시간당 평균 참여횟수
-		const joinCountPerUnitTime2 = getAverageJoinCountPerUnitMinute(
-			now,
-			member2.joinedAt,
-			member2.joinCount,
-			unitMinute
-		)
-		if (joinCountPerUnitTime2 === joinCountPerUnitTime1)
-			return member2.joinCount - member1.joinCount
-		return joinCountPerUnitTime2 - joinCountPerUnitTime1
-	})
-	return sortMethod === 'ascend' ? result : result.reverse()
+export const getSortedArrayByUnitTime = (
+	memberArray: MemberTableType,
+	sortMethod: SortMethodType,
+	unitMinute: number = 5
+) => {
+	const current = getFormattedCurTime()
+	const sortedMemberArray = memberArray.sort((memberA, memberB) =>
+		sortByUnitTime(memberA, memberB, current, sortMethod, unitMinute)
+	)
+	return sortedMemberArray
 }
