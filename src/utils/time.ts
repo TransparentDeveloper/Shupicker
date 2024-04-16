@@ -1,9 +1,9 @@
-export const getTimeFormatHHMM = (date: number) => {
+export const getFormattedCurTime = () => {
+	const date = Date.now()
 	const hour = new Date(date).getHours().toString().padStart(2, '0')
 	const minute = new Date(date).getMinutes().toString().padStart(2, '0')
 	return hour + ':' + minute
 }
-export const getFormattedCurTime = () => getTimeFormatHHMM(Date.now())
 export const getTimeStamp = () => {
 	return new Date().getTime()
 }

@@ -1,6 +1,6 @@
 import { ESSENTIAL_TRAIT_CREATION_TIME_ID, ESSENTIAL_TRAIT_PARTICIPATION_CNT_ID } from '@/constants'
 import type { MemberTableType, MemberType, SortMethodType } from '@/types'
-import { calAvgCntPerUnitMin, getFormattedCurTime } from '@/utils'
+import { calAvgCntPerUnitMin } from '@/utils'
 import { findEssentialTraitById } from './find'
 
 const sortByUnitTime = (
@@ -35,11 +35,11 @@ const sortByUnitTime = (
 export const getSortedArrayByUnitTime = (
 	memberArray: MemberTableType,
 	sortMethod: SortMethodType,
+	anchorTime: string,
 	unitMinute: number = 5
 ) => {
-	const current = getFormattedCurTime()
 	const sortedMemberArray = memberArray.sort((memberA, memberB) =>
-		sortByUnitTime(memberA, memberB, current, sortMethod, unitMinute)
+		sortByUnitTime(memberA, memberB, anchorTime, sortMethod, unitMinute)
 	)
 	return sortedMemberArray
 }
