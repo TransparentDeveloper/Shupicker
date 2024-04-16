@@ -1,4 +1,5 @@
 export * from './crypto'
+export * from './find'
 export * from './range'
 export * from './sort'
 export * from './time'
