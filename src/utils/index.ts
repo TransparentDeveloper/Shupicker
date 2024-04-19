@@ -1,6 +1,7 @@
 export * from './create'
 export * from './crypto'
 export * from './find'
+export * from './group'
 export * from './member'
 export * from './range'
 export * from './sort'
