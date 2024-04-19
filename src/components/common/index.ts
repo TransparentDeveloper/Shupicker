@@ -3,7 +3,7 @@ import Button from './button'
 import Dialog from './dialog'
 import DropBox from './drop-box'
 import Header from './header'
-import HorizontalGaugeGraph from './horizontal-gauge-graph'
+import HorizontalGauge from './horizontal-gauge'
 import IconButton from './icon-button'
 import Input from './input'
 import ShupickerIcon from './shpicker-icon'
@@ -15,7 +15,7 @@ export {
 	Dialog,
 	DropBox,
 	Header,
-	HorizontalGaugeGraph,
+	HorizontalGauge,
 	IconButton,
 	Input,
 	ShupickerIcon,
