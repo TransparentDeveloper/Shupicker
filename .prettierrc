@@ -1,0 +1,14 @@
+{
+	"arrowParens": "always",
+	"bracketSpacing": false,
+	"semi": false,
+	"singleQuote": true,
+	"jsxSingleQuote": true,
+	"quoteProps": "as-needed",
+	"trailingComma": "all",
+	"htmlWhitespaceSensitivity": "css",
+	"proseWrap": "preserve",
+	"printWidth": 80,
+	"tabWidth": 2,
+	"useTabs": true
+}
