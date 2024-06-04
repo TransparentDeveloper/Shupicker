@@ -1,5 +1,4 @@
-import {compress, decompress} from '@/utils'
-import {transStrToArr} from '@/utils/parse'
+import {compress, decompress, transStrToArr} from '@/utils'
 import {isNull} from 'lodash'
 import {useSearchParams} from 'react-router-dom'
 
