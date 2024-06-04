@@ -1,2 +1,2 @@
-export * from './compress'
-export * from './parse'
+export * from './compressor'
+export * from './parser'

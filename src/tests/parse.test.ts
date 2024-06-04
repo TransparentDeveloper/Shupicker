@@ -1,5 +1,5 @@
+import {transStrToArr} from '@/utils'
 import {expect, test} from 'vitest'
-import {transStrToArr} from '.'
 
 test('', () => {
 	const originalArr = [1, 2, 3, 4, 5]
