@@ -11,12 +11,15 @@ export const useManageDataOnUrl = () => {
 		const result = transStrToArr<T>(decompressed)
 		return result
 	}
-	const addToArr = <T>(paramKey: string, element: T) => {
-		const prevArr = getArr<T>(paramKey)
-		prevArr.push(element)
-		const compressed = compress(prevArr)
+	const saveArr = <T>(paramKey: string, arr: T[]) => {
+		const compressed = compress(arr)
 		params.set(paramKey, compressed)
 		setParams(params)
 	}
-	return {getArr, addToArr}
+	const addToArr = <T>(paramKey: string, element: T) => {
+		const prevArr = getArr<T>(paramKey)
+		prevArr.push(element)
+		saveArr(paramKey, prevArr)
+	}
+	return {getArr, saveArr, addToArr}
 }
