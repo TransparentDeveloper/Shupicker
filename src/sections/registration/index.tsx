@@ -9,13 +9,14 @@ import {
 } from './registration.utils'
 
 export const RegisterSection = () => {
-	const {getArr, addToArr, saveArr} = useManageDataOnUrl()
+	const {getArr, addToArr, saveArr, flush} = useManageDataOnUrl()
 
 	const onAddNewMember = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const memberName = (e.target.elements.item(0) as HTMLInputElement).value
 		const newMember = createNewMember(memberName)
 		addToArr(MEMBER_KEY, newMember)
+		flush()
 	}
 
 	const onAddNewTrait = (e: ChangeEvent<HTMLFormElement>) => {
@@ -27,6 +28,7 @@ export const RegisterSection = () => {
 		const memberArr = getArr<TMember>(MEMBER_KEY)
 		const updatedMemberArr = addTraitEachMember(memberArr, newTrait)
 		saveArr(MEMBER_KEY, updatedMemberArr)
+		flush()
 	}
 
 	return (

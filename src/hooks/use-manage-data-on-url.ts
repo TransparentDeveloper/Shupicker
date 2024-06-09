@@ -14,12 +14,12 @@ export const useManageDataOnUrl = () => {
 	const saveArr = <T>(paramKey: string, arr: T[]) => {
 		const compressed = compress(arr)
 		params.set(paramKey, compressed)
-		setParams(params)
 	}
 	const addToArr = <T>(paramKey: string, element: T) => {
 		const prevArr = getArr<T>(paramKey)
 		prevArr.push(element)
 		saveArr(paramKey, prevArr)
 	}
-	return {getArr, saveArr, addToArr}
+	const flush = () => setParams(params)
+	return {getArr, saveArr, addToArr, flush}
 }
