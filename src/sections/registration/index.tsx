@@ -1,53 +1,73 @@
-import {MEMBER_KEY} from '@/constants/param-key'
-import {useManageDataOnUrl} from '@/hooks'
-import type {TMember} from '@/types'
-import {type ChangeEvent} from 'react'
 import {
-	addTraitEachMember,
-	createNewMember,
-	createNewTrait,
-} from './registration.utils'
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+	ScrollArea,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/components/ui'
+import {PlusSquareIcon} from 'lucide-react'
 
 export const RegisterSection = () => {
-	const {getArr, addToArr, saveArr, flush} = useManageDataOnUrl()
-
-	const onAddNewMember = (e: ChangeEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		const memberName = (e.target.elements.item(0) as HTMLInputElement).value
-		const newMember = createNewMember(memberName)
-		addToArr(MEMBER_KEY, newMember)
-		flush()
-	}
-
-	const onAddNewTrait = (e: ChangeEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		const traitLabel = (e.target.elements.item(0) as HTMLInputElement).value
-		const traitOption =
-			(e.target.elements.item(1) as HTMLInputElement).value ?? '😅 None'
-		const newTrait = createNewTrait(traitLabel, ['미지정', traitOption])
-		const memberArr = getArr<TMember>(MEMBER_KEY)
-		const updatedMemberArr = addTraitEachMember(memberArr, newTrait)
-		saveArr(MEMBER_KEY, updatedMemberArr)
-		flush()
-	}
-
 	return (
-		<div className='bg-blue-400 w-[800px] h-96 flex justify-center items-center flex-col'>
-			Register
-			<div className='border-black border-2 w-full h-1/5 flex flex-col justify-center items-center'>
-				<form onSubmit={onAddNewMember}>
-					<input placeholder='멤버 이름' />
-					<button>멤버 추가</button>
-				</form>
+		<Card className='h-full w-full overflow-hidden'>
+			<CardHeader className='pb-2'>
+				<CardTitle>회원 등록</CardTitle>
+				<CardDescription>회원 및 속성을 등록하세요.</CardDescription>
+			</CardHeader>
+			<CardContent className='relative h-4/6 w-full'>
+				<div className='sticky top-0 z-10 bg-white'>
+					<Table>
+						<TableHeader>
+							<TableRow>
+								<TableHead className='w-[150px] text-center'>이름</TableHead>
+								<TableHead className='text-center'>등록시간</TableHead>
+								<TableHead className='text-right'>게임횟수</TableHead>
+							</TableRow>
+						</TableHeader>
+					</Table>
+				</div>
+				<ScrollArea className='h-[calc(100%-64px)] w-full'>
+					<Table>
+						<TableBody>
+							{Array.from({length: 8}).map((_, idx) => (
+								<MemberInfoOne key={idx} />
+							))}
+						</TableBody>
+					</Table>
+				</ScrollArea>
+			</CardContent>
+			<CardFooter>
+				<OpenModalButton />
+			</CardFooter>
+		</Card>
+	)
+}
+
+const MemberInfoOne = () => {
+	return (
+		<TableRow>
+			<TableCell className='w-[150px] text-center font-medium'>1</TableCell>
+			<TableCell className='text-center'>20:00</TableCell>
+			<TableCell className='text-right'>10 회</TableCell>
+		</TableRow>
+	)
+}
+
+const OpenModalButton = () => {
+	return (
+		<button className='flex h-12 w-full cursor-pointer items-center justify-center'>
+			<div className='flex h-full w-fit min-w-[50%] border-spacing-28 items-center justify-center gap-2 rounded-lg border-[3px] border-dotted border-[#777777] text-[#777777] transition-colors duration-200 hover:bg-white'>
+				<PlusSquareIcon color='#777777' className='bg-transparent' />
+				추가하기
 			</div>
-			<div className='border-black border-2 w-full h-1/5 flex flex-col justify-center items-center'>
-				<form onSubmit={onAddNewTrait}>
-					<input placeholder='속성 이름' />
-					<input placeholder='옵션 이름' />
-					<button>속성 추가</button>
-				</form>
-			</div>
-			<button>버튼</button>
-		</div>
+		</button>
 	)
 }

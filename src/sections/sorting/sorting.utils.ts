@@ -1,4 +1,5 @@
 import type {TMember, TOrder, TSortBy} from '@/types'
+import _ from 'lodash'
 
 export const sortMembers = (
 	members: TMember[],
@@ -75,4 +76,15 @@ const getDuration = (timeStamp1: number, timeStamp2: number) =>
 const getCntPerTimeChunk = (cnt: number, time: number, unitTime: number) => {
 	const timeChunk = Math.floor(time / unitTime)
 	return cnt / timeChunk
+}
+
+export const extractMembersById = (members: TMember[], ids: string[]) =>
+	_.filter(members, (member) => _.includes(ids, member.id))
+
+export const raisePlayingCnt = (members: TMember[]) => {
+	const result = members.map((member) => {
+		member.cntPlay += 1
+		return member
+	})
+	return result
 }

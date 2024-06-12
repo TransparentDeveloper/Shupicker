@@ -11,6 +11,8 @@
 		"test": "vitest"
 	},
 	"dependencies": {
+		"@radix-ui/react-context-menu": "^2.1.5",
+		"@radix-ui/react-scroll-area": "^1.0.5",
 		"@types/lodash": "^4.17.4",
 		"@types/uuid": "^9.0.8",
 		"class-variance-authority": "^0.7.0",
