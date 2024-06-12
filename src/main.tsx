@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client'
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import '../global.css'
 import App from './App.tsx'
+import {RootLayout} from './components/layouts/root-layout.tsx'
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <App />,
+		element: <RootLayout />,
+		children: [
+			{
+				path: '',
+				element: <App />,
+			},
+		],
 	},
 ])
 

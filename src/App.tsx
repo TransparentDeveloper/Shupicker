@@ -1,5 +1,16 @@
+import {GridLayout} from './components/layouts'
+import {useManageDataOnUrl} from './hooks'
+import {RecordSection, RegisterSection, SortingSection} from './sections'
+
 const App = () => {
-	return <h1>⛳️</h1>
+	const {getArr} = useManageDataOnUrl()
+	return (
+		<GridLayout
+			topLeft={<RegisterSection />}
+			bottomLeft={<RecordSection />}
+			fullRight={<SortingSection />}
+		/>
+	)
 }
 
 export default App
