@@ -9,7 +9,7 @@
 	}
 
 	* {
-		background-color: black;
-		color: white;
+		@apply bg-transparent text-white;
+		@apply rounded-md;
 	}
 }

@@ -23,7 +23,7 @@ export const RegisterSection = () => {
 				<CardDescription>회원 및 속성을 등록하세요.</CardDescription>
 			</CardHeader>
 			<CardContent className='relative h-4/6 w-full'>
-				<div className='sticky top-0 z-10 bg-white'>
+				<div className='sticky top-0 z-10'>
 					<Table>
 						<TableHeader>
 							<TableRow>
