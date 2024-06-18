@@ -4,6 +4,7 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import '../global.css'
 import App from './App.tsx'
 import {RootLayout} from './components/layouts/root-layout.tsx'
+import {SheetProvider} from './contexts/sheet-context.tsx'
 
 const router = createBrowserRouter([
 	{
@@ -12,7 +13,11 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '',
-				element: <App />,
+				element: (
+					<SheetProvider>
+						<App />
+					</SheetProvider>
+				),
 			},
 		],
 	},

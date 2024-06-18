@@ -1,7 +1,11 @@
 import {ScrollArea} from '@/components/ui'
+import {useSheet} from '@/hooks'
 import {PlusSquareIcon} from 'lucide-react'
+import type {ButtonHTMLAttributes} from 'react'
+import {RegisterForm} from './components/registeration-form'
 
 export const RegisterSection = () => {
+	const {onOpen} = useSheet()
 	return (
 		<div className='grid h-full w-full grid-rows-[65px_1fr_48px] gap-[0px] p-6'>
 			<CardHeader title='회원 등록' description='회원 및 속성을 등록하세요.' />
@@ -25,14 +29,28 @@ export const RegisterSection = () => {
 					</tr>
 				</ScrollArea>
 			</table>
-			<AddMemberButton />
+			<AddMemberButton
+				onClick={() =>
+					onOpen({
+						title: 'asdf',
+						description: 'asfd',
+						isOpen: true,
+						children: <RegisterForm />,
+					})
+				}
+			/>
 		</div>
 	)
 }
 
-const AddMemberButton = () => {
+type AddMemberButtonPT = ButtonHTMLAttributes<HTMLButtonElement>
+
+const AddMemberButton = (props: AddMemberButtonPT) => {
 	return (
-		<button className='flex h-[48px] w-full cursor-pointer items-center justify-center'>
+		<button
+			className='flex h-[48px] w-full cursor-pointer items-center justify-center'
+			{...props}
+		>
 			<div className='flex h-full w-fit min-w-[50%] border-spacing-28 items-center justify-center gap-2 rounded-lg border-[3px] border-dotted border-[#777777] text-[#777777] transition-colors duration-200 hover:bg-white'>
 				<PlusSquareIcon color='#777777' className='bg-transparent' />
 				추가하기
