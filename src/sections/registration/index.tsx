@@ -1,39 +1,48 @@
-import {ScrollArea} from '@/components/ui'
-import {useSheet} from '@/hooks'
+import {MEMBER_KEY} from '@/constants'
+import {useManageDataOnUrl, useSheet} from '@/hooks'
+import type {TMember} from '@/types'
+import {getFormedTime} from '@/utils'
 import {PlusSquareIcon} from 'lucide-react'
 import type {ButtonHTMLAttributes} from 'react'
 import {RegisterForm} from './components/registeration-form'
 
 export const RegisterSection = () => {
 	const {onOpen} = useSheet()
+	const {getArr} = useManageDataOnUrl()
+
+	const memberArr: TMember[] = getArr(MEMBER_KEY)
 	return (
 		<div className='grid h-full w-full grid-rows-[65px_1fr_48px] gap-[0px] p-6'>
 			<CardHeader title='회원 등록' description='회원 및 속성을 등록하세요.' />
-			<table
-				className='flex h-full flex-col items-start overflow-hidden'
-				width='100%'
-			>
-				<tr className='grid h-[70px] w-full grid-cols-[1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'>
-					<th>이름</th>
-					<th>등록시간</th>
-					<th></th>
-					<th className='text-end'>게임 횟수</th>
-				</tr>
-
-				<ScrollArea className='h-full w-full'>
-					<tr className='grid h-[55px] w-full grid-cols-[1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'>
-						<td>이윤신</td>
-						<td>ㅁㄴㅇ라</td>
-						<td></td>
-						<td className='text-end'>ㅁㄴㅇㄹ</td>
+			<table className='flex h-full flex-col overflow-hidden' width='100%'>
+				<thead className='flex h-fit w-full flex-col items-start'>
+					<tr className='grid h-[70px] w-full grid-cols-[1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'>
+						<th>이름</th>
+						<th>등록시간</th>
+						<th></th>
+						<th className='text-end'>게임 횟수</th>
 					</tr>
-				</ScrollArea>
+				</thead>
+
+				<tbody className='scrollbar-hide h-full w-full overflow-y-scroll'>
+					{memberArr.map((member) => (
+						<tr
+							key={member.id}
+							className='grid h-[55px] w-full grid-cols-[1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'
+						>
+							<td>{member.name}</td>
+							<td> {getFormedTime(member.createAt)}</td>
+							<td></td>
+							<td className='text-end'>{member.cntPlay}</td>
+						</tr>
+					))}
+				</tbody>
 			</table>
 			<AddMemberButton
 				onClick={() =>
 					onOpen({
-						title: 'asdf',
-						description: 'asfd',
+						title: '새 회원 정보 입력',
+						description: '아래 폼을 입력하고, 새로운 회원을 등록해주세요.',
 						isOpen: true,
 						children: <RegisterForm />,
 					})
