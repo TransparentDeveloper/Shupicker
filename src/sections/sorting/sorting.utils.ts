@@ -1,4 +1,7 @@
 import type {TMember, TOrder, TSortBy} from '@/types'
+import type {TGroup} from '@/types/group'
+import {getTimeDiff} from '@/utils'
+import {generateID} from '@/utils/uuid'
 import _ from 'lodash'
 
 export const sortMembers = (
@@ -22,8 +25,8 @@ export const sortMembersByCntPerTimeChunk = (
 ): TMember[] => {
 	const curTimeStamp = Date.now()
 	members.sort((member1, member2) => {
-		const timeFromCreation1 = getDuration(curTimeStamp, member1.createAt)
-		const timeFromCreation2 = getDuration(curTimeStamp, member2.createAt)
+		const timeFromCreation1 = getTimeDiff(curTimeStamp, member1.createAt)
+		const timeFromCreation2 = getTimeDiff(curTimeStamp, member2.createAt)
 		const cntPerTime1 = getCntPerTimeChunk(
 			member1.cntPlay,
 			timeFromCreation1,
@@ -70,21 +73,24 @@ export const sortMembersByCreatedAt = (
 const switchNegativeIfNot = (when: boolean, num: number): number =>
 	when ? num : -num
 
-const getDuration = (timeStamp1: number, timeStamp2: number) =>
-	Math.abs(timeStamp1 - timeStamp2)
-
-const getCntPerTimeChunk = (cnt: number, time: number, unitTime: number) => {
+export const getCntPerTimeChunk = (
+	cnt: number,
+	time: number,
+	unitTime: number,
+) => {
 	const timeChunk = Math.floor(time / unitTime)
 	return cnt / timeChunk
 }
-
-export const extractMembersById = (members: TMember[], ids: string[]) =>
-	_.filter(members, (member) => _.includes(ids, member.id))
-
-export const raisePlayingCnt = (members: TMember[]) => {
+export const raisePlayingCnt = (members: TMember[], ids: string[]) => {
 	const result = members.map((member) => {
-		member.cntPlay += 1
+		if (_.includes(ids, member.id)) {
+			member.cntPlay += 1
+		}
 		return member
 	})
 	return result
 }
+export const createNewGroup = (memberIds: string[]): TGroup => ({
+	id: generateID(),
+	memberIds,
+})

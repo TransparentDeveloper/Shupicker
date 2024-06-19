@@ -1,4 +1,9 @@
 import {ScrollArea} from '@/components/ui'
+import {GROUP_KEY, MEMBER_KEY} from '@/constants'
+import {useManageDataOnUrl} from '@/hooks'
+import type {TMember} from '@/types'
+import type {TGroup} from '@/types/group'
+import {extractMembersById} from './record.utils'
 
 export const RecordSection = () => {
 	return (
@@ -28,7 +33,12 @@ const CardHeader = ({
 		</header>
 	)
 }
-const GroupItem = ({order}: {order: number}) => {
+const GroupItem = ({order, group}: {order: number; group: TGroup}) => {
+	const {getArr} = useManageDataOnUrl()
+	const memberArr: TMember[] = getArr(MEMBER_KEY)
+
+	const groupMembers = extractMembersById(memberArr, group.memberIds)
+	const membersNameArr = groupMembers.map((group) => group.name)
 	return (
 		<div className='grid h-[70px] w-full grid-cols-[72px_1fr] rounded-[15px] border-[2px] border-white'>
 			<div className='flex h-full w-full items-center justify-center'>
@@ -37,20 +47,19 @@ const GroupItem = ({order}: {order: number}) => {
 
 			<div className='flex flex-col items-start justify-center'>
 				<p>Group {order}</p>
-				<p className='text-sm text-gray-400'>
-					member1 | member2 | member3 | member4
-				</p>
+				<p className='text-sm text-gray-400'>{membersNameArr.join(' | ')}</p>
 			</div>
 		</div>
 	)
 }
 const GroupList = () => {
-	const $tmpGroupArr = Array.from({length: 10})
+	const {getArr} = useManageDataOnUrl()
+	const groupArr: TGroup[] = getArr(GROUP_KEY)
 	return (
 		<ScrollArea>
 			<div className='flex flex-col items-center gap-[30px]'>
-				{$tmpGroupArr.map((_, idx) => (
-					<GroupItem key={idx} order={idx + 1} />
+				{groupArr.map((group, idx) => (
+					<GroupItem group={group} key={group.id} order={idx + 1} />
 				))}
 			</div>
 		</ScrollArea>
