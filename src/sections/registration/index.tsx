@@ -24,7 +24,7 @@ export const RegisterSection = () => {
 					</tr>
 				</thead>
 
-				<tbody className='scrollbar-hide h-full w-full overflow-y-scroll'>
+				<tbody className='h-full w-full overflow-y-scroll scrollbar-hide'>
 					{memberArr.map((member) => (
 						<tr
 							key={member.id}

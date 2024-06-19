@@ -18,11 +18,7 @@ export const RegisterForm = () => {
 	const {onClose} = useSheet()
 	const {addToArr, flush} = useManageDataOnUrl()
 
-	const {
-		register,
-		handleSubmit,
-		formState: {errors},
-	} = useForm({
+	const {register, handleSubmit} = useForm({
 		resolver: zodResolver(schema),
 	})
 

@@ -11,8 +11,8 @@ import {createNewGroup, raisePlayingCnt, sortMembers} from './sorting.utils'
 
 export const SortingSection = () => {
 	const {getArr, saveArr, addToArr, flush} = useManageDataOnUrl()
-	const [order, setOrder] = useState<TOrder>('desc')
-	const [sortBy, setSortBy] = useState<TSortBy>('cntPerTime')
+	const [order] = useState<TOrder>('desc')
+	const [sortBy] = useState<TSortBy>('cntPerTime')
 	const [selectedIdArr, setSelectedIdArr] = useState<string[]>(getEmptyArray())
 	const members = getArr<TMember>(MEMBER_KEY)
 	const sortedMember = sortMembers(members, sortBy, order)
@@ -42,7 +42,7 @@ export const SortingSection = () => {
 							</th>
 						</tr>
 					</thead>
-					<tbody className='scrollbar-hide h-full w-full'>
+					<tbody className='h-full w-full scrollbar-hide'>
 						{sortedMember.map((member) => {
 							const cntPlay = member.cntPlay
 							const current = getTimeStamp()
