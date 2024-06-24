@@ -1,7 +1,5 @@
 import type {TMember, TOrder, TSortBy} from '@/types'
-import type {TGroup} from '@/types/group'
 import {getTimeDiff, parseMinuteFromTime} from '@/utils'
-import {generateID} from '@/utils/uuid'
 import _ from 'lodash'
 import type {RowTableDataPT} from './sorting.type'
 
@@ -84,26 +82,22 @@ export const getCntPerTimeChunk = (
 }
 export const raisePlayingCnt = (members: TMember[], ids: string[]) => {
 	const result = members.map((member) => {
-		if (_.includes(ids, member.id)) {
-			member.cntPlay += 1
-		}
+		if (_.includes(ids, member.id)) member.cntPlay += 1
 		return member
 	})
 	return result
 }
-export const createNewGroup = (memberIds: string[]): TGroup => ({
-	id: generateID(),
-	memberIds,
-})
 
 export const createTableData = (
 	member: TMember,
 ): Omit<RowTableDataPT, 'isSelected' | 'onSelect'> => {
+	const now = Date.now()
+
 	const id = member.id
 	const name = member.name
-	const term = getTermFromCreatedToNow(member.createAt, Date.now())
-	const cnt = member.cntPlay
-	const cntPerTime = '1'
+	const cnt = `${member.cntPlay} 회`
+	const term = getPrintedTermFromCreatedToNow(member.createAt, now)
+	const cntPerTime = getPrintedCntPer5Min(member.cntPlay, member.createAt, now)
 	const tableData = {
 		id,
 		name,
@@ -114,9 +108,17 @@ export const createTableData = (
 	return tableData
 }
 
-const getTermFromCreatedToNow = (createdAt: number, now: number) => {
+const getPrintedTermFromCreatedToNow = (createdAt: number, now: number) => {
 	const timeDiffFromCreatedToNow = getTimeDiff(createdAt, now) // 등록시간 ~ 현재
 	const minuteDiff = parseMinuteFromTime(timeDiffFromCreatedToNow)
-	if (minuteDiff < 1) return '1분 미만'
+	if (minuteDiff < 1) return '1 분 미만'
 	return `~ ${minuteDiff} 분`
+}
+
+const getPrintedCntPer5Min = (cnt: number, createdAt: number, now: number) => {
+	const timeDiffFromCreatedToNow = getTimeDiff(createdAt, now)
+	if (cnt === 0) return '0 회'
+	if (timeDiffFromCreatedToNow < 50000) return `${cnt.toFixed(1)} 회`
+	const cntPer5Min = getCntPerTimeChunk(cnt, timeDiffFromCreatedToNow, 50000)
+	return `${cntPer5Min.toFixed(1)} 회`
 }

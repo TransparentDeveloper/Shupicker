@@ -2,17 +2,12 @@ import {Button, Checkbox} from '@/components/common'
 import {GROUP_KEY, MEMBER_KEY} from '@/constants'
 import {useManageDataOnUrl} from '@/hooks'
 import type {TMember, TOrder, TSortBy} from '@/types'
-import {getTimeDiff, getTimeStamp} from '@/utils'
 import {getEmptyArray, removeSomePrimitiveElement} from '@/utils/array-manager'
+import {createNewGroup} from '@/utils/group-manager'
 import _ from 'lodash'
 import {useState} from 'react'
 import type {RowTableDataPT} from './sorting.type'
-import {
-	createNewGroup,
-	createTableData,
-	raisePlayingCnt,
-	sortMembers,
-} from './sorting.utils'
+import {createTableData, raisePlayingCnt, sortMembers} from './sorting.utils'
 
 export const SortingSection = () => {
 	const {getArr, saveArr, addToArr, flush} = useManageDataOnUrl()
@@ -42,17 +37,13 @@ export const SortingSection = () => {
 							<th>등록 이후</th>
 							<th>총 참여횟수</th>
 							<th>
-								기준시간 대비
-								<br /> 참여횟수
+								5분 당
+								<br /> 평균참여횟수
 							</th>
 						</tr>
 					</thead>
 					<tbody className='h-full w-full scrollbar-hide'>
 						{sortedMember.map((member) => {
-							const cntPlay = member.cntPlay
-							const current = getTimeStamp()
-							const timeDiff = getTimeDiff(current, member.createAt)
-							const cntPerTime = cntPlay / timeDiff
 							return (
 								<RowTableData
 									key={member.id}
@@ -108,8 +99,8 @@ export const RowTableData = ({
 			</td>
 			<td>{name}</td>
 			<td>{term}</td>
-			<td>{cnt} 회</td>
-			<td>{cntPerTime} 회</td>
+			<td>{cnt}</td>
+			<td>{cntPerTime}</td>
 		</tr>
 	)
 }

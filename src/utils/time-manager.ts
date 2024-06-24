@@ -9,3 +9,6 @@ export const getFormedTime = (timeStamp: number) => {
 
 export const getTimeDiff = (timeStamp1: number, timeStamp2: number) =>
 	Math.abs(timeStamp1 - timeStamp2)
+
+export const parseMinuteFromTime = (timestamp: number) =>
+	Math.floor(timestamp / (1000 * 60))
