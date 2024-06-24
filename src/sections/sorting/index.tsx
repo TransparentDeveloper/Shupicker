@@ -2,12 +2,17 @@ import {Button, Checkbox} from '@/components/common'
 import {GROUP_KEY, MEMBER_KEY} from '@/constants'
 import {useManageDataOnUrl} from '@/hooks'
 import type {TMember, TOrder, TSortBy} from '@/types'
-import {getFormedTime, getTimeDiff, getTimeStamp} from '@/utils'
+import {getTimeDiff, getTimeStamp} from '@/utils'
 import {getEmptyArray, removeSomePrimitiveElement} from '@/utils/array-manager'
 import _ from 'lodash'
-import type {Dispatch, SetStateAction} from 'react'
 import {useState} from 'react'
-import {createNewGroup, raisePlayingCnt, sortMembers} from './sorting.utils'
+import type {RowTableDataPT} from './sorting.type'
+import {
+	createNewGroup,
+	createTableData,
+	raisePlayingCnt,
+	sortMembers,
+} from './sorting.utils'
 
 export const SortingSection = () => {
 	const {getArr, saveArr, addToArr, flush} = useManageDataOnUrl()
@@ -34,7 +39,7 @@ export const SortingSection = () => {
 						<tr className='grid h-[70px] w-full grid-cols-[2rem_1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'>
 							<th />
 							<th>이름</th>
-							<th>등록된 시간</th>
+							<th>등록 이후</th>
 							<th>총 참여횟수</th>
 							<th>
 								기준시간 대비
@@ -49,13 +54,9 @@ export const SortingSection = () => {
 							const timeDiff = getTimeDiff(current, member.createAt)
 							const cntPerTime = cntPlay / timeDiff
 							return (
-								<TableRow
+								<RowTableData
 									key={member.id}
-									name={member.name}
-									id={member.id}
-									time={getFormedTime(member.createAt)}
-									cnt={member.cntPlay}
-									cntPerTime={cntPerTime.toFixed(1)}
+									{...createTableData(member)}
 									isSelected={selectedIdArr.includes(member.id)}
 									onSelect={setSelectedIdArr}
 								/>
@@ -85,23 +86,15 @@ export const SortingSection = () => {
 	)
 }
 
-const TableRow = ({
+export const RowTableData = ({
 	id,
 	name,
-	time,
+	term,
 	cnt,
 	cntPerTime,
 	isSelected,
 	onSelect,
-}: {
-	id: string
-	name: string
-	time: string
-	cnt: number
-	cntPerTime: string
-	isSelected: boolean
-	onSelect: Dispatch<SetStateAction<string[]>>
-}) => {
+}: RowTableDataPT) => {
 	const onSwitchCheckbox = () => {
 		onSelect((prev) => {
 			if (_.includes(prev, id)) return removeSomePrimitiveElement(prev, id)
@@ -114,7 +107,7 @@ const TableRow = ({
 				<Checkbox onClick={onSwitchCheckbox} isActive={isSelected} />
 			</td>
 			<td>{name}</td>
-			<td>{time}</td>
+			<td>{term}</td>
 			<td>{cnt} 회</td>
 			<td>{cntPerTime} 회</td>
 		</tr>

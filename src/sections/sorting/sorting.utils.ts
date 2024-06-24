@@ -1,8 +1,9 @@
 import type {TMember, TOrder, TSortBy} from '@/types'
 import type {TGroup} from '@/types/group'
-import {getTimeDiff} from '@/utils'
+import {getTimeDiff, parseMinuteFromTime} from '@/utils'
 import {generateID} from '@/utils/uuid'
 import _ from 'lodash'
+import type {RowTableDataPT} from './sorting.type'
 
 export const sortMembers = (
 	members: TMember[],
@@ -94,3 +95,28 @@ export const createNewGroup = (memberIds: string[]): TGroup => ({
 	id: generateID(),
 	memberIds,
 })
+
+export const createTableData = (
+	member: TMember,
+): Omit<RowTableDataPT, 'isSelected' | 'onSelect'> => {
+	const id = member.id
+	const name = member.name
+	const term = getTermFromCreatedToNow(member.createAt, Date.now())
+	const cnt = member.cntPlay
+	const cntPerTime = '1'
+	const tableData = {
+		id,
+		name,
+		term,
+		cnt,
+		cntPerTime,
+	}
+	return tableData
+}
+
+const getTermFromCreatedToNow = (createdAt: number, now: number) => {
+	const timeDiffFromCreatedToNow = getTimeDiff(createdAt, now) // 등록시간 ~ 현재
+	const minuteDiff = parseMinuteFromTime(timeDiffFromCreatedToNow)
+	if (minuteDiff < 1) return '1분 미만'
+	return `~ ${minuteDiff} 분`
+}
