@@ -7,7 +7,7 @@ import {extractMembersById} from './record.utils'
 
 export const RecordSection = () => {
 	return (
-		<div className='grid h-full w-full grid-rows-[65px_1fr] gap-[35px] p-6'>
+		<div className='grid h-full w-full grid-rows-[50px_1fr] gap-[35px] p-6'>
 			<CardHeader
 				title='그룹, 참여기록 관리'
 				description='회원들의 활동 참여 이력을 기록합니다.'
@@ -25,7 +25,7 @@ const CardHeader = ({
 	description: string
 }) => {
 	return (
-		<header className='flex h-[65px] flex-col justify-start gap-2'>
+		<header className='flex h-[50px] flex-col justify-start gap-1'>
 			<h3 className='text-2xl font-semibold leading-none tracking-tight'>
 				{title}
 			</h3>

@@ -12,7 +12,7 @@ export const RegisterSection = () => {
 
 	const memberArr: TMember[] = getArr(MEMBER_KEY)
 	return (
-		<div className='grid h-full w-full grid-rows-[65px_1fr_48px] gap-[0px] p-6'>
+		<div className='grid h-full w-full grid-rows-[50px_1fr_48px] gap-[1px] p-6'>
 			<CardHeader title='회원 등록' description='회원 및 속성을 등록하세요.' />
 			<table className='flex h-full flex-col overflow-hidden' width='100%'>
 				<thead className='flex h-fit w-full flex-col items-start'>
@@ -28,7 +28,7 @@ export const RegisterSection = () => {
 					{memberArr.map((member) => (
 						<tr
 							key={member.id}
-							className='grid h-[55px] w-full grid-cols-[1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'
+							className='grid h-[55px] w-full grid-cols-[1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[1px] border-white/50 p-2 text-center'
 						>
 							<td>{member.name}</td>
 							<td> {getFormedTime(member.createAt)}</td>
@@ -56,15 +56,15 @@ type AddMemberButtonPT = ButtonHTMLAttributes<HTMLButtonElement>
 
 const AddMemberButton = (props: AddMemberButtonPT) => {
 	return (
-		<button
-			className='flex h-[48px] w-full cursor-pointer items-center justify-center'
-			{...props}
-		>
-			<div className='flex h-full w-fit min-w-[50%] border-spacing-28 items-center justify-center gap-2 rounded-lg border-[3px] border-dotted border-[#777777] text-[#777777] transition-colors duration-200 hover:bg-white'>
+		<div className='flex h-[48px] w-full cursor-pointer items-end justify-center'>
+			<button
+				className='flex h-[40px] w-fit min-w-[50%] border-spacing-28 items-center justify-center gap-2 rounded-lg border-[3px] border-dotted border-[#777777] text-[#777777] transition-colors duration-200 hover:bg-white'
+				{...props}
+			>
 				<PlusSquareIcon color='#777777' className='bg-transparent' />
 				추가하기
-			</div>
-		</button>
+			</button>
+		</div>
 	)
 }
 
@@ -76,7 +76,7 @@ const CardHeader = ({
 	description: string
 }) => {
 	return (
-		<header className='flex h-[65px] flex-col justify-start gap-2'>
+		<header className='flex h-[50px] flex-col justify-start gap-1'>
 			<h3 className='text-2xl font-semibold leading-none tracking-tight'>
 				{title}
 			</h3>
