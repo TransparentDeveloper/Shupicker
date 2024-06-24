@@ -23,7 +23,10 @@ export const SortingSection = () => {
 				title='참여 인원 선택'
 				description='다음 경기에 참여할 인원을 선택해주세요.'
 			/>
-			<SelectedItemsCounter totalNum={25} partialNum={4} />
+			<SelectedItemsCounter
+				totalNum={selectedIdArr.length}
+				partialNum={members.length}
+			/>
 
 			<div className='flex h-full w-full flex-col gap-2'>
 				<table
