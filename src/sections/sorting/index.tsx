@@ -18,7 +18,7 @@ export const SortingSection = () => {
 	const sortedMember = sortMembers(members, sortBy, order)
 
 	return (
-		<div className='grid h-full w-full grid-rows-[50px_50px_1fr] overflow-hidden rounded-lg border border-gray-200 p-6'>
+		<div className='grid h-full w-full grid-rows-[50px_50px_1fr_3rem] gap-1 overflow-hidden rounded-lg border border-gray-200 p-6'>
 			<CardHeader
 				title='참여 인원 선택'
 				description='다음 경기에 참여할 인원을 선택해주세요.'
@@ -27,55 +27,52 @@ export const SortingSection = () => {
 				totalNum={selectedIdArr.length}
 				partialNum={members.length}
 			/>
-
-			<div className='flex h-full w-full flex-col gap-2'>
-				<table
-					className='flex h-full flex-col items-start overflow-hidden border-[0.5px] border-white'
-					width='100%'
-				>
-					<thead className='h-fit w-full'>
-						<tr className='grid h-[70px] w-full grid-cols-[2rem_1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'>
-							<th />
-							<th>이름</th>
-							<th>등록 이후</th>
-							<th>총 참여횟수</th>
-							<th>
-								5분 당
-								<br /> 평균참여횟수
-							</th>
-						</tr>
-					</thead>
-					<tbody className='h-full w-full scrollbar-hide'>
-						{sortedMember.map((member) => {
-							return (
-								<RowTableData
-									key={member.id}
-									{...createTableData(member)}
-									isSelected={selectedIdArr.includes(member.id)}
-									onSelect={setSelectedIdArr}
-								/>
-							)
-						})}
-					</tbody>
-				</table>
-				<Button
-					className='w-full'
-					onClick={() => {
-						if (selectedIdArr.length === 0) {
-							alert('선택된 회원이 없습니다.')
-							return
-						}
-						const updatedMembers = raisePlayingCnt(members, selectedIdArr)
-						const newGroup = createNewGroup(selectedIdArr)
-						addToArr(GROUP_KEY, newGroup)
-						saveArr(MEMBER_KEY, updatedMembers)
-						setSelectedIdArr(getEmptyArray())
-						flush()
-					}}
-				>
-					그룹 추가
-				</Button>
-			</div>
+			<table
+				className='flex h-full flex-col items-start overflow-hidden border-[0.5px] border-white'
+				width='100%'
+			>
+				<thead className='h-fit w-full'>
+					<tr className='grid h-[70px] w-full grid-cols-[2rem_1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'>
+						<th />
+						<th>이름</th>
+						<th>등록 이후</th>
+						<th>총 참여횟수</th>
+						<th>
+							5분 당
+							<br /> 평균참여횟수
+						</th>
+					</tr>
+				</thead>
+				<tbody className='h-full w-full overflow-y-scroll scrollbar-hide'>
+					{sortedMember.map((member) => {
+						return (
+							<RowTableData
+								key={member.id}
+								{...createTableData(member)}
+								isSelected={selectedIdArr.includes(member.id)}
+								onSelect={setSelectedIdArr}
+							/>
+						)
+					})}
+				</tbody>
+			</table>
+			<Button
+				className='w-full'
+				onClick={() => {
+					if (selectedIdArr.length === 0) {
+						alert('선택된 회원이 없습니다.')
+						return
+					}
+					const updatedMembers = raisePlayingCnt(members, selectedIdArr)
+					const newGroup = createNewGroup(selectedIdArr)
+					addToArr(GROUP_KEY, newGroup)
+					saveArr(MEMBER_KEY, updatedMembers)
+					setSelectedIdArr(getEmptyArray())
+					flush()
+				}}
+			>
+				그룹 추가
+			</Button>
 		</div>
 	)
 }
