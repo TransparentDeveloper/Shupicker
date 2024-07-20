@@ -1,4 +1,8 @@
 import {Button, Checkbox} from '@/components/common'
+import {
+	SectionBase,
+	SectionHeader,
+} from '@/components/common/section-base/index.tsx'
 import {GROUP_KEY, MEMBER_KEY} from '@/constants'
 import {useManageDataOnUrl} from '@/hooks'
 import type {TMember, TOrder, TSortBy} from '@/types'
@@ -32,8 +36,8 @@ export const SortingSection = () => {
 	}
 
 	return (
-		<div className='grid h-full w-full grid-rows-[50px_50px_1fr_3rem] gap-1 overflow-hidden rounded-lg border border-gray-200 p-6'>
-			<CardHeader
+		<SectionBase className='grid grid-rows-[50px_50px_1fr_3rem] gap-1'>
+			<SectionHeader
 				title='참여 인원 선택'
 				description='다음 경기에 참여할 인원을 선택해주세요.'
 			/>
@@ -97,7 +101,7 @@ export const SortingSection = () => {
 			>
 				그룹 추가
 			</Button>
-		</div>
+		</SectionBase>
 	)
 }
 
@@ -129,28 +133,10 @@ export const RowTableData = ({
 	)
 }
 
-const CardHeader = ({
-	title,
-	description,
-}: {
-	title: string
-	description: string
-}) => {
-	return (
-		<header className='flex h-[50px] flex-col justify-between'>
-			<h3 className='text-2xl font-semibold leading-none tracking-tight'>
-				{title}
-			</h3>
-			<p className='text-sm text-gray-500'>{description}</p>
-		</header>
-	)
-}
-
 type SelectedItemsCounterPT = {
 	totalNum: number
 	partialNum: number
 }
-
 const SelectedItemsCounter = ({
 	totalNum,
 	partialNum,
