@@ -6,16 +6,30 @@ import {getEmptyArray, removeSomePrimitiveElement} from '@/utils/array-manager'
 import {createNewGroup} from '@/utils/group-manager'
 import _ from 'lodash'
 import {useState} from 'react'
+import {SortingToggle} from './sorting-toggle.ts'
+import {TABLE_COLS, TABLE_HEAD_MAPPER} from './sorting.constant.ts'
 import type {RowTableDataPT} from './sorting.type'
 import {createTableData, raisePlayingCnt, sortMembers} from './sorting.utils'
 
 export const SortingSection = () => {
 	const {getArr, saveArr, addToArr, flush} = useManageDataOnUrl()
-	const [order] = useState<TOrder>('desc')
-	const [sortBy] = useState<TSortBy>('cntPerTime')
+	const [order, setOrder] = useState<TOrder>('desc')
+	const [sortBy, setSortBy] = useState<TSortBy>('cntPerTime')
 	const [selectedIdArr, setSelectedIdArr] = useState<string[]>(getEmptyArray())
 	const members = getArr<TMember>(MEMBER_KEY)
 	const sortedMember = sortMembers(members, sortBy, order)
+
+	const onClickTableHeadOne = (focusedSortBy: TSortBy) => {
+		if (focusedSortBy === sortBy) {
+			setOrder((prev) => {
+				if (prev === 'asc') return 'desc'
+				return 'asc'
+			})
+		} else {
+			setSortBy(focusedSortBy)
+			setOrder('desc')
+		}
+	}
 
 	return (
 		<div className='grid h-full w-full grid-rows-[50px_50px_1fr_3rem] gap-1 overflow-hidden rounded-lg border border-gray-200 p-6'>
@@ -34,13 +48,23 @@ export const SortingSection = () => {
 				<thead className='h-fit w-full'>
 					<tr className='grid h-[70px] w-full grid-cols-[2rem_1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[2px] p-2 text-center'>
 						<th />
-						<th>이름</th>
-						<th>등록 이후</th>
-						<th>총 참여횟수</th>
-						<th>
-							5분 당
-							<br /> 평균참여횟수
-						</th>
+						{Array.from({length: TABLE_COLS}).map((_, idx) => {
+							const label = TABLE_HEAD_MAPPER.labels[idx]
+							const value = TABLE_HEAD_MAPPER.values[idx]
+							const isToggle = value === sortBy
+							return (
+								<th
+									key={label}
+									className='grid h-full cursor-pointer grid-cols-[auto_13px] items-center justify-center gap-[10px]'
+									onClick={() => {
+										onClickTableHeadOne(value)
+									}}
+								>
+									<p className='whitespace-pre'>{label}</p>
+									{isToggle && <SortingToggle order={order} />}
+								</th>
+							)
+						})}
 					</tr>
 				</thead>
 				<tbody className='h-full w-full overflow-y-scroll scrollbar-hide'>
