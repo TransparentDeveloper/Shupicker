@@ -4,8 +4,7 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import '../global.css'
 import App from './App.tsx'
 import {RootLayout} from './components/layouts/root-layout.tsx'
-import {SheetProvider} from './contexts/sheet-context.tsx'
-
+import {SheetProvider} from './contexts/sheet-context/index.tsx'
 const router = createBrowserRouter([
 	{
 		path: '/',

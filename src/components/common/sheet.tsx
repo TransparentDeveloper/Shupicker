@@ -1,19 +1,24 @@
 import {useSheet} from '@/hooks'
+import {cn} from '@/libs/shadcn/util'
 import {X} from 'lucide-react'
-import type {PropsWithChildren} from 'react'
+import type {HTMLAttributes, PropsWithChildren} from 'react'
 
-type SheetPT = PropsWithChildren<{
-	isOpen: boolean
-	title: string
-	description: string
-}>
+type SheetPT = HTMLAttributes<HTMLDivElement> &
+	PropsWithChildren<{
+		isOpen: boolean
+		title: string
+		description: string
+	}>
 
-export const Sheet = ({title, description, children}: SheetPT) => {
+export const Sheet = ({title, description, className, children}: SheetPT) => {
 	const {onClose} = useSheet()
 	return (
 		<div
 			role='dialog'
-			className='fixed left-0 top-0 z-[100] flex h-full w-full items-center justify-end bg-black/90'
+			className={cn(
+				'fixed left-0 top-0 z-[100] flex h-full w-full items-center justify-end bg-black/90',
+				className,
+			)}
 		>
 			<div className='relative flex h-full w-[500px] flex-col gap-2 rounded-none border-l-[1px] border-gray-500 bg-black px-8 py-12'>
 				<X
