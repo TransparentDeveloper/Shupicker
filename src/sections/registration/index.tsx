@@ -32,6 +32,7 @@ export const RegisterSection = () => {
 		[],
 	)
 	const onDeleteMember = (idx: number) => {
+		if (idx < 0 && memberArr.length <= idx) return
 		onOpenModal({
 			children: <MemberDeletionConfirmationModal {...{idx}} />,
 		})

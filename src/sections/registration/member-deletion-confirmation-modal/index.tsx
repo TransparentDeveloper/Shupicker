@@ -4,6 +4,7 @@ import {useManageDataOnUrl} from '@/hooks'
 import {useModal} from '@/hooks/use-modal'
 import type {TMember} from '@/types'
 import type {TGroup} from '@/types/group'
+import {isUndefined} from 'lodash'
 import type {MemberDeletionConfirmationModalPT} from './member-deletion-confirmation-modal.type'
 import {
 	excludeMemberFromAllGroup,
@@ -19,13 +20,15 @@ export const MemberDeletionConfirmationModal = ({
 
 	const memberArr: TMember[] = getArr(MEMBER_KEY)
 	const member = memberArr[idx]
-	const memberId = member.id
 
+	let memberId = ''
+	if (!isUndefined(member)) memberId = member.id
 	const groupArr: TGroup[] = getArr(GROUP_KEY)
 
 	const onDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		e.preventDefault()
 		e.stopPropagation()
+		onClose()
 
 		const filteredGroupArr = excludeMemberFromAllGroup(groupArr, memberId)
 		const nonEmptyGroupArr = getNonEmptyGroupArr(filteredGroupArr)
@@ -33,7 +36,6 @@ export const MemberDeletionConfirmationModal = ({
 		updateArr(GROUP_KEY, nonEmptyGroupArr)
 		removeOneFromArr(MEMBER_KEY, idx)
 		flush()
-		onClose()
 	}
 	return (
 		<div className='flex h-full w-full flex-col items-center justify-center'>
