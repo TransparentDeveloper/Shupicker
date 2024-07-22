@@ -4,6 +4,7 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import '../global.css'
 import App from './App.tsx'
 import {RootLayout} from './components/layouts/root-layout.tsx'
+import {ModalProvider} from './contexts/modal-context/index.tsx'
 import {SheetProvider} from './contexts/sheet-context/index.tsx'
 const router = createBrowserRouter([
 	{
@@ -14,7 +15,9 @@ const router = createBrowserRouter([
 				path: '',
 				element: (
 					<SheetProvider>
-						<App />
+						<ModalProvider>
+							<App />
+						</ModalProvider>
 					</SheetProvider>
 				),
 			},
