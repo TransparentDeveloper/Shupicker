@@ -9,7 +9,7 @@ export const GroupList = () => {
 	const groupArr: TGroup[] = getArr(GROUP_KEY)
 	return (
 		<ScrollArea>
-			<div className='flex flex-col items-center gap-[30px]'>
+			<div className='flex flex-col items-center gap-[20px]'>
 				{groupArr.map((group, idx) => (
 					<GroupItem group={group} key={group.id} order={idx + 1} />
 				))}
