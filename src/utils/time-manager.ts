@@ -1,6 +1,6 @@
 export const getTimeStamp = () => Date.now()
 
-export const getFormedTime = (timeStamp: number) => {
+export const getFormattedTime = (timeStamp: number) => {
 	const current = new Date(timeStamp)
 	const hour = String(current.getHours()).padStart(2, '0')
 	const minute = String(current.getMinutes()).padStart(2, '0')
