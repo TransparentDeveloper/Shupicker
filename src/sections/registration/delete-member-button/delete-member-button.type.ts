@@ -1,4 +1,4 @@
 export type DeleteMemberButtonPT = {
-	memberId: string
-	onDeleteMember?: (memberId: string) => void
+	idx: number
+	onDeleteMember?: (idx: number) => void
 }
