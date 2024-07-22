@@ -2,7 +2,7 @@ import {Button, Input} from '@/components/common'
 import {ScrollArea} from '@/components/ui'
 import {MEMBER_KEY} from '@/constants'
 import {useManageDataOnUrl, useSheet} from '@/hooks'
-import {getFormedTime, getTimeStamp} from '@/utils'
+import {getFormattedTime, getTimeStamp} from '@/utils'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {isUndefined} from 'lodash'
 import type {FieldValues} from 'react-hook-form'
@@ -22,7 +22,7 @@ export const RegisterForm = () => {
 		resolver: zodResolver(schema),
 	})
 
-	const currentTime = getFormedTime(getTimeStamp())
+	const currentTime = getFormattedTime(getTimeStamp())
 
 	const onSubmit = (data: FieldValues) => {
 		const name = data.name
