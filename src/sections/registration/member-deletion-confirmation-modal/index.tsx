@@ -1,23 +1,36 @@
 import {Button} from '@/components/common'
-import {MEMBER_KEY} from '@/constants'
+import {GROUP_KEY, MEMBER_KEY} from '@/constants'
 import {useManageDataOnUrl} from '@/hooks'
 import {useModal} from '@/hooks/use-modal'
 import type {TMember} from '@/types'
+import type {TGroup} from '@/types/group'
 import type {MemberDeletionConfirmationModalPT} from './member-deletion-confirmation-modal.type'
+import {
+	excludeMemberFromAllGroup,
+	getNonEmptyGroupArr,
+} from './member-deletion-confirmation-modal.util'
 import {NoticeSection} from './notice-section'
 
 export const MemberDeletionConfirmationModal = ({
 	idx,
 }: MemberDeletionConfirmationModalPT) => {
-	const {getArr, removeOneFromArr, flush} = useManageDataOnUrl()
+	const {getArr, removeOneFromArr, updateArr, flush} = useManageDataOnUrl()
 	const {onClose} = useModal()
 
 	const memberArr: TMember[] = getArr(MEMBER_KEY)
 	const member = memberArr[idx]
+	const memberId = member.id
+
+	const groupArr: TGroup[] = getArr(GROUP_KEY)
 
 	const onDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		e.preventDefault()
 		e.stopPropagation()
+
+		const filteredGroupArr = excludeMemberFromAllGroup(groupArr, memberId)
+		const nonEmptyGroupArr = getNonEmptyGroupArr(filteredGroupArr)
+
+		updateArr(GROUP_KEY, nonEmptyGroupArr)
 		removeOneFromArr(MEMBER_KEY, idx)
 		flush()
 		onClose()
