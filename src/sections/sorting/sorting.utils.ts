@@ -1,13 +1,15 @@
 import type {TMember, TOrder, TSortBy} from '@/types'
-import {getTimeDiff, parseMinuteFromTime} from '@/utils'
+import {getTimeDiff, getTimeStamp, parseMinuteFromTime} from '@/utils'
+import {shallowArrayCopy} from '@/utils/array-manager'
 import _ from 'lodash'
+import {DEFAULT_TIME_CHUNK} from './sorting.constant'
 import type {RowTableDataPT} from './sorting.type'
 
 export const sortMembers = (
 	members: TMember[],
 	sortBy: TSortBy,
 	order: TOrder,
-	timeChunk: number = 1000 * 5,
+	timeChunk: number = DEFAULT_TIME_CHUNK,
 ): TMember[] => {
 	if (sortBy === 'cntPerTime')
 		return sortMembersByCntPerTimeChunk(members, order, timeChunk)
@@ -16,30 +18,31 @@ export const sortMembers = (
 	if (sortBy === 'name') return sortMembersByName(members, order)
 	return members
 }
-
-export const sortMembersByCntPerTimeChunk = (
+/** "단위 시간 당 참여횟수" 을 기준으로 멤버 정렬 */
+const sortMembersByCntPerTimeChunk = (
 	members: TMember[],
 	order: TOrder,
 	timeChunk: number,
 ): TMember[] => {
-	const curTimeStamp = Date.now()
-	members.sort((member1, member2) => {
-		const timeFromCreation1 = getTimeDiff(curTimeStamp, member1.createAt)
-		const timeFromCreation2 = getTimeDiff(curTimeStamp, member2.createAt)
-		const cntPerTime1 = getCntPerTimeChunk(
+	const _members = shallowArrayCopy(members)
+	const current = getTimeStamp()
+	_members.sort((member1, member2) => {
+		const cntPlayPerTimeChunk1 = getCntPlayPerTimeChunk(
 			member1.cntPlay,
-			timeFromCreation1,
+			member1.createAt,
+			current,
 			timeChunk,
 		)
-		const cntPerTime2 = getCntPerTimeChunk(
+		const cntPlayPerTimeChunk2 = getCntPlayPerTimeChunk(
 			member2.cntPlay,
-			timeFromCreation2,
+			member2.createAt,
+			current,
 			timeChunk,
 		)
-		const result = cntPerTime1 - cntPerTime2
-		return switchNegativeIfNot(order === 'asc', result)
+		const diff = cntPlayPerTimeChunk1 - cntPlayPerTimeChunk2
+		return switchNegativeIfNot(order === 'asc', diff)
 	})
-	return members
+	return _members
 }
 
 export const sortMembersByCntPlay = (
@@ -119,6 +122,21 @@ const getPrintedCntPer5Min = (cnt: number, createdAt: number, now: number) => {
 	const timeDiffFromCreatedToNow = getTimeDiff(createdAt, now)
 	if (cnt === 0) return '0 회'
 	if (timeDiffFromCreatedToNow < 50000) return `${cnt.toFixed(1)} 회`
-	const cntPer5Min = getCntPerTimeChunk(cnt, timeDiffFromCreatedToNow, 50000)
+	const cntPer5Min = getCntPerTimeChunk(
+		cnt,
+		timeDiffFromCreatedToNow,
+		DEFAULT_TIME_CHUNK,
+	)
 	return `${cntPer5Min.toFixed(1)} 회`
+}
+/** "시간 단위 당 참여횟수" 반환 */
+export const getCntPlayPerTimeChunk = (
+	cntPlay: number,
+	startTime: number,
+	endTime: number,
+	timeChunk: number,
+): number => {
+	const timeDiff = getTimeDiff(startTime, endTime)
+	const divisor = timeDiff < timeChunk ? timeChunk : timeDiff / timeChunk
+	return cntPlay / divisor
 }
