@@ -1,12 +1,8 @@
-import type {TSortBy} from '@/types'
+import type {TMember, TSortBy} from '@/types'
 import type {Dispatch, SetStateAction} from 'react'
 
 export type RowTableDataPT = {
-	id: string
-	name: string
-	term: string
-	cnt: string
-	cntPerTime: string
+	member: TMember
 	isSelected: boolean
 	onSelect: Dispatch<SetStateAction<string[]>>
 }
