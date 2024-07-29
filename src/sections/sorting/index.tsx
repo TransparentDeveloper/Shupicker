@@ -8,12 +8,23 @@ import {useManageDataOnUrl} from '@/hooks'
 import type {TMember, TOrder, TSortBy} from '@/types'
 import {getEmptyArray, removeSomePrimitiveElement} from '@/utils/array-manager'
 import {createNewGroup} from '@/utils/group-manager'
+import {getTimeStamp} from '@/utils/time-manager.ts'
 import _ from 'lodash'
 import {useState} from 'react'
 import {SortingToggle} from './sorting-toggle.ts'
-import {TABLE_COLS, TABLE_HEAD_MAPPER} from './sorting.constant.ts'
+import {
+	DEFAULT_TIME_CHUNK,
+	TABLE_COLS,
+	TABLE_HEAD_MAPPER,
+} from './sorting.constant.ts'
 import type {RowTableDataPT} from './sorting.type'
-import {createTableData, raisePlayingCnt, sortMembers} from './sorting.utils'
+import {
+	appendUnit,
+	getFormattedCntPlayPerTimeChunk,
+	getFormattedMinuteDiff,
+	raisePlayingCnt,
+	sortMembers,
+} from './sorting.utils'
 
 export const SortingSection = () => {
 	const {getArr, saveArr, addToArr, flush} = useManageDataOnUrl()
@@ -76,7 +87,7 @@ export const SortingSection = () => {
 						return (
 							<RowTableData
 								key={member.id}
-								{...createTableData(member)}
+								{...{member}}
 								isSelected={selectedIdArr.includes(member.id)}
 								onSelect={setSelectedIdArr}
 							/>
@@ -106,14 +117,23 @@ export const SortingSection = () => {
 }
 
 export const RowTableData = ({
-	id,
-	name,
-	term,
-	cnt,
-	cntPerTime,
+	member,
 	isSelected,
 	onSelect,
 }: RowTableDataPT) => {
+	const {id, createAt, name, cntPlay} = member
+
+	const current = getTimeStamp()
+
+	const forMattedMinuteDiff = getFormattedMinuteDiff(createAt, current)
+	const forMattedCntPlay = appendUnit(cntPlay, '회')
+	const formattedCntPlayPerTimeChunk = getFormattedCntPlayPerTimeChunk(
+		cntPlay,
+		current,
+		createAt,
+		DEFAULT_TIME_CHUNK,
+	)
+
 	const onSwitchCheckbox = () => {
 		onSelect((prev) => {
 			if (_.includes(prev, id)) return removeSomePrimitiveElement(prev, id)
@@ -121,14 +141,14 @@ export const RowTableData = ({
 		})
 	}
 	return (
-		<tr className='grid h-[55px] w-full grid-cols-[2rem_1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[0.1px] p-2 text-center text-sm font-thin italic'>
+		<tr className='grid h-[55px] w-full grid-cols-[2rem_1fr_1fr_1fr_1fr] items-center justify-center rounded-none border-b-[0.1px] p-2 text-center text-sm font-thin'>
 			<td className='flex h-full w-full items-center justify-center'>
 				<Checkbox onClick={onSwitchCheckbox} isActive={isSelected} />
 			</td>
 			<td>{name}</td>
-			<td>{term}</td>
-			<td>{cnt}</td>
-			<td>{cntPerTime}</td>
+			<td>{forMattedMinuteDiff}</td>
+			<td>{forMattedCntPlay}</td>
+			<td>{formattedCntPlayPerTimeChunk}</td>
 		</tr>
 	)
 }
