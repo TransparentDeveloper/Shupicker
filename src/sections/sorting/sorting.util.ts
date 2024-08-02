@@ -101,7 +101,7 @@ export const getFormattedCntPlayPerTimeChunk = (
 		timeChunk,
 	)
 	const rounded = round(cntCntPlayPerTimeChunk, 2)
-	if (rounded === cntPlay) return appendUnit('⚠️ ' + cntPlay, '회')
+	if (rounded === cntPlay) return appendUnit('⚠️' + cntPlay, '회')
 
 	const result = isInteger(rounded)
 		? floor(rounded).toString()
