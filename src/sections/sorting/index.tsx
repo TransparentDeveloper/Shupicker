@@ -3,14 +3,13 @@ import {
 	SectionHeader,
 } from '@/components/common/section-base/index.tsx'
 import {GROUP_KEY, MEMBER_KEY} from '@/constants'
+import {createGroup} from '@/functions/group.ts'
+import {addMemberPlay, sortMembers} from '@/functions/member.ts'
 import {useManageDataOnUrl} from '@/hooks'
 import type {TMember, TOrder, TSortBy} from '@/types'
-import {getEmptyArray} from '@/utils/array-manager'
-import {createNewGroup} from '@/utils/group-manager'
 import {useState} from 'react'
 import {AddGroupButton} from './add-group-button/index.tsx'
 import {SelectedItemsCounter} from './selected-items-counter/index.tsx'
-import {raisePlayingCnt, sortMembers} from './sorting.util.ts'
 import {TableBody} from './table-body/index.tsx'
 import {TableHead} from './table-head/index.tsx'
 
@@ -18,8 +17,7 @@ export const SortingSection = () => {
 	const {getArr, saveArr, addToArr, flush} = useManageDataOnUrl()
 	const [order, setOrder] = useState<TOrder>('desc')
 	const [sortBy, setSortBy] = useState<TSortBy>('cntPerTime')
-	const [selectedMemberIds, setSelectedMemberIds] =
-		useState<string[]>(getEmptyArray())
+	const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([])
 
 	const members = getArr<TMember>(MEMBER_KEY)
 	const sortedMembers = sortMembers(members, sortBy, order)
@@ -41,11 +39,15 @@ export const SortingSection = () => {
 			alert('선택된 회원이 없습니다.')
 			return
 		}
-		const updatedMembers = raisePlayingCnt(members, selectedMemberIds)
-		const newGroup = createNewGroup(selectedMemberIds)
+		const updatedMembers = members.map((member) => {
+			const memberId = member.id
+			if (selectedMemberIds.includes(memberId)) return addMemberPlay(member, 1)
+			return member
+		})
+		const newGroup = createGroup({memberIds: selectedMemberIds})
 		addToArr(GROUP_KEY, newGroup)
 		saveArr(MEMBER_KEY, updatedMembers)
-		setSelectedMemberIds(getEmptyArray())
+		setSelectedMemberIds([])
 		flush()
 	}
 
