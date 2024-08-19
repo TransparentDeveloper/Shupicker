@@ -1,14 +1,14 @@
 import {Button, Input} from '@/components/common'
 import {ScrollArea} from '@/components/ui'
 import {MEMBER_KEY} from '@/constants'
+import {createMember} from '@/functions/member'
+import {formatHHMM, getCurStamp} from '@/functions/time'
 import {useManageDataOnUrl, useSheet} from '@/hooks'
-import {getFormattedTime, getTimeStamp} from '@/utils'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {isUndefined} from 'lodash'
 import type {FieldValues} from 'react-hook-form'
 import {useForm} from 'react-hook-form'
 import * as z from 'zod'
-import {createNewMember} from '../../registration.utils'
 
 const schema = z.object({
 	name: z.string().max(8, '이름은 8자 이하여야 합니다.'),
@@ -22,7 +22,8 @@ export const RegisterForm = () => {
 		resolver: zodResolver(schema),
 	})
 
-	const currentTime = getFormattedTime(getTimeStamp())
+	const current = getCurStamp()
+	const formattedCurrent = formatHHMM(current)
 
 	const onSubmit = (data: FieldValues) => {
 		const name = data.name
@@ -30,7 +31,12 @@ export const RegisterForm = () => {
 			alert('이름을 입력해주세요.')
 			return
 		}
-		const newMember = createNewMember(name)
+		const newMember = createMember({
+			name,
+			createAt: getCurStamp(),
+			cntPlay: 0,
+			traits: [],
+		})
 		addToArr(MEMBER_KEY, newMember)
 		flush()
 		onClose()
@@ -63,7 +69,7 @@ export const RegisterForm = () => {
 						>
 							등록시간
 						</label>
-						<Input placeholder={currentTime} disabled />
+						<Input placeholder={formattedCurrent} disabled />
 					</div>
 					<div className='grid h-fit w-full grid-cols-[1fr_2fr] items-center justify-center gap-8'>
 						<label

@@ -1,9 +1,9 @@
 import {SectionBase, SectionHeader} from '@/components/common/section-base'
 import {MEMBER_KEY} from '@/constants'
+import {formatHHMM} from '@/functions/time'
 import {useManageDataOnUrl, useSheet} from '@/hooks'
 import {useModal} from '@/hooks/use-modal'
 import type {TMember} from '@/types'
-import {getFormattedTime} from '@/utils'
 import {useCallback} from 'react'
 import {AddMemberButton} from './add-member-button'
 import {RegisterForm} from './components/registeration-form'
@@ -50,7 +50,7 @@ export const RegisterSection = () => {
 					{memberArr.map((member, idx) => {
 						const id = member.id
 						const name = member.name
-						const createAt = getFormattedTime(member.createAt)
+						const formattedCreateAt = formatHHMM(member.createAt)
 						const cntPlay = member.cntPlay
 						return (
 							<tr
@@ -64,7 +64,7 @@ export const RegisterSection = () => {
 									<p>{name}</p>
 								</td>
 								<td className='flex h-full items-center justify-center'>
-									<p>{createAt}</p>
+									<p>{formattedCreateAt}</p>
 								</td>
 								<td />
 								<td className='flex h-full items-center justify-end'>

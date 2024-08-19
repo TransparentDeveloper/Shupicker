@@ -1,13 +1,14 @@
-import {isString} from 'lodash'
+import {isString} from '@/functions/type-guard'
 import {
 	compressToEncodedURIComponent,
 	decompressFromEncodedURIComponent,
 } from 'lz-string'
-export const compress = (target: string | object) => {
+
+export const compressToURL = (target: string | object) => {
 	if (isString(target)) return compressToEncodedURIComponent(target)
-	else return compressToEncodedURIComponent(JSON.stringify(target))
+	return compressToEncodedURIComponent(JSON.stringify(target))
 }
-export const decompress = (compressed: string): string => {
+export const decompressFromURL = (compressed: string): string => {
 	const decompressed = decompressFromEncodedURIComponent(compressed)
 	return decompressed
 }

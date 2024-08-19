@@ -1,8 +1,8 @@
 import {MEMBER_KEY} from '@/constants'
+import {getGMemberNames} from '@/functions/group'
 import {useManageDataOnUrl} from '@/hooks'
 import {useModal} from '@/hooks/use-modal'
 import type {TMember} from '@/types'
-import {extractMembersById} from '../../record.utils'
 import {DeleteGroupButton} from './delete-group-button'
 import {DeletingGroupConfirmationModal} from './deleting-group-confirmation-modal'
 import type {GroupItemPT} from './group-itme.type'
@@ -11,10 +11,9 @@ export const GroupItem = ({order, group}: GroupItemPT) => {
 	const {getArr} = useManageDataOnUrl()
 	const {onOpen} = useModal()
 
-	const memberArr = getArr<TMember>(MEMBER_KEY)
+	const members = getArr<TMember>(MEMBER_KEY)
 
-	const groupMembers = extractMembersById(memberArr, group.memberIds)
-	const membersNameArr = groupMembers.map((group) => group.name)
+	const gMemberNames = getGMemberNames(group, members)
 	const groupName = `Group ${order}`
 
 	const onOpenDeletingGroupConfirmation = () => {
@@ -22,7 +21,7 @@ export const GroupItem = ({order, group}: GroupItemPT) => {
 			children: (
 				<DeletingGroupConfirmationModal
 					groupIdx={order - 1}
-					{...{group, groupMembers, groupName}}
+					{...{group, groupName}}
 				/>
 			),
 		})
@@ -36,7 +35,7 @@ export const GroupItem = ({order, group}: GroupItemPT) => {
 
 			<div className='flex flex-col items-start justify-center'>
 				<p>{groupName}</p>
-				<p className='text-sm text-gray-400'>{membersNameArr.join(' | ')}</p>
+				<p className='text-sm text-gray-400'>{gMemberNames.join(' | ')}</p>
 			</div>
 
 			<div className='flex items-center justify-start'>

@@ -1,30 +1,20 @@
 import {Checkbox} from '@/components/common'
-import {appendUnit, getTimeStamp} from '@/utils'
-import {removeSomePrimitiveElement} from '@/utils/array-manager'
-import {DEFAULT_TIME_CHUNK} from '../../sorting.constant'
+import {removeElement} from '@/functions/common'
+import {getAvgPlayPerMinute, getMinuteAge} from '@/functions/member'
 import type {RowOnePT} from './row-one.type'
-import {
-	getFormattedCntPlayPerTimeChunk,
-	getFormattedMinuteDiff,
-} from './row-one.util'
 
 export const RowOne = ({member, isSelected, onSelect}: RowOnePT) => {
-	const {id, createAt, name, cntPlay} = member
+	const id = member.id
+	const name = member.name
+	const age = getMinuteAge(member)
+	const play = member.cntPlay
+	const avgPlayPer5Min = getAvgPlayPerMinute(member, 5)
 
-	const current = getTimeStamp()
-
-	const formattedMinuteDiff = getFormattedMinuteDiff(createAt, current)
-	const forMattedCntPlay = appendUnit(cntPlay, '회')
-	const formattedCntPlayPerTimeChunk = getFormattedCntPlayPerTimeChunk(
-		cntPlay,
-		current,
-		createAt,
-		DEFAULT_TIME_CHUNK,
-	)
+	const roundedAvgPlay = avgPlayPer5Min.toFixed(2)
 
 	const onSwitchCheckbox = () => {
 		onSelect((prev) => {
-			if (prev.includes(id)) return removeSomePrimitiveElement(prev, id)
+			if (prev.includes(id)) return removeElement(prev, id)
 			return [...prev, id]
 		})
 	}
@@ -34,9 +24,9 @@ export const RowOne = ({member, isSelected, onSelect}: RowOnePT) => {
 				<Checkbox onClick={onSwitchCheckbox} isActive={isSelected} />
 			</td>
 			<td>{name}</td>
-			<td>{formattedMinuteDiff}</td>
-			<td>{forMattedCntPlay}</td>
-			<td>{formattedCntPlayPerTimeChunk}</td>
+			<td>{`${age} 분`}</td>
+			<td>{`${play} 회`}</td>
+			<td>{`${roundedAvgPlay} 회`}</td>
 		</tr>
 	)
 }
