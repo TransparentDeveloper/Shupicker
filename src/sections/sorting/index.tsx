@@ -1,3 +1,4 @@
+import {Button} from '@/components/common/button.tsx'
 import {
 	SectionBase,
 	SectionHeader,
@@ -8,7 +9,6 @@ import {addMemberPlay, sortMembers} from '@/functions/member.ts'
 import {useManageDataOnUrl} from '@/hooks'
 import type {TMember, TOrder, TSortBy} from '@/types'
 import {useState} from 'react'
-import {AddGroupButton} from './add-group-button/index.tsx'
 import {SelectedItemsCounter} from './selected-items-counter/index.tsx'
 import {TableBody} from './table-body/index.tsx'
 import {TableHead} from './table-head/index.tsx'
@@ -70,7 +70,9 @@ export const SortingSection = () => {
 					{...{sortedMembers, selectedMemberIds, setSelectedMemberIds}}
 				/>
 			</table>
-			<AddGroupButton onClick={onAddGroup} />
+			<Button flexibility='full' onClick={onAddGroup}>
+				새 그룹 추가
+			</Button>
 		</SectionBase>
 	)
 }

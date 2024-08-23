@@ -1,3 +1,4 @@
+import {Button} from '@/components/common'
 import {SectionBase, SectionHeader} from '@/components/common/section-base'
 import {MEMBER_KEY} from '@/constants'
 import {formatHHMM} from '@/functions/time'
@@ -5,7 +6,6 @@ import {useManageDataOnUrl, useSheet} from '@/hooks'
 import {useModal} from '@/hooks/use-modal'
 import type {TMember} from '@/types'
 import {useCallback} from 'react'
-import {AddMemberButton} from './add-member-button'
 import {RegisterForm} from './components/registeration-form'
 import {DeleteMemberButton} from './delete-member-button'
 import {MemberDeletionConfirmationModal} from './member-deletion-confirmation-modal'
@@ -75,16 +75,24 @@ export const RegisterSection = () => {
 					})}
 				</tbody>
 			</table>
-			<AddMemberButton
-				onClick={() =>
-					onOpenSheet({
-						title: '새 회원 정보 입력',
-						description: '아래 폼을 입력하고, 새로운 회원을 등록해주세요.',
-						isOpen: true,
-						children: <RegisterForm />,
-					})
-				}
-			/>
+			<section className='flex h-fit w-full items-center justify-center'>
+				<Button
+					variant='void'
+					border='solid'
+					flexibility='fit'
+					className='gap-2'
+					onClick={() =>
+						onOpenSheet({
+							title: '새 회원 정보 입력',
+							description: '아래 폼을 입력하고, 새로운 회원을 등록해주세요.',
+							isOpen: true,
+							children: <RegisterForm />,
+						})
+					}
+				>
+					새 멤버 추가
+				</Button>
+			</section>
 		</SectionBase>
 	)
 }
