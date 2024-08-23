@@ -31,15 +31,18 @@ export const getGMembers = (group: TGroup, members: TMember[]) => {
 	return removedUndefined
 }
 
-/** 그룹에 속한 멤버의 참여횟수 조정 */
-export const addGMemberPlays = (
+/** 그룹에 속한 멤버의 참여횟수만 조정 */
+export const addOnlyGMemberPlays = (
 	group: TGroup,
 	members: TMember[],
 	adding: number,
 ) => {
-	const gMembers = getGMembers(group, members)
-	const gMember = gMembers.map((member) => addMemberPlay(member, adding))
-	return gMember
+	const gMemberIds = group.memberIds
+	const updatedMembers = members.map((member) => {
+		if (gMemberIds.includes(member.id)) return addMemberPlay(member, adding)
+		return member
+	})
+	return updatedMembers
 }
 
 /** 한 멤버를 모든 그룹에서 배제 */
