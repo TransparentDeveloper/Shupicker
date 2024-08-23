@@ -1,5 +1,6 @@
 import {GridLayout} from './components/layouts'
-import {RecordSection, RegisterSection, SortingSection} from './sections'
+import {RegisterSection, SortingSection} from './sections'
+import {RecordSection} from './sections/record/record-section'
 
 const App = () => {
 	return (
