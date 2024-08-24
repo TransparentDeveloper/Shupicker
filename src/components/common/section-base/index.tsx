@@ -5,7 +5,7 @@ export const SectionBase = ({children, className}: SectionBasePT) => {
 	return (
 		<section
 			className={cn(
-				'h-full w-full overflow-hidden rounded-lg border border-gray-200 p-6',
+				'h-full w-full overflow-hidden rounded-lg border border-gray-200 p-3 pt-6',
 				className,
 			)}
 		>

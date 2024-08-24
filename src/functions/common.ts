@@ -47,3 +47,6 @@ export const parseArray = <T>(str: string): T[] => {
 		throw new Error('배열로 바꿀 수 없는 문자열입니다.')
 	}
 }
+
+export const isLess = (target: number, than: number) => target < than
+export const isMore = (target: number, than: number) => than < target
