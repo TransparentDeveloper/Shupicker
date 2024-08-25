@@ -1,4 +1,4 @@
-# Shupicker &middot; [![Latest Version](https://img.shields.io/badge/latest_version-1.0.2-blue.svg)](https://github.com/TransparentDeveloper/Shupicker/tree/main-1.0.0)[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/TransparentDeveloper/Shupicker/blob/main-1.0.0/LICENSE)
+# Shupicker &middot; [![Latest Version](https://img.shields.io/badge/latest_version-1.0.3-blue.svg)](https://github.com/TransparentDeveloper/Shupicker/tree/main-1.0.3) [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/TransparentDeveloper/Shupicker/blob/main-1.0.0/LICENSE)
 
 _(* Supicker는 서울시 동북부 배드민턴 동아리 "셔틀버스" 팀을 위해 제작된 웹 애플리케이션입니다.)_
 
