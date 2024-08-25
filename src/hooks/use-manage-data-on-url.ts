@@ -1,4 +1,4 @@
-import {parseArray, removeElementByIndex} from '@/functions/common'
+import {parseArray, pushElement, removeElementByIndex} from '@/functions/common'
 import {isNull} from '@/functions/type-guard'
 import {compressToURL, decompressFromURL} from '@/libs/lz-string/util'
 import {useSearchParams} from 'react-router-dom'
@@ -17,9 +17,9 @@ export const useManageDataOnUrl = () => {
 		params.set(paramKey, compressed)
 	}
 	const addToArr = <T>(paramKey: string, element: T) => {
-		const prevArr = getArr<T>(paramKey)
-		prevArr.push(element)
-		saveArr(paramKey, prevArr)
+		const prev = getArr<T>(paramKey)
+		const updated = pushElement<T>(prev, element)
+		saveArr(paramKey, updated)
 	}
 	const updateArr = <T>(paramKey: string, newArr: T[]) =>
 		saveArr(paramKey, newArr)

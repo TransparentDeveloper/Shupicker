@@ -74,16 +74,16 @@ export const compareMemberWithPlayPer5Min = (
 	member2: TMember,
 ) => {
 	const minuteUnit = 5
-	const playPerAge1 = getAvgPlayPerMinute(member1, minuteUnit)
-	const playPerAge2 = getAvgPlayPerMinute(member2, minuteUnit)
+	const playPerAge1 = getAvgPlayPerChunk(member1, minuteUnit)
+	const playPerAge2 = getAvgPlayPerChunk(member2, minuteUnit)
 	return compareWithNumber(playPerAge1, playPerAge2)
 }
 
-/** 멤버의 평균 분당 플레이 횟수를 계산 */
-export const getAvgPlayPerMinute = (member: TMember, minute: number) => {
+/** 멤버의 "시간 단위"(= chunk) 당 평균 플레이 횟수를 계산 */
+export const getAvgPlayPerChunk = (member: TMember, minute: number) => {
 	const play = member.cntPlay
 	const age = getMinuteAge(member)
-	if (age === 0) return play
+	if (age < minute) return play
 	return (play * minute) / age
 }
 
