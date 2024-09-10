@@ -1,8 +1,14 @@
 import {Button} from '@/components/common'
 import {SectionBase, SectionHeader} from '@/components/common/section-base'
 import {GROUP_KEY, MEMBER_KEY} from '@/constants'
+import {shallowCopy} from '@/functions/common'
 import {addOnlyGMemberPlays, createGroup} from '@/functions/group'
-import {sortMembers} from '@/functions/member'
+import {
+	sortMembersByAge,
+	sortMembersByName,
+	sortMembersByPlay,
+	sortMembersByPlayPerTime,
+} from '@/functions/member'
 import {useManageDataOnUrl} from '@/hooks'
 import {generateID} from '@/libs/uuid/util'
 import type {TMember, TOrder, TSortBy} from '@/types'
@@ -20,14 +26,23 @@ export const SelectSection = () => {
 
 	const members = getArr<TMember>(MEMBER_KEY)
 
-	const sortedMembers = useMemo(
-		() => sortMembers(members, sortBy, order),
-		[members, sortBy, order],
-	)
+	const sortedMembers = useMemo(() => {
+		switch (sortBy) {
+			case 'name':
+				return sortMembersByName(members, order)
+			case 'cntPlay':
+				return sortMembersByPlay(members, order)
+			case 'createAt':
+				return sortMembersByAge(members, order)
+			case 'cntPerTime':
+				return sortMembersByPlayPerTime(members, order, 5)
+			default:
+				return shallowCopy(members)
+		}
+	}, [members, sortBy, order])
 
 	const membersSize = members.length
-	const selectedMembersSize = 0
-	selectedMemberIds.forEach(() => {})
+	const selectedMembersSize = selectedMemberIds.length
 
 	const onAddGroup = () => {
 		if (isEmpty(selectedMemberIds)) {
