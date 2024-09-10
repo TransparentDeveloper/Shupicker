@@ -1,35 +1,18 @@
-import {generateID} from '@/libs/uuid/util'
 import type {TMember} from '@/types'
 import type {TGroup} from '@/types/group'
-import {removeElement, removeUndefinedElement} from './common'
-import {addMemberPlay, findMemberById} from './member'
+import {removeElement} from './common'
 
 /** 그룹생성 */
-export const createGroup = (props: Omit<TGroup, 'id'>) => {
-	const id = generateID()
+export const createGroup = (props: TGroup) => {
 	const group: TGroup = {
-		id,
 		...props,
 	}
 	return group
 }
 
 /** 그룹에 속한 멤버 이름 반환 */
-export const getGMemberNames = (group: TGroup, members: TMember[]) => {
-	const gMember = getGMembers(group, members)
-	const gMemberNames = gMember.map((member) => member.name)
-	return gMemberNames
-}
-
-/** 그룹에 속한 멤버 객체를 배열로 반환 */
-export const getGMembers = (group: TGroup, members: TMember[]) => {
-	const gMemberIds = group.memberIds
-	const gMembers = gMemberIds.map((memberId) =>
-		findMemberById(members, memberId),
-	)
-	const removedUndefined = removeUndefinedElement(gMembers)
-	return removedUndefined
-}
+export const getGMemberNames = (gMembers: TMember[]) =>
+	gMembers.map((member) => member.name)
 
 /** 그룹에 속한 멤버의 참여횟수만 조정 */
 export const addOnlyGMemberPlays = (
@@ -39,7 +22,7 @@ export const addOnlyGMemberPlays = (
 ) => {
 	const gMemberIds = group.memberIds
 	const updatedMembers = members.map((member) => {
-		if (gMemberIds.includes(member.id)) return addMemberPlay(member, adding)
+		if (gMemberIds.includes(member.id)) member.cntPlay += adding
 		return member
 	})
 	return updatedMembers
@@ -50,11 +33,11 @@ export const excludeMemberFromAllGroups = (
 	groups: TGroup[],
 	memberId: string,
 ): TGroup[] => {
-	const excludedGroups = groups.map((group) =>
-		removeMemberFromGroup(group, memberId),
-	)
-	const groupsWithMembers = filterGroupsWithMembers(excludedGroups)
-	return groupsWithMembers
+	const groupsExcludingTarget = groups.map((group) => {
+		group.memberIds = removeElement(group.memberIds, memberId)
+		return group
+	})
+	return groupsExcludingTarget
 }
 
 /** 멤버가 1인 이상 있는 그룹만 반환 */

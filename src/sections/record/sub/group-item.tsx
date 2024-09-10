@@ -1,4 +1,6 @@
 import {getGMemberNames} from '@/functions/group'
+import {findMemberById} from '@/functions/member'
+import {isUndefined} from '@/functions/type-guard'
 import type {TMember} from '@/types'
 import type {TGroup} from '@/types/group'
 import {X} from 'lucide-react'
@@ -20,7 +22,12 @@ export const GroupItem = ({
 	members,
 	onOpenDeleteGroupModal,
 }: GroupItemPT) => {
-	const gMemberNames = getGMemberNames(group, members)
+	const gMemberIds = group.memberIds
+	const gMembers = gMemberIds
+		.map((id) => findMemberById(members, id))
+		.filter((gMember) => !isUndefined(gMember))
+
+	const gMemberNames = getGMemberNames(gMembers)
 	const order = groupIdx + 1
 	const groupName = `Group ${order}`
 

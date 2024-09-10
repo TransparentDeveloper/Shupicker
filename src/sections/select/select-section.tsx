@@ -4,6 +4,7 @@ import {GROUP_KEY, MEMBER_KEY} from '@/constants'
 import {addOnlyGMemberPlays, createGroup} from '@/functions/group'
 import {sortMembers} from '@/functions/member'
 import {useManageDataOnUrl} from '@/hooks'
+import {generateID} from '@/libs/uuid/util'
 import type {TMember, TOrder, TSortBy} from '@/types'
 import {isEmpty} from 'lodash'
 import {useMemo, useState} from 'react'
@@ -34,6 +35,7 @@ export const SelectSection = () => {
 			return
 		}
 		const group = createGroup({
+			id: generateID(),
 			memberIds: selectedMemberIds,
 		})
 		const updatedMembers = addOnlyGMemberPlays(group, members, 1)
