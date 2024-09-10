@@ -4,6 +4,7 @@ import {isLess, isMore} from '@/functions/common'
 import {createMember} from '@/functions/member'
 import {formatHHMM, getCurStamp} from '@/functions/time'
 import {useManageDataOnUrl, useSheet} from '@/hooks'
+import {generateID} from '@/libs/uuid/util'
 import {isUndefined} from 'lodash'
 import type {ComponentProps, FormEvent} from 'react'
 import {forwardRef, useRef} from 'react'
@@ -35,6 +36,7 @@ export const RegisterMemberSheet = () => {
 		}
 
 		const newMember = createMember({
+			id: generateID(),
 			name,
 			createAt,
 			cntPlay: 0,

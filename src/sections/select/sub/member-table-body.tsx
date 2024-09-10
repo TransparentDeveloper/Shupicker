@@ -6,7 +6,7 @@ import {
 	removeElement,
 	truncateToFixedPrecision,
 } from '@/functions/common'
-import {getAvgPlayPerChunk, getMinuteAge} from '@/functions/member'
+import {getAvgPlayPerTime, getMinuteAge} from '@/functions/member'
 import type {TMember} from '@/types'
 import {useCallback, type Dispatch, type SetStateAction} from 'react'
 
@@ -40,7 +40,7 @@ export const MemberTableBody = ({
 				const age = getMinuteAge(member)
 				const play = member.cntPlay
 
-				const avgPlayPer5Min = getAvgPlayPerChunk(member, DEFAULT_TIME_CHUNK)
+				const avgPlayPer5Min = getAvgPlayPerTime(member, DEFAULT_TIME_CHUNK)
 				const truncatedAvgPlay = truncateToFixedPrecision(avgPlayPer5Min, 2)
 				const avgPlay = covertToIntIfPossible(truncatedAvgPlay)
 

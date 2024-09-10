@@ -1,6 +1,9 @@
 import {Button} from '@/components/common'
 import {GROUP_KEY, MEMBER_KEY} from '@/constants'
-import {excludeMemberFromAllGroups} from '@/functions/group'
+import {
+	excludeMemberFromAllGroups,
+	filterGroupsWithMembers,
+} from '@/functions/group'
 import {useManageDataOnUrl} from '@/hooks'
 import {useModal} from '@/hooks/use-modal'
 import type {TMember} from '@/types'
@@ -18,10 +21,11 @@ export const DeleteMemberModal = ({target}: DeleteMemberModalPT) => {
 
 	const onDelete = () => {
 		onClose()
-		const updatedGroups = excludeMemberFromAllGroups(groups, target.id)
+		const groupsExcludingTarget = excludeMemberFromAllGroups(groups, target.id)
+		const groupsWithMembers = filterGroupsWithMembers(groupsExcludingTarget)
 		const updatedMembers = members.filter((member) => member.id !== target.id)
 		updateArr(MEMBER_KEY, updatedMembers)
-		updateArr(GROUP_KEY, updatedGroups)
+		updateArr(GROUP_KEY, groupsWithMembers)
 		flush()
 	}
 	return (
